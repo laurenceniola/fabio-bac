@@ -1,0 +1,3188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espace de révision — Fabio · Bac Pro MCV 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f8f7f4; --surface: #fff; --border: #e2e0d8; --text: #1a1a18; --muted: #6b6b65;
+  --blue: #185FA5; --blue-bg: #e6f1fb; --blue-text: #0c447c;
+  --green: #3B6D11; --green-bg: #eaf3de; --green-text: #27500a;
+  --amber: #854F0B; --amber-bg: #faeeda; --amber-text: #633806;
+  --red: #993C1D; --red-bg: #faece7; --red-text: #712b13;
+  --purple: #534AB7; --purple-bg: #eeedfe; --purple-text: #3c3489;
+  --teal: #0F6E56; --teal-bg: #e1f5ee; --teal-text: #085041;
+}
+body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; font-size: 15px; }
+
+/* HEADER */
+.header { background: var(--blue); color: white; padding: 1.25rem 1.5rem; }
+.header h1 { font-size: 18px; font-weight: 500; margin-bottom: 3px; }
+.header p { font-size: 13px; opacity: 0.8; }
+.header-row { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+.countdown-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.count-badge { background: rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 12px; font-size: 12px; text-align: center; }
+.count-badge .num { font-size: 18px; font-weight: 500; display: block; }
+.count-badge .label { font-size: 11px; opacity: 0.8; }
+
+/* ALERTE */
+.alert { background: var(--red-bg); border: 1px solid #f0997b; border-left: 4px solid var(--red); padding: 1rem 1.25rem; margin: 1rem; border-radius: 0 8px 8px 0; }
+.alert-title { font-weight: 500; color: var(--red-text); font-size: 14px; margin-bottom: 4px; }
+.alert p { font-size: 13px; color: var(--red-text); line-height: 1.6; }
+
+/* NAV */
+.nav { background: var(--surface); border-bottom: 1px solid var(--border); display: flex; overflow-x: auto; padding: 0 1rem; gap: 2px; position: sticky; top: 0; z-index: 100; }
+.nav-btn { padding: 12px 14px; font-size: 13px; background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; color: var(--muted); white-space: nowrap; transition: all 0.15s; }
+.nav-btn:hover { color: var(--text); }
+.nav-btn.active { color: var(--blue); border-bottom-color: var(--blue); font-weight: 500; }
+
+/* PAGES */
+.page { display: none; padding: 1.25rem; max-width: 860px; margin: 0 auto; }
+.page.active { display: block; }
+
+/* PLANNING */
+.planning-header { margin-bottom: 1.5rem; }
+.planning-header h2 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+.planning-header p { font-size: 13px; color: var(--muted); }
+
+.week-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin: 1.25rem 0 0.5rem; }
+
+.epreuve-row { display: flex; align-items: stretch; gap: 10px; margin-bottom: 8px; }
+.epreuve-date { width: 72px; flex-shrink: 0; font-size: 12px; color: var(--muted); text-align: right; padding-top: 2px; }
+.epreuve-bar { flex: 1; background: var(--surface); border: 0.5px solid var(--border); border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
+.epreuve-bar.urgent { border-left: 3px solid var(--red); }
+.epreuve-bar.high { border-left: 3px solid var(--amber); }
+.epreuve-bar.medium { border-left: 3px solid var(--blue); }
+.epreuve-bar.low { border-left: 3px solid var(--border); }
+.epreuve-bar.done { background: var(--bg); opacity: 0.6; }
+.epreuve-bar.alert-row { background: var(--red-bg); border-color: #f0997b; border-left: 3px solid var(--red); }
+.epreuve-name { font-size: 14px; font-weight: 500; flex: 1; }
+.epreuve-meta { font-size: 12px; color: var(--muted); }
+.coef-badge { font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 500; flex-shrink: 0; }
+.coef-9 { background: #501313; color: white; }
+.coef-4 { background: var(--red-text); color: white; }
+.coef-25 { background: var(--amber-text); color: white; }
+.coef-2 { background: var(--blue-text); color: white; }
+.coef-1 { background: var(--bg); color: var(--muted); border: 0.5px solid var(--border); }
+.coef-done { background: var(--bg); color: var(--muted); border: 0.5px solid var(--border); }
+.check-circle { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--border); cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; }
+.check-circle.done-check { background: var(--green); border-color: var(--green); color: white; }
+
+.strategy-box { background: var(--blue-bg); border: 0.5px solid var(--blue-text); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+.strategy-box h3 { font-size: 14px; font-weight: 500; color: var(--blue-text); margin-bottom: 6px; }
+.strategy-box p { font-size: 13px; color: var(--blue-text); line-height: 1.6; }
+
+/* MATIERE PAGE */
+.matiere-header { border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+.matiere-header h2 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+.matiere-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.chip { font-size: 12px; padding: 3px 10px; border-radius: 20px; border: 0.5px solid var(--border); }
+.chip-blue { background: var(--blue-bg); color: var(--blue-text); border-color: #85b7eb; }
+.chip-red { background: var(--red-bg); color: var(--red-text); border-color: #f0997b; }
+.chip-amber { background: var(--amber-bg); color: var(--amber-text); border-color: #ef9f27; }
+.chip-green { background: var(--green-bg); color: var(--green-text); border-color: #97c459; }
+.chip-purple { background: var(--purple-bg); color: var(--purple-text); border-color: #afa9ec; }
+
+.epreuve-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.epreuve-card h3 { font-size: 15px; font-weight: 500; margin-bottom: 0.6rem; }
+.epreuve-card p, .epreuve-card li { font-size: 14px; line-height: 1.7; }
+.epreuve-card ul { padding-left: 1.4rem; }
+
+.info-box { border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 0.75rem; font-size: 14px; line-height: 1.6; }
+.info-blue { background: var(--blue-bg); color: var(--blue-text); }
+.info-amber { background: var(--amber-bg); color: var(--amber-text); }
+.info-red { background: var(--red-bg); color: var(--red-text); }
+.info-green { background: var(--green-bg); color: var(--green-text); }
+.info-purple { background: var(--purple-bg); color: var(--purple-text); }
+.info-teal { background: var(--teal-bg); color: var(--teal-text); }
+.info-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+
+.module-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+.module-header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; cursor: pointer; }
+.module-header:hover { background: var(--bg); }
+.module-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.module-title { font-size: 14px; font-weight: 500; flex: 1; }
+.module-chevron { font-size: 11px; color: var(--muted); transition: transform 0.2s; }
+.module-chevron.open { transform: rotate(90deg); }
+.module-body { display: none; padding: 0 1rem 1rem; border-top: 0.5px solid var(--border); }
+.module-body.open { display: block; }
+.section-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin: 1rem 0 0.5rem; }
+
+.exercice { background: var(--teal-bg); border: 0.5px solid #5dcaa5; border-radius: 8px; padding: 0.9rem 1rem; margin-bottom: 0.75rem; }
+.exercice-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--teal); margin-bottom: 6px; }
+.exercice p { font-size: 14px; line-height: 1.7; color: var(--teal-text); }
+.btn-corr { background: transparent; border: 0.5px solid var(--teal); color: var(--teal); font-size: 13px; padding: 4px 12px; border-radius: 20px; cursor: pointer; margin-top: 8px; }
+.btn-corr:hover { background: rgba(15,110,86,0.08); }
+.correction { display: none; background: var(--surface); border: 0.5px solid #5dcaa5; border-radius: 8px; padding: 0.75rem 1rem; margin-top: 8px; font-size: 14px; line-height: 1.7; color: var(--text); }
+.correction.open { display: block; }
+
+.formula { background: var(--bg); border-left: 3px solid var(--blue); border-radius: 0 6px 6px 0; padding: 0.6rem 0.9rem; font-family: monospace; font-size: 14px; color: var(--blue-text); margin: 0.6rem 0; }
+table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 14px; }
+th { background: var(--blue); color: white; padding: 8px 10px; text-align: left; font-weight: 500; font-size: 13px; }
+td { padding: 7px 10px; border-bottom: 0.5px solid var(--border); }
+tr:nth-child(even) td { background: var(--bg); }
+h3 { font-size: 16px; font-weight: 500; margin: 1.25rem 0 0.5rem; }
+h4 { font-size: 14px; font-weight: 500; margin: 1rem 0 0.4rem; }
+p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; }
+.key { display: inline-block; background: #2c2c2a; color: white; padding: 1px 7px; border-radius: 4px; font-family: monospace; font-size: 12px; margin: 1px; }
+
+/* Progress bar */
+.progress-section { margin-bottom: 1.5rem; }
+.progress-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.progress-name { font-size: 13px; width: 160px; flex-shrink: 0; color: var(--muted); }
+.progress-bg { flex: 1; height: 6px; background: var(--border); border-radius: 3px; }
+.progress-fill { height: 6px; border-radius: 3px; transition: width 0.3s; }
+.progress-pct { font-size: 12px; width: 32px; text-align: right; color: var(--muted); }
+
+/* Coming soon */
+.coming-soon { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+.coming-soon .icon { font-size: 32px; margin-bottom: 0.75rem; }
+.coming-soon h3 { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+.coming-soon p { font-size: 14px; max-width: 360px; margin: 0 auto; }
+
+@media (max-width: 600px) {
+  .epreuve-date { width: 50px; font-size: 11px; }
+  .epreuve-name { font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-row">
+    <div>
+      <h1>Espace de révision · Fabio</h1>
+      <p>Bac Pro MCV option B · Session 2026 · Académie de Rennes</p>
+    </div>
+  </div>
+  <div class="countdown-grid" id="countdowns"></div>
+</div>
+
+<div class="alert">
+  <div class="alert-title">Urgent — dossier E3 à déposer avant le 22 mai</div>
+  <p>Sans les 3 supports professionnels déposés avant le 22 mai → note zéro à l'E3 (coefficient 9) → diplôme non délivrable. Préparer les dossiers E31, E32 et E33 est la priorité absolue cette semaine, avant les révisions.</p>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showPage('planning')">Planning</button>
+  <button class="nav-btn" onclick="showPage('maths')">Maths ★</button>
+  <button class="nav-btn" onclick="showPage('e2')">E2 Pro ★★★</button>
+  <button class="nav-btn" onclick="showPage('francais')">Vente-conseil E31 ★★★</button>
+  <button class="nav-btn" onclick="showPage('histgeo')">Suivi ventes E32 ★★</button>
+  <button class="nav-btn" onclick="showPage('espagnol')">Fidélisation E33 ★★★</button>
+  <button class="nav-btn" onclick="showPage('ecodroit')">Éco-Droit ★</button>
+  <button class="nav-btn" onclick="showPage('pse')">PSE ★</button>
+  <button class="nav-btn" onclick="showPage('arts')">Arts appliqués</button>
+  <button class="nav-btn" onclick="showPage('anglais')">Anglais</button>
+  <button class="nav-btn" onclick="showPage('francaisgen')">Français E5-A</button>
+  <button class="nav-btn" onclick="showPage('histgeogen')">Histoire-Géo E5-B</button>
+  <button class="nav-btn" onclick="showPage('espagnolgen')">Espagnol E4</button>
+</nav>
+
+<!-- ============ PLANNING ============ -->
+<div id="planning" class="page active">
+  <div class="planning-header">
+    <h2>Planning stratégique</h2>
+    <p>Du 4 mai au 10 juin 2026 · Priorités calculées par coefficient × difficulté × délai</p>
+  </div>
+
+  <div class="strategy-box">
+    <h3>Règle des 3 priorités</h3>
+    <p><strong>1. Le dossier E3 avant le 22 mai</strong> — coefficient 9, diplôme en jeu si absent.<br>
+    <strong>2. L'épreuve E2 pro</strong> — coefficient 4, matière connue, meilleur retour sur investissement.<br>
+    <strong>3. Français + Histoire-Géo</strong> — coefficient 2,5 chacun, les plus hauts coefficients des épreuves générales.</p>
+  </div>
+
+  <div class="week-label">Cette semaine · 4–10 mai</div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">Urgent</div>
+    <div class="epreuve-bar alert-row">
+      <span class="epreuve-name">Dossier E3 — supports professionnels</span>
+      <span class="epreuve-meta">À déposer avant le 22 mai</span>
+      <span class="coef-badge coef-9">Coef 9</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">5 mai</div>
+    <div class="epreuve-bar done">
+      <div class="check-circle done-check">✓</div>
+      <span class="epreuve-name">EPS — Tennis de table + Demi-fond</span>
+      <span class="epreuve-meta">Passé</span>
+      <span class="coef-badge coef-done">Coef 1</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">4–18 mai</div>
+    <div class="epreuve-bar high">
+      <span class="epreuve-name">Révisions Maths</span>
+      <span class="epreuve-meta">~8h réparties · séq 6 et 2 en priorité</span>
+      <span class="coef-badge coef-1">Coef 1</span>
+    </div>
+  </div>
+
+  <div class="week-label">Semaine 2 · 11–17 mai</div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">11–17 mai</div>
+    <div class="epreuve-bar high">
+      <span class="epreuve-name">Révisions Anglais écrit</span>
+      <span class="epreuve-meta">Niveau correct · méthode compréhension de texte · 2h suffisent</span>
+      <span class="coef-badge coef-2">Coef 2</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">11–17 mai</div>
+    <div class="epreuve-bar high">
+      <span class="epreuve-name">Révisions Espagnol écrit</span>
+      <span class="epreuve-meta">Vocabulaire commerce · méthode · ~3h</span>
+      <span class="coef-badge coef-2">Coef 2</span>
+    </div>
+  </div>
+
+  <div class="week-label">Épreuves · 19–21 mai</div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">19 mai</div>
+    <div class="epreuve-bar medium">
+      <span class="epreuve-name">Mathématiques E1-B</span>
+      <span class="epreuve-meta">14h00 · 1h · LP Louis Guilloux, Rennes</span>
+      <span class="coef-badge coef-1">Coef 1</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">20 mai</div>
+    <div class="epreuve-bar low">
+      <span class="epreuve-name">Anglais écrit E4-AA</span>
+      <span class="epreuve-meta">14h00 · 1h · LP Coetlogon, Rennes</span>
+      <span class="coef-badge coef-2">Coef 2</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">21 mai</div>
+    <div class="epreuve-bar low">
+      <span class="epreuve-name">Espagnol écrit E4-BA</span>
+      <span class="epreuve-meta">14h00 · 1h · LP Coetlogon, Rennes</span>
+      <span class="coef-badge coef-2">Coef 2</span>
+    </div>
+  </div>
+
+  <div class="week-label">Semaine 3 · 22–27 mai — révisions intensives</div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">22–27 mai</div>
+    <div class="epreuve-bar urgent">
+      <span class="epreuve-name">Révisions Français</span>
+      <span class="epreuve-meta">Méthode résumé + écriture · ~5h · Priorité haute</span>
+      <span class="coef-badge coef-25">Coef 2,5</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">22–27 mai</div>
+    <div class="epreuve-bar urgent">
+      <span class="epreuve-name">Révisions Histoire-Géo EMC</span>
+      <span class="epreuve-meta">Notions clés + méthode · ~4h</span>
+      <span class="coef-badge coef-25">Coef 2,5</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">22–27 mai</div>
+    <div class="epreuve-bar high">
+      <span class="epreuve-name">Révisions Éco-Droit</span>
+      <span class="epreuve-meta">Notions clés · ~3h</span>
+      <span class="coef-badge coef-1">Coef 1</span>
+    </div>
+  </div>
+
+  <div class="week-label">Épreuves · 28–29 mai</div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">28 mai</div>
+    <div class="epreuve-bar medium">
+      <span class="epreuve-name">Français E5-A</span>
+      <span class="epreuve-meta">08h30 · 3h · LP Coetlogon, Rennes</span>
+      <span class="coef-badge coef-25">Coef 2,5</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">28 mai</div>
+    <div class="epreuve-bar medium">
+      <span class="epreuve-name">Histoire-Géographie EMC E5-B</span>
+      <span class="epreuve-meta">14h00 · 2h30 · LP Coetlogon, Rennes</span>
+      <span class="coef-badge coef-25">Coef 2,5</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">29 mai</div>
+    <div class="epreuve-bar low">
+      <span class="epreuve-name">Arts appliqués E6</span>
+      <span class="epreuve-meta">09h30 · 2h · Matériel à apporter (crayons, feutres)</span>
+      <span class="coef-badge coef-1">Coef 1</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">29 mai</div>
+    <div class="epreuve-bar medium">
+      <span class="epreuve-name">Économie-Droit E1-A</span>
+      <span class="epreuve-meta">14h00 · 2h · LP Coetlogon, Rennes</span>
+      <span class="coef-badge coef-1">Coef 1</span>
+    </div>
+  </div>
+
+  <div class="week-label">Semaine 4 · 30 mai–1er juin — sprint final E2</div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">30 mai–1 juin</div>
+    <div class="epreuve-bar urgent">
+      <span class="epreuve-name">Révisions E2 Pro — Prospection &amp; valorisation</span>
+      <span class="epreuve-meta">Étude de cas · méthode + notions · ~6h · Priorité absolue</span>
+      <span class="coef-badge coef-4">Coef 4</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">1er juin</div>
+    <div class="epreuve-bar medium">
+      <span class="epreuve-name">PSE E3-D</span>
+      <span class="epreuve-meta">08h30 · 2h · LP Coetlogon, Rennes</span>
+      <span class="coef-badge coef-1">Coef 1</span>
+    </div>
+  </div>
+
+  <div class="week-label">Épreuve principale · 2 juin</div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">2 juin</div>
+    <div class="epreuve-bar urgent">
+      <span class="epreuve-name">E2 Prospection clientèle &amp; valorisation</span>
+      <span class="epreuve-meta">14h00 · 3h · LP Coetlogon, Rennes</span>
+      <span class="coef-badge coef-4">Coef 4</span>
+    </div>
+  </div>
+
+  <div class="week-label">Épreuves orales · 8–10 juin</div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">8 juin</div>
+    <div class="epreuve-bar low">
+      <span class="epreuve-name">Anglais oral E4-AB</span>
+      <span class="epreuve-meta">13h30 · 10 min · LP Ste Thérèse, La Guerche-de-Bretagne</span>
+      <span class="coef-badge coef-2">Coef 2</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">9 juin</div>
+    <div class="epreuve-bar low">
+      <span class="epreuve-name">Espagnol oral E4-BB</span>
+      <span class="epreuve-meta">13h30 · 10 min · Lodima Ouest, Bruz</span>
+      <span class="coef-badge coef-2">Coef 2</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">10 juin</div>
+    <div class="epreuve-bar alert-row">
+      <span class="epreuve-name">E3 — Vente-conseil + Suivi ventes + Fidélisation</span>
+      <span class="epreuve-meta">07h45 · Lodima Ouest, Bruz · Dossier obligatoire</span>
+      <span class="coef-badge coef-9">Coef 9</span>
+    </div>
+  </div>
+
+  <div style="background:var(--green-bg);border:0.5px solid #97c459;border-radius:10px;padding:1rem 1.25rem;margin-top:1.5rem;">
+    <p style="font-size:13px;color:var(--green-text);font-weight:500;margin-bottom:4px;">Calcul stratégique</p>
+    <p style="font-size:13px;color:var(--green-text);">Total coefficients : 26. Pour obtenir 10/20 de moyenne, il faut obtenir 260 points. L'E3 (coef 9) et l'E2 (coef 4) représentent à eux seuls 50% du total. Fabio peut compenser des notes faibles en épreuves générales (coef 1 chacune) si E2 et E3 sont solides.</p>
+  </div>
+</div>
+
+<!-- ============ MATHS ============ -->
+<div id="maths" class="page">
+  <div class="matiere-header">
+    <h2>Mathématiques E1-B</h2>
+    <div class="matiere-chips">
+      <span class="chip chip-blue">19 mai 2026 · 14h00</span>
+      <span class="chip chip-blue">1h · LP Louis Guilloux Rennes</span>
+      <span class="chip chip-amber">Coefficient 1</span>
+      <span class="chip chip-green">Formules fournies en annexe</span>
+    </div>
+  </div>
+
+  <div class="info-box info-blue">
+    <div class="info-label">Navigation dans les maths</div>
+    Utilise les onglets ci-dessous pour naviguer entre les chapitres. Priorité : <strong>Calculs financiers ★★★</strong> puis <strong>Suites ★★★</strong> puis Dérivées ★★.
+  </div>
+
+  <!-- Sous-navigation maths -->
+  <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:1.25rem;border-bottom:1px solid var(--border);padding-bottom:0px;">
+    <button class="nav-btn active" style="font-size:12px;padding:8px 12px;" onclick="showMaths('m-bases',this)">Les bases</button>
+    <button class="nav-btn" style="font-size:12px;padding:8px 12px;" onclick="showMaths('m-fonctions',this)">Fonctions</button>
+    <button class="nav-btn" style="font-size:12px;padding:8px 12px;" onclick="showMaths('m-derivees',this)">Dérivées ★★</button>
+    <button class="nav-btn" style="font-size:12px;padding:8px 12px;" onclick="showMaths('m-suites',this)">Suites ★★★</button>
+    <button class="nav-btn" style="font-size:12px;padding:8px 12px;" onclick="showMaths('m-finance',this)">Calculs financiers ★★★</button>
+    <button class="nav-btn" style="font-size:12px;padding:8px 12px;" onclick="showMaths('m-stats',this)">Stats 2 var ★★</button>
+    <button class="nav-btn" style="font-size:12px;padding:8px 12px;" onclick="showMaths('m-probas',this)">Probabilités ★</button>
+    <button class="nav-btn" style="font-size:12px;padding:8px 12px;" onclick="showMaths('m-calculatrice',this)">Calculatrice</button>
+    <button class="nav-btn" style="font-size:12px;padding:8px 12px;" onclick="showMaths('m-jourj',this)">Le jour J</button>
+  </div>
+
+  <!-- Sous-pages maths -->
+  <div id="m-bases" class="maths-sub" style="display:block">
+  <h2>Les bases indispensables</h2>
+  <p class="page-intro">Avant tout le reste, ces notions doivent être claires. Elles viennent du collège et du lycée.</p>
+
+  <h3>1. Les pourcentages</h3>
+  <div class="box box-amber">
+    <div class="box-label">🏪 L'idée concrète</div>
+    Tu travailles dans un magasin. Le patron te dit : "Ce mois-ci on a fait +8% de ventes par rapport au mois dernier." Ça veut dire quoi exactement ?
+  </div>
+
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div><strong>Calculer X% d'un nombre</strong> = multiplier par X divisé par 100<br>
+      <em>Exemple : 8% de 500 ventes = 500 × 8/100 = 500 × 0,08 = 40 ventes en plus</em></div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div><strong>Augmenter de X%</strong> = multiplier par (1 + X/100) → c'est le <strong>coefficient multiplicateur</strong><br>
+      <em>Exemple : +8% → multiplier par 1,08<br>
+      500 × 1,08 = 540 ventes (les 500 de départ + les 40 en plus)</em></div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div><strong>Diminuer de X%</strong> = multiplier par (1 − X/100)<br>
+      <em>Exemple : −20% → multiplier par 0,80</em></div>
+    </div>
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">🔑 Tableau à retenir</div>
+    <table>
+      <tr><th>Variation</th><th>Coefficient multiplicateur</th><th>Exemple</th></tr>
+      <tr><td>+5%</td><td>× 1,05</td><td>1 000 × 1,05 = 1 050</td></tr>
+      <tr><td>+10%</td><td>× 1,10</td><td>1 000 × 1,10 = 1 100</td></tr>
+      <tr><td>+100%</td><td>× 2</td><td>1 000 × 2 = 2 000 (doublé)</td></tr>
+      <tr><td>−5%</td><td>× 0,95</td><td>1 000 × 0,95 = 950</td></tr>
+      <tr><td>−50%</td><td>× 0,50</td><td>1 000 × 0,50 = 500 (divisé par 2)</td></tr>
+    </table>
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exercice 1</div>
+    <p>Un magasin réalise 12 000 € de CA en janvier. En février, le CA augmente de 5%. Quel est le CA en février ?</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">CA février = 12 000 × 1,05 = <strong>12 600 €</strong><br>
+    Vérification : 5% de 12 000 = 600 → 12 000 + 600 = 12 600 ✓</div>
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exercice 2</div>
+    <p>Un emprunt de 20 000 € porte un taux d'intérêt annuel de 4%. Combien d'intérêts doit-on payer la 1ère année ?</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">Intérêts = 20 000 × 0,04 = <strong>800 €</strong></div>
+  </div>
+
+  <hr class="section-divider">
+
+  <h3>2. Résoudre une équation : ax + b = 0</h3>
+  <div class="box box-amber">
+    <div class="box-label">🎯 L'idée concrète</div>
+    Imagine une balance. À gauche, tu as une expression avec un inconnu x. À droite, tu as 0. Résoudre l'équation, c'est trouver la valeur de x qui équilibre la balance. La règle d'or : <strong>ce qu'on fait à gauche, on le fait aussi à droite</strong>.
+  </div>
+
+  <p>Une équation du 1er degré ressemble à ça : <strong>−1,4x + 21 = 0</strong></p>
+  <p>Ici, a = −1,4 et b = 21. On cherche x.</p>
+
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div><strong>Isoler le terme avec x :</strong> déplacer b de l'autre côté (il change de signe)<br>
+      −1,4x + 21 = 0 → −1,4x = 0 − 21 → −1,4x = −21</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div><strong>Diviser les deux côtés par a :</strong><br>
+      x = −21 ÷ −1,4</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div><strong>Calculer :</strong><br>
+      x = 15<br>
+      (deux négatifs qui se divisent donnent un positif : −÷− = +)</div>
+    </div>
+  </div>
+
+  <div class="formula">ax + b = 0  →  x = −b ÷ a</div>
+
+  <div class="box box-red">
+    <div class="box-label">⚠️ Erreurs fréquentes</div>
+    · Oublier de changer le signe de b quand on le déplace<br>
+    · Diviser seulement d'un côté<br>
+    · (−) ÷ (−) = + &nbsp; · &nbsp; (−) ÷ (+) = − &nbsp; · &nbsp; (+) ÷ (−) = −
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exercice 3</div>
+    <p>Résoudre : 3x − 12 = 0</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      3x = 12<br>
+      x = 12 ÷ 3 = <strong>4</strong><br>
+      Vérification : 3 × 4 − 12 = 12 − 12 = 0 ✓
+    </div>
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exercice 4</div>
+    <p>Résoudre : −2x + 40 = 0<br><em>(Ce type d'équation sert à trouver le maximum d'une fonction — on le verra en dérivées)</em></p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      −2x = −40<br>
+      x = −40 ÷ −2 = <strong>20</strong>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <h3>3. Lire et calculer avec une expression</h3>
+  <p>Dans les exercices de bac, on te donne souvent une formule et on te demande de "calculer pour x = 10" par exemple. Ça veut simplement dire : <strong>remplace x par 10 et calcule</strong>.</p>
+
+  <div class="exercice">
+    <div class="exercice-label">Exercice 5</div>
+    <p>On donne f(x) = −0,7 × x² + 21 × x − 86. Calcule f(10), c'est-à-dire la valeur quand x = 10.</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      On remplace x par 10 partout :<br>
+      f(10) = −0,7 × 10² + 21 × 10 − 86<br>
+      = −0,7 × 100 + 210 − 86<br>
+      = −70 + 210 − 86<br>
+      = <strong>54</strong>
+    </div>
+  </div>
+
+  
+</div>
+
+<!-- ===================== FONCTIONS ===================== -->
+
+  <div id="m-fonctions" class="maths-sub" style="display:none">
+  <h2>C'est quoi une fonction ?</h2>
+  <p class="page-intro">Notion centrale du programme. Tout repose là-dessus : dérivées, suites, stats.</p>
+
+  <div class="box box-amber">
+    <div class="box-label">🎮 L'analogie parfaite : la machine</div>
+    Imagine une machine à café. Tu mets des pièces (c'est l'entrée, notée x), la machine fait quelque chose, et tu reçois un café (c'est la sortie, notée f(x) ou y).<br><br>
+    <strong>Une fonction, c'est exactement ça :</strong> à chaque valeur x qu'on entre, elle produit une seule valeur f(x) en sortie, selon une règle fixe.
+  </div>
+
+  <h3>Notation f(x)</h3>
+  <p>On écrit f(x) = ... pour donner la règle de la machine.</p>
+  <p>Exemple : <strong>f(x) = 2x + 3</strong> signifie "prends x, multiplie par 2, ajoute 3".</p>
+  <ul style="margin-left:1.5rem; margin-bottom:1rem; font-family:Arial,sans-serif; font-size:15px; line-height:2">
+    <li>f(1) = 2×1 + 3 = 5</li>
+    <li>f(5) = 2×5 + 3 = 13</li>
+    <li>f(10) = 2×10 + 3 = 23</li>
+  </ul>
+
+  <div class="box box-blue">
+    <div class="box-label">📊 Lien avec la réalité commerciale</div>
+    Dans un sujet de bac, une fonction représente souvent quelque chose de concret :<br><br>
+    · <strong>f(x) = chiffre d'affaires</strong> en fonction du nombre de clients x<br>
+    · <strong>f(t) = concentration de pollution</strong> à l'heure t (exemple évaluation 4 CNED)<br>
+    · <strong>f(n) = montant d'un placement</strong> après n années<br><br>
+    La lettre entre parenthèses représente ce qui varie (le temps, le nombre de clients, etc.).
+  </div>
+
+  <h3>La représentation graphique</h3>
+  <p>Une fonction peut se dessiner : on place x sur l'axe horizontal, f(x) sur l'axe vertical. On obtient une courbe.</p>
+  <div class="box box-purple">
+    <div class="box-label">🔍 Ce qu'on peut lire sur un graphique</div>
+    · <strong>Le maximum</strong> = le point le plus haut de la courbe (ex : l'heure de pollution maximale)<br>
+    · <strong>Le minimum</strong> = le point le plus bas<br>
+    · <strong>Croissante</strong> = la courbe monte de gauche à droite<br>
+    · <strong>Décroissante</strong> = la courbe descend de gauche à droite
+  </div>
+
+  <h3>Les types de fonctions qu'on voit au bac</h3>
+  <table>
+    <tr><th>Nom</th><th>Formule générale</th><th>Exemple</th></tr>
+    <tr><td>Fonction affine (droite)</td><td>f(x) = ax + b</td><td>f(x) = 2x + 3</td></tr>
+    <tr><td>Fonction polynôme degré 2</td><td>f(x) = ax² + bx + c</td><td>f(x) = −0,7x² + 21x − 86</td></tr>
+    <tr><td>Fonction polynôme degré 3</td><td>f(x) = ax³ + bx² + cx + d</td><td>Plus complexe</td></tr>
+  </table>
+
+  <div class="exercice">
+    <div class="exercice-label">Exercice — comprendre une fonction</div>
+    <p>L'évaluation 4 du CNED donne cette fonction :<br>
+    <strong>C(t) = −0,7t² + 21t − 86</strong><br>
+    où t est l'heure de la journée (9h à 21h) et C(t) la concentration en ozone.<br><br>
+    1. Que vaut C(10) ? (concentration à 10h)<br>
+    2. Que vaut C(15) ? (concentration à 15h)<br>
+    3. À ton avis, que cherche-t-on à trouver ?</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      1. C(10) = −0,7 × 10² + 21 × 10 − 86 = −70 + 210 − 86 = <strong>54 µg/m³</strong><br><br>
+      2. C(15) = −0,7 × 15² + 21 × 15 − 86 = −0,7 × 225 + 315 − 86 = −157,5 + 315 − 86 = <strong>71,5 µg/m³</strong><br><br>
+      3. On cherche à quelle heure la concentration est la plus élevée = trouver le <strong>maximum</strong> de la fonction. C'est exactement ce que permettent les dérivées.
+    </div>
+  </div>
+
+  
+</div>
+
+<!-- ===================== DERIVEES ===================== -->
+
+  <div id="m-derivees" class="maths-sub" style="display:none">
+  <h2>Les fonctions dérivées</h2>
+  <p class="page-intro">Séquence 1 du programme. Objectif : trouver le maximum ou minimum d'une fonction.</p>
+
+  <div class="box box-amber">
+    <div class="box-label">🚗 L'idée concrète</div>
+    Sur une autoroute, le compteur de vitesse te dit si tu accélères ou si tu freines. La dérivée, c'est pareil : elle mesure si la fonction monte ou descend, et à quelle vitesse. Quand la dérivée vaut 0, on est au sommet (ou au fond) — ni montée, ni descente. C'est là qu'est le maximum ou le minimum.
+  </div>
+
+  <h3>Les 4 règles de base — une par une</h3>
+  <p>Ces règles sont données en annexe le jour J. Ici on les explique vraiment.</p>
+
+  <div class="box box-blue">
+    <div class="box-label">Règle 1 — Une constante seule disparaît</div>
+    <strong>f(x) = k &nbsp;→&nbsp; f'(x) = 0</strong><br><br>
+    Exemple : f(x) = 86 &nbsp;→&nbsp; f'(x) = 0<br><br>
+    Pourquoi ? Une constante ne change jamais, donc sa "vitesse de changement" est nulle. Sur un graphique, c'est une ligne horizontale — pas de pente.
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">Règle 2 — Un x seul (avec ou sans nombre devant)</div>
+    <strong>f(x) = ax + b &nbsp;→&nbsp; f'(x) = a</strong><br><br>
+    Exemples :<br>
+    · f(x) = 21x &nbsp;→&nbsp; f'(x) = <strong>21</strong><br>
+    · f(x) = 5x + 3 &nbsp;→&nbsp; f'(x) = <strong>5</strong> (le +3 disparaît, c'est une constante)<br>
+    · f(x) = x &nbsp;→&nbsp; f'(x) = <strong>1</strong><br><br>
+    Pourquoi ? Sur un graphique, ax + b est une droite. La pente de cette droite, c'est exactement a. La dérivée mesure la pente — donc elle vaut a, tout simplement.
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">Règle 3 — x² tout seul</div>
+    <strong>f(x) = x² &nbsp;→&nbsp; f'(x) = 2x</strong><br><br>
+    C'est une règle qu'on accepte. On peut la retenir ainsi : <em>"l'exposant 2 descend devant, et l'exposant devient 2−1 = 1, donc il disparaît"</em>.<br><br>
+    x² &nbsp;→&nbsp; <strong>2</strong> × x<sup>2−1</sup> = 2 × x<sup>1</sup> = <strong>2x</strong>
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">Règle 4 — la règle de la constante (la plus importante à comprendre)</div>
+    <strong>f(x) = k × u(x) &nbsp;→&nbsp; f'(x) = k × u'(x)</strong><br><br>
+    En français : <em>quand on a un nombre qui multiplie une fonction, ce nombre reste là, et on dérive juste la fonction.</em><br><br>
+    Analogie : si une recette de gâteau utilise 3 œufs, et que tu fais la recette × 5, tu utilises 5 × 3 = 15 œufs. Le "×5" s'applique à tout. Ici c'est pareil : la constante "passe devant" le résultat de la dérivée.<br><br>
+    <strong>Exemple concret :</strong> f(x) = −0,7x²<br>
+    On a k = −0,7 et u(x) = x²<br>
+    On sait que la dérivée de x² = 2x (règle 3)<br>
+    Donc : dérivée de −0,7x² = −0,7 × 2x = <strong>−1,4x</strong><br><br>
+    C'est tout. On a juste multiplié : −0,7 × 2 = −1,4, et le x reste.
+  </div>
+
+  <h3>Récapitulatif des cas qu'on croise au bac</h3>
+  <div class="box box-purple">
+    <table>
+      <tr><th>Ce qu'on voit</th><th>Ce qu'on fait</th><th>Résultat</th></tr>
+      <tr><td>−86 (nombre seul)</td><td>Constante → disparaît</td><td>0</td></tr>
+      <tr><td>21x</td><td>ax → dérivée = a</td><td>21</td></tr>
+      <tr><td>x²</td><td>x² → 2x</td><td>2x</td></tr>
+      <tr><td>−0,7x²</td><td>−0,7 × (dérivée de x²) = −0,7 × 2x</td><td>−1,4x</td></tr>
+      <tr><td>5x²</td><td>5 × 2x</td><td>10x</td></tr>
+      <tr><td>−3x²</td><td>−3 × 2x</td><td>−6x</td></tr>
+      <tr><td>x³</td><td>x³ → 3x²</td><td>3x²</td></tr>
+      <tr><td>2x³</td><td>2 × 3x²</td><td>6x²</td></tr>
+    </table>
+  </div>
+
+  <h3>Exemple complet décomposé — terme par terme</h3>
+  <p>Dériver f(x) = <strong>−0,7x² + 21x − 86</strong></p>
+  <p>Cette fonction a 3 morceaux séparés par + et −. On dérive chaque morceau séparément, puis on recolle.</p>
+
+  <div class="box box-amber">
+    <div class="box-label">Morceau 1 : −0,7x²</div>
+    On repère : c'est un nombre (−0,7) multiplié par x²<br>
+    Étape A : dériver x² → 2x &nbsp;&nbsp; (règle 3)<br>
+    Étape B : multiplier par −0,7 → −0,7 × 2x<br>
+    Étape C : calculer −0,7 × 2 = −1,4<br>
+    <strong>Résultat : −1,4x</strong>
+  </div>
+
+  <div class="box box-amber">
+    <div class="box-label">Morceau 2 : +21x</div>
+    On repère : c'est ax avec a = 21<br>
+    La dérivée de ax, c'est juste a &nbsp;&nbsp; (règle 2)<br>
+    <strong>Résultat : 21</strong><br><br>
+    Pourquoi pas 21x ? Parce que la règle dit que la dérivée de ax = a, pas ax. Le x "disparaît" aussi.
+  </div>
+
+  <div class="box box-amber">
+    <div class="box-label">Morceau 3 : −86</div>
+    C'est un nombre seul, une constante.<br>
+    La dérivée d'une constante = 0 &nbsp;&nbsp; (règle 1)<br>
+    <strong>Résultat : 0 (on ne l'écrit même pas)</strong>
+  </div>
+
+  <div class="box box-green">
+    <div class="box-label">✅ On recolle les 3 morceaux</div>
+    f'(x) = −1,4x + 21 + 0<br>
+    <strong>f'(x) = −1,4x + 21</strong>
+  </div>
+
+  <div class="box box-red">
+    <div class="box-label">⚠️ Les 2 erreurs classiques sur ce calcul</div>
+    <strong>Erreur 1</strong> : écrire −0,7 × 2x = −0,9x (confusion addition/multiplication)<br>
+    Non : −0,7 × 2 = −1,4 &nbsp;&nbsp; (c'est une multiplication, pas une addition)<br><br>
+    <strong>Erreur 2</strong> : écrire la dérivée de 21x = 21x<br>
+    Non : la dérivée de 21x = 21 &nbsp;&nbsp; (le x disparaît, c'est la règle 2)
+  </div>
+
+  <h3>Trouver le maximum : résoudre f'(x) = 0</h3>
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div>On pose f'(x) = 0 : −1,4x + 21 = 0</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div>On résout (équation du 1er degré !) : x = 21 ÷ 1,4 = <strong>15</strong></div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div>On calcule la valeur max : f(15) = −0,7×225 + 21×15 − 86 = <strong>71,5</strong></div>
+    </div>
+  </div>
+
+  <div class="box box-green">
+    <div class="box-label">✅ Réponse type bac</div>
+    "La concentration en ozone est maximale à <strong>15h</strong>, avec une concentration de <strong>71,5 µg/m³</strong>."
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exercice type bac complet</div>
+    <p>Le profit d'un magasin est modélisé par f(x) = −3x² + 60x − 200 où x est le nombre de produits vendus (entre 0 et 20).<br><br>
+    1. Calculez f'(x)<br>
+    2. Résolvez f'(x) = 0<br>
+    3. Quel est le profit maximum ?</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      1. f'(x) = −3×2x + 60 = <strong>−6x + 60</strong><br><br>
+      2. −6x + 60 = 0 → −6x = −60 → x = 10<br>
+      Le profit est maximum pour <strong>x = 10 produits vendus</strong><br><br>
+      3. f(10) = −3×100 + 60×10 − 200 = −300 + 600 − 200 = <strong>100 €</strong>
+    </div>
+  </div>
+
+  
+</div>
+
+<!-- ===================== SUITES ===================== -->
+
+  <div id="m-suites" class="maths-sub" style="display:none">
+  <h2>Les suites numériques</h2>
+  <p class="page-intro">Séquence 2. Directement lié aux calculs financiers — apprendre les deux ensemble.</p>
+
+  <div class="box box-amber">
+    <div class="box-label">🔄 L'idée concrète</div>
+    Une suite, c'est une liste de nombres qui se suivent selon une règle. Exemple : le nombre de clients d'un magasin chaque mois. Si on a une règle pour passer d'un mois au suivant, c'est une suite.
+  </div>
+
+  <h3>Décrypter la notation — avant toute formule</h3>
+
+  <div class="box box-amber">
+    <div class="box-label">🏷️ C'est quoi u, n, u₁, uₙ ? — tout décoder</div>
+    Les maths utilisent des lettres pour parler de façon générale. Voici le dictionnaire complet :<br><br>
+
+    <strong>u</strong> — c'est juste le nom qu'on donne à la suite. On aurait pu l'appeler "ventes" ou "clients", mais par convention on écrit u (ou parfois v, w…). C'est le nom de la liste.<br><br>
+
+    <strong>n</strong> — c'est le <em>numéro</em> d'une valeur dans la liste. Le 1er mois = n°1, le 2ème mois = n°2, le 12ème mois = n°12. n est toujours un nombre entier (1, 2, 3…)<br><br>
+
+    <strong>uₙ</strong> — c'est "la valeur numéro n de la liste u". Autrement dit : la valeur au rang n.<br>
+    u₃ = la valeur au 3ème rang · u₁₂ = la valeur au 12ème rang<br><br>
+
+    <strong>u₁</strong> — c'est la valeur de départ, au rang 1. C'est le point de départ de toute la suite.<br><br>
+
+    <strong>r</strong> — la <em>raison</em> d'une suite arithmétique. C'est la quantité qu'on ajoute à chaque étape.<br><br>
+
+    <strong>q</strong> — la <em>raison</em> d'une suite géométrique. C'est le nombre par lequel on multiplie à chaque étape.
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">📋 Exemple concret pour fixer la notation</div>
+    Un vendeur fait des ventes chaque mois. On note cette suite u.<br><br>
+    <table>
+      <tr><th>Mois</th><th>Janvier</th><th>Février</th><th>Mars</th><th>Avril</th><th>…</th><th>Décembre</th></tr>
+      <tr><td>Rang n</td><td>n = 1</td><td>n = 2</td><td>n = 3</td><td>n = 4</td><td>…</td><td>n = 12</td></tr>
+      <tr><td>Ventes uₙ</td><td>u₁ = 50</td><td>u₂ = 55</td><td>u₃ = 60</td><td>u₄ = 65</td><td>…</td><td>u₁₂ = ?</td></tr>
+    </table>
+    <br>
+    On cherche u₁₂ = le nombre de ventes au 12ème mois = en décembre.<br>
+    On voit que chaque mois on ajoute 5 → c'est une suite arithmétique de raison r = 5.
+  </div>
+
+  <h3>Suite arithmétique — on additionne toujours le même nombre</h3>
+
+  <div class="box box-blue">
+    <div class="box-label">📐 La formule — décortiquée</div>
+    <strong>uₙ = u₁ + (n − 1) × r</strong><br><br>
+
+    · <strong>uₙ</strong> = la valeur qu'on cherche (au rang n)<br>
+    · <strong>u₁</strong> = la valeur de départ (au rang 1)<br>
+    · <strong>n</strong> = le numéro du rang qu'on cherche<br>
+    · <strong>r</strong> = ce qu'on ajoute à chaque étape<br>
+    · <strong>(n − 1)</strong> = le nombre de fois qu'on a ajouté r<br><br>
+
+    Pourquoi (n − 1) et pas n ?<br>
+    Parce qu'on part de u₁ et qu'on fait des <em>sauts</em> entre les termes.<br>
+    De u₁ à u₁₂, on fait 11 sauts, pas 12.<br>
+    De u₁ à uₙ, on fait toujours (n − 1) sauts.
+  </div>
+
+  <div class="box box-amber">
+    <div class="box-label">🔢 Vérification avec des petits nombres</div>
+    Suite : 50 · 55 · 60 · 65… (u₁ = 50, r = 5)<br><br>
+    Cherchons u₄ avec la formule :<br>
+    u₄ = 50 + (4 − 1) × 5 = 50 + 3 × 5 = 50 + 15 = <strong>65</strong><br><br>
+    Vérification à la main : 50 → +5 → 55 → +5 → 60 → +5 → 65 ✓<br>
+    On a bien fait 3 sauts pour aller de u₁ à u₄.
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">➕ La formule de la somme — ce qu'elle signifie</div>
+    <strong>Sₙ = n × (u₁ + uₙ) / 2</strong><br><br>
+    · <strong>Sₙ</strong> = la somme de tous les termes de u₁ jusqu'à uₙ<br>
+    · <strong>n</strong> = le nombre de termes qu'on additionne<br>
+    · <strong>u₁ + uₙ</strong> = premier terme + dernier terme<br>
+    · <strong>/ 2</strong> = on divise par 2 (c'est une moyenne entre le premier et le dernier)<br><br>
+    En français : somme = nombre de termes × moyenne du premier et du dernier terme.
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exercice — suite arithmétique</div>
+    <p>Un vendeur fait 50 ventes en janvier (u₁ = 50). Chaque mois, il fait 5 ventes de plus (r = 5).<br><br>
+    1. Identifie u₁, r et le rang n pour décembre.<br>
+    2. Calcule le nombre de ventes en décembre (u₁₂).<br>
+    3. Calcule le total des ventes sur toute l'année (S₁₂).</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      1. u₁ = 50 · r = 5 · décembre = 12ème mois donc n = 12<br><br>
+      2. u₁₂ = 50 + (12 − 1) × 5 = 50 + 11 × 5 = 50 + 55 = <strong>105 ventes</strong><br><br>
+      3. S₁₂ = 12 × (u₁ + u₁₂) / 2 = 12 × (50 + 105) / 2 = 12 × 155 / 2 = 12 × 77,5 = <strong>930 ventes au total</strong>
+    </div>
+  </div>
+
+  <h3>Suite géométrique — on multiplie toujours par le même nombre</h3>
+
+  <div class="box box-blue">
+    <div class="box-label">📐 La formule — décortiquée</div>
+    <strong>uₙ = u₁ × q^(n − 1)</strong><br><br>
+
+    · <strong>uₙ</strong> = la valeur qu'on cherche (au rang n)<br>
+    · <strong>u₁</strong> = la valeur de départ (au rang 1)<br>
+    · <strong>q</strong> = ce par quoi on multiplie à chaque étape (la raison)<br>
+    · <strong>n − 1</strong> = le nombre de fois qu'on a multiplié par q<br><br>
+
+    Même logique que pour l'arithmétique : de u₁ à u₁₂, on multiplie 11 fois, pas 12.<br><br>
+
+    <strong>Comment trouver q à partir de l'énoncé :</strong><br>
+    · "augmente de 5% par mois" → q = 1 + 5/100 = <strong>1,05</strong><br>
+    · "augmente de 10% par an" → q = 1 + 10/100 = <strong>1,10</strong><br>
+    · "diminue de 3% par mois" → q = 1 − 3/100 = <strong>0,97</strong>
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">➕ La formule de la somme</div>
+    <strong>Sₙ = u₁ × (1 − qⁿ) / (1 − q)</strong><br><br>
+    · <strong>Sₙ</strong> = total de tous les termes de u₁ jusqu'à uₙ<br>
+    · <strong>n</strong> = nombre de termes qu'on additionne<br>
+    · <strong>q</strong> = la raison de la suite<br><br>
+    Attention : cette formule ne fonctionne que si q ≠ 1 (sinon on diviserait par 0).
+  </div>
+
+  <div class="box box-amber">
+    <div class="box-label">🔢 Vérification avec des petits nombres</div>
+    Suite : 100 · 110 · 121 · 133,1… (u₁ = 100, q = 1,1, soit +10%)<br><br>
+    Cherchons u₃ avec la formule :<br>
+    u₃ = 100 × (1,1)^(3−1) = 100 × (1,1)² = 100 × 1,21 = <strong>121</strong><br><br>
+    Vérification à la main : 100 → ×1,1 → 110 → ×1,1 → 121 ✓
+  </div>
+
+  <div class="box box-red">
+    <div class="box-label">⚠️ Le piège classique des suites géométriques</div>
+    Confondre le <strong>rang n</strong> avec le <strong>nombre de multiplications</strong>.<br><br>
+    On cherche u₁₂ (le 12ème terme) → l'exposant dans la formule est <strong>12 − 1 = 11</strong>, pas 12.<br><br>
+    Formule : u₁₂ = u₁ × q<sup>11</sup>&nbsp;&nbsp; ← exposant 11, pas 12
+  </div>
+
+  <div class="box box-purple">
+    <div class="box-label">🔑 Reconnaître arithmétique ou géométrique en 10 secondes</div>
+    Prends deux termes consécutifs de la suite.<br><br>
+    · Tu les <strong>soustrais</strong> et le résultat est constant → <strong>arithmétique</strong> (r = différence)<br>
+    · Tu les <strong>divises</strong> et le résultat est constant → <strong>géométrique</strong> (q = quotient)<br><br>
+    Exemple : 200 · 210 · 220 · 230<br>
+    210 − 200 = 10 · 220 − 210 = 10 · 230 − 220 = 10 → différence constante → <strong>arithmétique</strong>, r = 10<br><br>
+    Exemple : 200 · 210 · 220,5 · 231,5<br>
+    210 / 200 = 1,05 · 220,5 / 210 = 1,05 → quotient constant → <strong>géométrique</strong>, q = 1,05
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exercice — suite géométrique (extrait évaluation 4 CNED)</div>
+    <p>En mai 2005, un service de vélos enregistre 20 000 utilisations (u₁ = 20 000). Le nombre augmente de 5% chaque mois.<br><br>
+    1. Identifie u₁ et q. Pourquoi c'est une suite géométrique ?<br>
+    2. Calcule u₂ (juin 2005) et u₃ (juillet 2005) avec la formule.<br>
+    3. Mai 2006 = quel rang n ? Calcule ce terme.</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      1. u₁ = 20 000 · q = 1,05 (car +5% → on multiplie par 1,05)<br>
+      C'est géométrique car on <em>multiplie</em> par le même nombre (1,05) à chaque étape.<br><br>
+      2. u₂ = 20 000 × (1,05)^(2−1) = 20 000 × (1,05)¹ = 20 000 × 1,05 = <strong>21 000</strong><br>
+      u₃ = 20 000 × (1,05)^(3−1) = 20 000 × (1,05)² = 20 000 × 1,1025 = <strong>22 050</strong><br><br>
+      3. Mai 2005 = u₁, juin 2005 = u₂, juillet = u₃, … décembre 2005 = u₈, janvier 2006 = u₉, … mai 2006 = u₁₃<br>
+      (12 mois entre mai 2005 et mai 2006, donc n = 1 + 12 = 13)<br><br>
+      u₁₃ = 20 000 × (1,05)^(13−1) = 20 000 × (1,05)^12<br>
+      Sur calculatrice : 1,05 ^ 12 = 1,7959<br>
+      u₁₃ = 20 000 × 1,7959 ≈ <strong>35 919 utilisations</strong>
+    </div>
+  </div>
+
+  
+</div>
+
+<!-- ===================== FINANCE ===================== -->
+
+  <div id="m-finance" class="maths-sub" style="display:none">
+  <h2>Calculs commerciaux et financiers ★★★</h2>
+  <p class="page-intro">Séquence 6 — Priorité absolue. C'est le chapitre le plus accessible et le plus utile pour toi au bac.</p>
+
+  <h3>1. Les intérêts composés — construire la formule depuis zéro</h3>
+
+  <div class="box box-amber">
+    <div class="box-label">🏪 Situation de départ — suivons l'argent année par année</div>
+    Fabio place <strong>1 000 €</strong> à la banque. La banque lui donne <strong>5% par an</strong>.<br>
+    On va suivre ce capital année après année, sans aucune formule d'abord.
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">Année 1 — ce qui se passe concrètement</div>
+    Départ : 1 000 €<br>
+    La banque ajoute 5% → 1 000 × 0,05 = 50 €<br>
+    Fin d'année 1 : 1 000 + 50 = <strong>1 050 €</strong><br><br>
+    Autre façon de l'écrire : 1 000 × 1,05 = <strong>1 050 €</strong><br>
+    (multiplier par 1,05 = garder le capital + ajouter 5%)
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">Année 2 — les intérêts s'accumulent sur les intérêts</div>
+    Départ : <strong>1 050 €</strong> (pas 1 000 — c'est ça la clé des intérêts composés)<br>
+    La banque ajoute 5% de 1 050 → 1 050 × 0,05 = 52,50 €<br>
+    Fin d'année 2 : 1 050 × 1,05 = <strong>1 102,50 €</strong><br><br>
+    Remarque : on peut aussi écrire 1 000 × 1,05 × 1,05 = 1 000 × (1,05)²
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">Année 3 — on voit le schéma</div>
+    1 102,50 × 1,05 = <strong>1 157,63 €</strong><br>
+    Soit : 1 000 × 1,05 × 1,05 × 1,05 = 1 000 × (1,05)³
+  </div>
+
+  <div class="box box-green">
+    <div class="box-label">✅ La formule — elle résume juste ce qu'on vient de faire</div>
+    On multiplie par 1,05 autant de fois qu'il y a d'années.<br>
+    Au bout de n années, ça donne :<br><br>
+    <strong>Cn = C0 × (1 + t)ⁿ</strong><br><br>
+    · C0 = capital de départ (ici 1 000 €)<br>
+    · t = taux en décimal (ici 5% → 0,05, donc 1 + t = 1,05)<br>
+    · n = nombre d'années (ici 3)<br>
+    · Cn = capital à la fin (ce qu'on cherche)<br><br>
+    Vérification : C3 = 1 000 × (1,05)³ = 1 000 × 1,1576 = <strong>1 157,63 €</strong> ✓
+  </div>
+
+  <div class="box box-red">
+    <div class="box-label">⚠️ Le piège du taux — erreur la plus fréquente</div>
+    La formule utilise <strong>t en décimal</strong>, pas en pourcentage.<br><br>
+    Taux de 3% → t = <strong>0,03</strong> (pas 3)<br>
+    Taux de 5% → t = <strong>0,05</strong> (pas 5)<br>
+    Taux de 12% → t = <strong>0,12</strong> (pas 12)<br><br>
+    Règle simple : diviser le pourcentage par 100 pour obtenir t.
+  </div>
+
+  <div class="box box-red">
+    <div class="box-label">⚠️ Le piège de la durée</div>
+    t et n doivent être dans la même unité de temps.<br><br>
+    Si le taux est <strong>annuel</strong> → n se compte en <strong>années</strong><br>
+    Si le taux est <strong>mensuel</strong> → n se compte en <strong>mois</strong><br><br>
+    Exemple qui piège : taux annuel de 3%, placement de 18 mois.<br>
+    Il faut convertir : 18 mois = 1,5 an → n = 1,5
+  </div>
+
+  <h4>Application sur la calculatrice — pas à pas</h4>
+  <div class="box box-purple">
+    Calculer C4 = 5 000 × (1,03)⁴<br><br>
+    Étape 1 — calculer (1,03)⁴ :<br>
+    Taper : <span class="key">1</span><span class="key">.</span><span class="key">0</span><span class="key">3</span> <span class="key">^</span> <span class="key">4</span> <span class="key">=</span> → affiche <strong>1,12550881</strong><br><br>
+    Étape 2 — multiplier par 5 000 :<br>
+    Taper : <span class="key">×</span> <span class="key">5</span><span class="key">0</span><span class="key">0</span><span class="key">0</span> <span class="key">=</span> → affiche <strong>5 627,54 €</strong><br><br>
+    Ou en une seule ligne : <span class="key">5</span><span class="key">0</span><span class="key">0</span><span class="key">0</span> <span class="key">×</span> <span class="key">1</span><span class="key">.</span><span class="key">0</span><span class="key">3</span> <span class="key">^</span> <span class="key">4</span> <span class="key">=</span>
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exercice 1 — capital final</div>
+    <p>Un commerçant place 5 000 € à 3% par an. Combien aura-t-il au bout de 4 ans ?<br>
+    <em>Identifie d'abord C0, t et n avant de calculer.</em></p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      C0 = 5 000 €&nbsp;&nbsp; t = 0,03 &nbsp;&nbsp; n = 4<br><br>
+      C4 = 5 000 × (1 + 0,03)⁴<br>
+      = 5 000 × (1,03)⁴<br>
+      = 5 000 × 1,1255<br>
+      = <strong>5 627,54 €</strong>
+    </div>
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exercice 2 — trouver n (durée nécessaire)</div>
+    <p>Une entreprise place 10 000 € à 4% par an. Elle veut atteindre 15 000 €. Dans combien d'années ?<br>
+    <em>La formule pour trouver n est donnée en annexe le jour J — ici on explique chaque étape.</em></p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      On cherche n tel que : 10 000 × (1,04)ⁿ = 15 000<br><br>
+      La formule de l'annexe : <strong>n = log(Cn ÷ C0) ÷ log(1 + t)</strong><br><br>
+      Étape 1 — calculer Cn ÷ C0 : 15 000 ÷ 10 000 = 1,5<br>
+      Étape 2 — calculer log(1,5) sur la calculatrice :<br>
+      &nbsp;&nbsp;<span class="key">log</span><span class="key">(</span><span class="key">1</span><span class="key">.</span><span class="key">5</span><span class="key">)</span><span class="key">=</span> → <strong>0,1761</strong><br>
+      Étape 3 — calculer log(1 + t) = log(1,04) :<br>
+      &nbsp;&nbsp;<span class="key">log</span><span class="key">(</span><span class="key">1</span><span class="key">.</span><span class="key">0</span><span class="key">4</span><span class="key">)</span><span class="key">=</span> → <strong>0,01703</strong><br>
+      Étape 4 — diviser : n = 0,1761 ÷ 0,01703 ≈ <strong>10,34</strong><br><br>
+      Résultat : on arrondit <strong>toujours à l'entier supérieur</strong> → <strong>11 ans</strong><br>
+      Pourquoi supérieur ? À 10 ans on n'a pas encore 15 000 €. Il faut attendre la 11ème année complète.
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <h3>2. Le tableau d'amortissement — construire depuis zéro</h3>
+
+  <div class="box box-amber">
+    <div class="box-label">🏦 La situation concrète</div>
+    Fabio ouvre un commerce. Il emprunte <strong>30 000 €</strong> à la banque pour acheter du matériel. La banque lui prête à <strong>5% par an</strong> sur <strong>3 ans</strong>.<br><br>
+    Chaque année, Fabio rembourse une partie. Le tableau montre exactement où va chaque euro qu'il verse.
+  </div>
+
+  <h4>Les 4 colonnes — ce qu'elles signifient vraiment</h4>
+
+  <div class="box box-blue">
+    <div class="box-label">Colonne 1 — Capital restant dû</div>
+    C'est la dette qui reste à rembourser <strong>au début de l'année</strong>, avant de payer quoi que ce soit.<br><br>
+    · Année 1 : toujours égal à l'emprunt de départ → <strong>30 000 €</strong><br>
+    · Année 2 : capital restant année 1 − ce qu'on a remboursé (amortissement) → 30 000 − 10 000 = <strong>20 000 €</strong><br>
+    · Année 3 : 20 000 − 10 000 = <strong>10 000 €</strong>
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">Colonne 2 — Intérêts</div>
+    C'est le "loyer" de l'argent qu'on a emprunté. On paye des intérêts sur ce qu'il reste à rembourser.<br><br>
+    Calcul : <strong>Capital restant × taux</strong><br><br>
+    · Année 1 : 30 000 × 0,05 = <strong>1 500 €</strong><br>
+    · Année 2 : 20 000 × 0,05 = <strong>1 000 €</strong>&nbsp;&nbsp; ← moins car on a remboursé une partie<br>
+    · Année 3 : 10 000 × 0,05 = <strong>500 €</strong>&nbsp;&nbsp; ← encore moins<br><br>
+    Logique : plus on rembourse, moins on doit, moins on paye d'intérêts.
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">Colonne 3 — Amortissement</div>
+    C'est la part du capital qu'on rembourse réellement cette année (pas les intérêts — ça c'est la colonne 2).<br><br>
+    Dans un tableau à <strong>amortissement constant</strong> : ce montant est le même chaque année.<br>
+    Calcul : emprunt total ÷ nombre d'années = 30 000 ÷ 3 = <strong>10 000 €/an</strong><br><br>
+    Dans un tableau à <strong>annuité constante</strong> : c'est l'annuité qui est fixe, et l'amortissement change chaque année.<br>
+    Calcul : amortissement = annuité − intérêts
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">Colonne 4 — Annuité</div>
+    C'est le total versé à la banque cette année. C'est la somme des deux précédents.<br><br>
+    <strong>Annuité = Amortissement + Intérêts</strong><br><br>
+    · Année 1 : 10 000 + 1 500 = <strong>11 500 €</strong><br>
+    · Année 2 : 10 000 + 1 000 = <strong>11 000 €</strong><br>
+    · Année 3 : 10 000 + 500 = <strong>10 500 €</strong>
+  </div>
+
+  <div class="box box-green">
+    <div class="box-label">✅ Le tableau complet — avec l'ordre de calcul</div>
+    <table>
+      <tr><th>Année</th><th>① Capital restant</th><th>② Intérêts (×5%)</th><th>③ Amortissement</th><th>④ Annuité (②+③)</th></tr>
+      <tr><td>1</td><td>30 000 €</td><td>1 500 €</td><td>10 000 €</td><td>11 500 €</td></tr>
+      <tr><td>2</td><td>20 000 €</td><td>1 000 €</td><td>10 000 €</td><td>11 000 €</td></tr>
+      <tr><td>3</td><td>10 000 €</td><td>500 €</td><td>10 000 €</td><td>10 500 €</td></tr>
+    </table>
+    <br>
+    Ordre à suivre à chaque ligne : ① → ② → ③ → ④<br>
+    Pour passer à la ligne suivante : nouveau capital restant = ① − ③ de la ligne précédente
+  </div>
+
+  <div class="box box-red">
+    <div class="box-label">⚠️ L'erreur classique du tableau</div>
+    Calculer les intérêts sur le capital <strong>initial</strong> (30 000 €) toutes les années au lieu du capital <strong>restant</strong>.<br><br>
+    Non : intérêts année 2 ≠ 30 000 × 0,05<br>
+    Oui : intérêts année 2 = <strong>20 000</strong> × 0,05 (capital restant après le 1er remboursement)
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exercice 3 — tableau à remplir</div>
+    <p>Un magasin emprunte 24 000 € sur 4 ans au taux de 6% par an. L'amortissement est constant.<br><br>
+    1. Quel est le montant de l'amortissement annuel ?<br>
+    2. Remplis les 2 premières lignes du tableau.</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      1. Amortissement = 24 000 ÷ 4 = <strong>6 000 € par an</strong><br><br>
+      2. Tableau :<br>
+      <table>
+        <tr><th>Année</th><th>Capital restant</th><th>Intérêts (×6%)</th><th>Amortissement</th><th>Annuité</th></tr>
+        <tr><td>1</td><td>24 000 €</td><td>1 440 €</td><td>6 000 €</td><td>7 440 €</td></tr>
+        <tr><td>2</td><td>18 000 €</td><td>1 080 €</td><td>6 000 €</td><td>7 080 €</td></tr>
+      </table>
+      <br>
+      Détail ligne 1 : intérêts = 24 000 × 0,06 = 1 440 € · annuité = 6 000 + 1 440 = 7 440 €<br>
+      Début ligne 2 : capital restant = 24 000 − 6 000 = 18 000 €<br>
+      Intérêts ligne 2 : 18 000 × 0,06 = 1 080 €
+    </div>
+  </div>
+
+  
+</div>
+
+<!-- ===================== STATS ===================== -->
+
+  <div id="m-stats" class="maths-sub" style="display:none">
+  <h2>Statistiques à deux variables</h2>
+  <p class="page-intro">Séquence 4. On modélise des données réelles par une courbe pour faire des prévisions.</p>
+
+  <div class="box box-amber">
+    <div class="box-label">📈 L'idée concrète</div>
+    Tu as des données sur le nombre de clients de ton magasin sur 6 mois. Tu veux estimer le nombre de clients au 10ème mois. Pour ça, tu trouves une formule (une courbe) qui "colle" le mieux à tes données, et tu l'utilises pour prédire.
+  </div>
+
+  <h3>La démarche (toujours la même)</h3>
+  <div class="steps">
+    <div class="step-item"><div class="step-num">1</div><div>Saisir les données → faire un <strong>nuage de points</strong> (sur Excel ou calculatrice)</div></div>
+    <div class="step-item"><div class="step-num">2</div><div>Essayer différents types d'ajustement (courbe qui colle le mieux aux points)</div></div>
+    <div class="step-item"><div class="step-num">3</div><div>Choisir celui avec le <strong>R² le plus proche de 1</strong> (R² mesure la qualité de l'ajustement)</div></div>
+    <div class="step-item"><div class="step-num">4</div><div>Utiliser l'équation pour calculer des valeurs inconnues</div></div>
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">🔢 Ce qu'on peut te demander en pratique</div>
+    L'équation de l'ajustement est souvent <strong>donnée dans l'énoncé</strong>. La question est alors simplement : "Calculez f(8)" → tu remplaces x par 8 et tu calcules. C'est la même chose que l'exercice des fonctions !
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exercice type bac</div>
+    <p>L'ajustement du nombre de clients par mois donne l'équation :<br>
+    <strong>f(x) = 3,11x² − 7,55x + 19,68</strong> (x = numéro du mois)<br><br>
+    Estimez le nombre de clients pour le mois 8 (extrapolation).<br>
+    Estimez le nombre de clients pour le mois 5 (interpolation).</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      <strong>Mois 8 :</strong> f(8) = 3,11 × 64 − 7,55 × 8 + 19,68 = 199,04 − 60,40 + 19,68 ≈ <strong>158 clients</strong><br><br>
+      <strong>Mois 5 :</strong> f(5) = 3,11 × 25 − 7,55 × 5 + 19,68 = 77,75 − 37,75 + 19,68 ≈ <strong>60 clients</strong>
+    </div>
+  </div>
+
+  
+</div>
+
+<!-- ===================== PROBAS ===================== -->
+
+  <div id="m-probas" class="maths-sub" style="display:none">
+  <h2>Probabilités</h2>
+  <p class="page-intro">Séquence 5. Notions intuitives — l'arbre suffit pour répondre aux questions.</p>
+
+  <div class="box box-amber">
+    <div class="box-label">🎲 L'idée concrète</div>
+    Une probabilité mesure les chances qu'un événement se produise. Elle est toujours entre 0 (impossible) et 1 (certain). 0,5 = 50% de chances.
+  </div>
+
+  <h3>L'arbre de probabilités</h3>
+  <p>On dessine un arbre pour visualiser les différentes situations possibles. Sur chaque branche, on note la probabilité. On multiplie le long d'un chemin, on additionne les chemins qui mènent au même résultat.</p>
+
+  <div class="box box-blue">
+    <div class="box-label">📐 Les 2 règles</div>
+    · <strong>Le long d'un chemin</strong> : on multiplie les probabilités<br>
+    · <strong>Pour obtenir un événement</strong> : on additionne tous les chemins qui y mènent<br>
+    · <strong>Vérification</strong> : la somme de toutes les branches issues d'un même nœud = 1
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exercice type bac</div>
+    <p>Dans un magasin :<br>
+    · 60% des clients paient par carte (probabilité 0,6)<br>
+    · 40% paient en espèces (probabilité 0,4)<br>
+    Parmi ceux qui paient par carte, 15% achètent un article en promotion.<br>
+    Parmi ceux qui paient en espèces, 30% achètent un article en promotion.<br><br>
+    Quelle est la probabilité qu'un client paie par carte ET achète en promo ?<br>
+    Quelle est la probabilité qu'un client achète en promo (peu importe le mode de paiement) ?</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      <strong>Carte ET promo :</strong> 0,6 × 0,15 = <strong>0,09 soit 9%</strong><br><br>
+      <strong>Promo (tous modes) :</strong><br>
+      · Chemin 1 : carte + promo = 0,6 × 0,15 = 0,09<br>
+      · Chemin 2 : espèces + promo = 0,4 × 0,30 = 0,12<br>
+      Total = 0,09 + 0,12 = <strong>0,21 soit 21%</strong>
+    </div>
+  </div>
+
+  
+</div>
+
+<!-- ===================== CALCULATRICE ===================== -->
+
+  <div id="m-calculatrice" class="maths-sub" style="display:none">
+  <h2>La calculatrice graphique</h2>
+  <p class="page-intro">Obligatoire à l'épreuve. L'évaluation comporte toujours une question qui nécessite la calculatrice.</p>
+
+  <div class="box box-red">
+    <div class="box-label">⚠️ Urgent</div>
+    Si tu n'as jamais utilisé ta calculatrice graphique, consacre 30 minutes à t'entraîner sur ces 5 opérations avant toute autre chose. Sans calculatrice fonctionnelle, certaines questions sont impossibles à faire.
+  </div>
+
+  <h3>Touche 1 — Les puissances : xʸ ou ^</h3>
+  <p>Utilisée pour : (1,05)^12, (1,03)^4, etc.</p>
+  <div class="box box-purple">
+    Calculer (1,05)¹²<br>
+    Taper : <span class="key">1</span><span class="key">.</span><span class="key">0</span><span class="key">5</span> <span class="key">^</span> <span class="key">1</span><span class="key">2</span> <span class="key">=</span><br>
+    Résultat attendu : <strong>1,7959</strong>
+  </div>
+
+  <h3>Touche 2 — Le logarithme décimal : log</h3>
+  <p>Utilisée pour : trouver la durée d'un placement (n).</p>
+  <div class="box box-purple">
+    Calculer log(1,5)<br>
+    Taper : <span class="key">log</span> <span class="key">(</span> <span class="key">1</span><span class="key">.</span><span class="key">5</span> <span class="key">)</span> <span class="key">=</span><br>
+    Résultat attendu : <strong>0,1761</strong>
+  </div>
+
+  <h3>Touche 3 — Les parenthèses</h3>
+  <p>Essentielles pour les fractions. Sans elles, la calculatrice fait les opérations dans le mauvais ordre.</p>
+  <div class="box box-purple">
+    Calculer (21 − 86) / (1,05 − 1)<br>
+    Taper : <span class="key">(</span><span class="key">2</span><span class="key">1</span> <span class="key">−</span> <span class="key">8</span><span class="key">6</span><span class="key">)</span> <span class="key">÷</span> <span class="key">(</span><span class="key">1</span><span class="key">.</span><span class="key">0</span><span class="key">5</span> <span class="key">−</span> <span class="key">1</span><span class="key">)</span> <span class="key">=</span><br>
+    Résultat : −1 300
+  </div>
+
+  <h3>Exercice d'entraînement calculatrice</h3>
+  <div class="exercice">
+    <div class="exercice-label">Calcule ces 3 expressions et vérifie tes résultats</div>
+    <p>a) 20 000 × (1,05)^12<br>
+    b) log(1,2) / log(1,04)<br>
+    c) 20 000 × (1 − (1,05)^13) / (1 − 1,05)</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir les résultats attendus</button>
+    <div class="correction">
+      a) 20 000 × 1,7959 ≈ <strong>35 919</strong><br>
+      b) 0,1761 / 0,0170 ≈ <strong>10,34</strong><br>
+      c) ≈ <strong>354 260</strong>
+    </div>
+  </div>
+
+  
+</div>
+
+<!-- ===================== JOUR J ===================== -->
+
+  <div id="m-jourj" class="maths-sub" style="display:none">
+  <h2>Le jour de l'épreuve — 18 mai</h2>
+  <p class="page-intro">1 heure. 2 parties indépendantes. 20 points. Les formules sont en annexe.</p>
+
+  <div class="box box-green">
+    <div class="box-label">✅ Ce que tu peux faire avant même de lire le sujet</div>
+    1. Ouvrir le sujet et lire les <strong>annexes en premier</strong> — elles te disent quelles formules sont utilisées donc quelles séquences sont au programme<br>
+    2. Lire les 2 parties et commencer par celle que tu reconnais le mieux<br>
+    3. Identifier les questions de type "S'approprier" (lire, comprendre) — ce sont souvent les plus faciles
+  </div>
+
+  <h3>Les 5 compétences évaluées</h3>
+  <table>
+    <tr><th>Compétence</th><th>Ce qu'on attend</th><th>Points typiques</th></tr>
+    <tr><td><strong>S'approprier</strong></td><td>Lire l'énoncé, identifier les données, comprendre la situation</td><td>1 à 2 pts</td></tr>
+    <tr><td><strong>Analyser / Raisonner</strong></td><td>Choisir la bonne méthode, proposer une démarche</td><td>2 à 3 pts</td></tr>
+    <tr><td><strong>Réaliser</strong></td><td>Faire les calculs, utiliser la calculatrice</td><td>3 à 5 pts</td></tr>
+    <tr><td><strong>Valider</strong></td><td>Vérifier que la réponse est cohérente, argumenter</td><td>1 à 2 pts</td></tr>
+    <tr><td><strong>Communiquer</strong></td><td>Rédiger une réponse claire avec des unités</td><td>1 à 2 pts</td></tr>
+  </table>
+
+  <div class="box box-blue">
+    <div class="box-label">💡 Stratégie pour avoir 8/10 (= 16/20)</div>
+    · Répondre complètement aux questions de type "S'approprier" et "Communiquer" → facile<br>
+    · Montrer la démarche même si tu n'es pas sûr du résultat → points partiels<br>
+    · Écrire la formule utilisée avant de calculer → montre que tu sais<br>
+    · Ne jamais laisser une question vide → une réponse partielle vaut toujours plus que rien
+  </div>
+
+  <div class="box box-amber">
+    <div class="box-label">⏱️ Gestion du temps (1h)</div>
+    · 5 min : lire les annexes + vue d'ensemble du sujet<br>
+    · 25 min : partie 1<br>
+    · 25 min : partie 2<br>
+    · 5 min : relecture et vérification
+  </div>
+
+  <div class="box box-red">
+    <div class="box-label">❌ Les pièges classiques</div>
+    · Oublier les unités dans la réponse (€, %, mois, µg/m³...)<br>
+    · Confondre taux et coefficient (5% → 0,05 pour multiplier)<br>
+    · Oublier le "(n−1)" dans la formule des suites<br>
+    · Ne pas arrondir n à l'entier supérieur quand on cherche une durée
+  </div>
+
+  <div class="box box-green" style="margin-top:1.5rem">
+    <div class="box-label">💪 Dernier mot</div>
+    Les formules sont données. Tu n'as rien à mémoriser par cœur. Ce qui compte, c'est de comprendre la situation décrite dans l'énoncé et de choisir la bonne formule. Avec ce qu'on a travaillé ensemble, tu as toutes les cartes en main.
+  </div>
+
+  
+</div>
+
+</div>
+<!-- ============ E2 PRO ============ -->
+<div id="e2" class="page">
+  <div class="matiere-header">
+    <h2>E2 — Prospection clientèle &amp; valorisation de l'offre</h2>
+    <div class="matiere-chips">
+      <span class="chip chip-red">2 juin 2026 · 14h00</span>
+      <span class="chip chip-red">3h · LP Coetlogon Rennes</span>
+      <span class="chip chip-red">Coefficient 4 — priorité absolue</span>
+      <span class="chip chip-amber">Étude de cas avec dossier documentaire</span>
+    </div>
+  </div>
+
+  <div class="epreuve-card">
+    <h3>🎯 Ce qu'est l'épreuve — 3h, étude de cas</h3>
+    <p>Le sujet te plonge dans une situation professionnelle concrète : tu es commercial, conseiller de vente ou chargé de prospection dans une entreprise fictive. Un dossier de documents t'est fourni (fiches clients, tableaux de données, emails, plans de tournée…). Tu dois analyser la situation et répondre à des questions opérationnelles.</p>
+    <div class="info-box info-blue">
+      <div class="info-label">Ce qui est évalué — GC4B Prospecter et valoriser</div>
+      1. Rechercher et analyser des informations commerciales (SIC, concurrence, clients)<br>
+      2. Participer à la conception d'une opération de prospection (cible, objectifs, techniques)<br>
+      3. Mettre en œuvre une prospection (plan de tournée, prise de contact, argumentation)<br>
+      4. Suivre et évaluer les résultats (tableau de bord, compte-rendu)<br>
+      5. Valoriser les produits/services (salon, showroom, site marchand)
+    </div>
+    <div class="info-box info-green">
+      <div class="info-label">✅ Bonne nouvelle stratégique</div>
+      C'est <strong>ta matière de spécialité</strong>. Tu connais le commerce de façon pratique. Les questions mobilisent du bon sens commercial autant que du cours. Un élève qui raisonne comme un vrai commercial marque des points même sans tout connaître par cœur.
+    </div>
+  </div>
+
+  <h3>Les notions clés — organisées par bloc</h3>
+
+  <!-- BLOC 1 : INFOS ET SIC -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#993C1D;"></div>
+      <span class="module-title">Bloc 1 — Le SIC et la veille commerciale</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">C'est quoi en simple ?</div>
+        Le SIC (Système d'Information Commercial), c'est la base de données de l'entreprise sur ses clients, prospects et concurrents. La veille commerciale, c'est surveiller en permanence son marché pour ne pas se faire dépasser. Ensemble, ils permettent de prendre les bonnes décisions commerciales.
+      </div>
+
+      <h4>Le SIC — Système d'Information Commercial</h4>
+      <div class="info-box info-blue">
+        Le SIC est un ensemble organisé qui permet de :<br>
+        · <strong>Collecter</strong> les informations (clients, concurrents, marchés)<br>
+        · <strong>Stocker</strong> dans une base de données<br>
+        · <strong>Traiter</strong> (analyser, croiser les données)<br>
+        · <strong>Diffuser</strong> aux personnes qui en ont besoin (commerciaux, direction)
+      </div>
+
+      <h4>Les types d'informations dans le SIC</h4>
+      <table>
+        <tr><th>Type</th><th>Ce que ça contient</th><th>Exemple</th></tr>
+        <tr><td><strong>Identification</strong></td><td>Qui est le client ?</td><td>Nom, adresse, secteur d'activité, taille entreprise</td></tr>
+        <tr><td><strong>Qualification</strong></td><td>Comment le contacter ?</td><td>Nom du décideur, budget, niveau d'équipement</td></tr>
+        <tr><td><strong>Comportementales</strong></td><td>Comment achète-t-il ?</td><td>Historique achats, fréquence, mode de paiement, réclamations</td></tr>
+      </table>
+
+      <h4>La veille commerciale — surveiller pour anticiper</h4>
+      <div class="info-box info-blue">
+        La veille commerciale c'est "surveiller en continu l'univers de commercialisation d'un produit ou service" pour prendre de meilleures décisions.<br><br>
+        <strong>Ce qu'on surveille :</strong><br>
+        · Veille tarifaire (les prix des concurrents)<br>
+        · Veille concurrentielle (ce que font les concurrents)<br>
+        · Avis et e-réputation des clients (réseaux sociaux, forums)<br>
+        · Évolution des prospects et clients actuels
+      </div>
+
+      <h4>Les profils clients — du suspect au client fidèle</h4>
+      <table>
+        <tr><th>Profil</th><th>C'est qui ?</th></tr>
+        <tr><td><strong>Suspect / Lead</strong></td><td>Quelqu'un susceptible d'avoir besoin du produit. Aucun contact encore.</td></tr>
+        <tr><td><strong>Prospect froid</strong></td><td>A réagi à une démarche commerciale, mais n'a pas encore accepté de rendez-vous.</td></tr>
+        <tr><td><strong>Prospect tiède</strong></td><td>A répondu favorablement, n'est pas encore convaincu. Nécessite un autre contact.</td></tr>
+        <tr><td><strong>Prospect chaud</strong></td><td>Très intéressé, n'a pas encore acheté. Prêt à conclure.</td></tr>
+        <tr><td><strong>Client</strong></td><td>A déjà effectué un achat. Client actif, tiède ou inactif selon la fréquence.</td></tr>
+      </table>
+
+      <div class="exercice">
+        <div class="exercice-label">Question type E2</div>
+        <p>Dans votre portefeuille, vous identifiez un contact qui a répondu positivement à votre e-mailing mais n'a pas encore rappelé malgré votre relance. Quel est son profil ? Quelle action menez-vous ?</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          Il s'agit d'un <strong>prospect tiède</strong> : il a montré un intérêt mais n'est pas encore convaincu.<br><br>
+          Action : le recontacter par téléphone (phoning) pour identifier ses freins, répondre à ses objections et proposer un rendez-vous. Mettre à jour sa fiche dans le SIC avec l'historique des contacts.
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOC 2 : PROSPECTION -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#185FA5;"></div>
+      <span class="module-title">Bloc 2 — Segmenter, cibler et fixer des objectifs SMART</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">L'idée concrète</div>
+        Prospecter sans cibler, c'est comme pêcher sans appât. On ne contacte pas tout le monde de la même façon. La démarche : <strong>Segmenter → Cibler → Positionner</strong> — dans cet ordre toujours.
+      </div>
+
+      <h4>Segmentation → Ciblage → Positionnement</h4>
+      <table>
+        <tr><th>Étape</th><th>Ce qu'on fait</th><th>Comment</th></tr>
+        <tr><td><strong>1. Segmenter</strong></td><td>Diviser le marché en groupes homogènes</td><td>Critères géographiques, sociodémographiques, comportementaux, psychographiques</td></tr>
+        <tr><td><strong>2. Cibler</strong></td><td>Choisir le ou les segments prioritaires</td><td>Évaluer l'attractivité de chaque segment, sélectionner les plus rentables</td></tr>
+        <tr><td><strong>3. Positionner</strong></td><td>Définir la place de l'offre face aux concurrents</td><td>Élaborer un plan marketing adapté à chaque segment cible</td></tr>
+      </table>
+
+      <h4>Gérer son fichier clients — Pareto et méthode ABC</h4>
+      <div class="info-box info-blue">
+        <strong>Loi de Pareto (20/80)</strong> : 20% des clients génèrent 80% du CA.<br>
+        → Concentrer les efforts sur ces 20% prioritaires.<br><br>
+        <strong>Méthode ABC</strong> : affiner en 3 groupes :<br>
+        · Groupe A (10% des clients = 60% du CA) → <em>Gros clients</em> — priorité absolue<br>
+        · Groupe B (40% des clients = 30% du CA) → <em>Clients moyens</em> — à développer<br>
+        · Groupe C (50% des clients = 10% du CA) → <em>Petits clients</em> — à optimiser ou automatiser
+      </div>
+
+      <h4>La méthode SMART — fixer des objectifs efficaces</h4>
+      <table>
+        <tr><th>Lettre</th><th>Signification</th><th>Application concrète</th></tr>
+        <tr><td><strong>S</strong></td><td>Spécifique</td><td>Définir précisément ce qu'on veut atteindre (qui, quoi, combien, où)</td></tr>
+        <tr><td><strong>M</strong></td><td>Mesurable</td><td>Chiffrer l'objectif (nombre de contacts, CA, taux de transformation)</td></tr>
+        <tr><td><strong>A</strong></td><td>Atteignable</td><td>Calculer les coûts et les imprévus — l'objectif doit être faisable</td></tr>
+        <tr><td><strong>R</strong></td><td>Réaliste</td><td>Tenir compte des ressources humaines, financières et matérielles disponibles</td></tr>
+        <tr><td><strong>T</strong></td><td>Temporel</td><td>Fixer une date limite précise et mesurer dans le temps</td></tr>
+      </table>
+      <div class="info-box info-teal">
+        <strong>Objectifs quantitatifs</strong> (mesurables) : nombre de ventes, taux de marge, nombre de nouveaux clients, taux de conquête<br>
+        <strong>Objectifs qualitatifs</strong> (non mesurables) : améliorer la notoriété, renforcer l'image de marque, fidéliser les clients actuels
+      </div>
+
+      <h4>Les 4 étapes d'une opération de prospection</h4>
+      <div class="info-box info-blue">
+        <strong>1. Fixer les objectifs</strong> (SMART) : conquérir de nouveaux marchés, relancer des prospects froids, présenter de nouveaux produits…<br><br>
+        <strong>2. Cibler</strong> : le bon prospect, au bon moment, avec le bon message, au bon endroit<br><br>
+        <strong>3. Choisir les techniques</strong> : selon la cible, le budget et les compétences de l'équipe<br><br>
+        <strong>4. Mettre en œuvre et évaluer</strong> : planning de réalisation, constitution de la base de données, création des supports, test, lancement, bilan
+      </div>
+
+      <div class="exercice">
+        <div class="exercice-label">Question type E2 — objectif SMART</div>
+        <p>Votre responsable vous dit : "On veut faire plus de ventes." Reformulez cet objectif en objectif SMART.</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          ❌ Non SMART : "Faire plus de ventes" — trop vague, non mesurable, pas de délai.<br><br>
+          ✅ SMART : "Conquérir <strong>15 nouveaux clients PME</strong> dans le secteur agroalimentaire, situés dans un rayon de 50 km, en réalisant un CA de 30 000 € supplémentaires, <strong>d'ici le 30 juin 2026</strong>, avec une équipe de 2 commerciaux et un budget de 2 000 €."<br><br>
+          S : PME agroalimentaire, 50 km · M : 15 clients, 30 000 € · A : budget et équipe définis · R : objectif cohérent avec les moyens · T : délai fixé au 30 juin
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOC 2B : TECHNIQUES -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#534AB7;"></div>
+      <span class="module-title">Bloc 2B — Techniques de prospection : outbound vs inbound</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">La distinction clé</div>
+        <strong>Outbound marketing</strong> = on va vers le prospect (techniques traditionnelles : on l'appelle, on lui envoie un courrier, on le visite)<br>
+        <strong>Inbound marketing</strong> = on attire le prospect vers soi (techniques digitales : il vient sur notre site, voit notre publicité, nous contacte)
+      </div>
+
+      <h4>Techniques traditionnelles (outbound)</h4>
+      <table>
+        <tr><th>Technique</th><th>Avantages</th><th>Inconvénients</th></tr>
+        <tr><td><strong>Phoning</strong> (appel sortant)</td><td>Contact direct, dialogue en temps réel, coût faible, rapide</td><td>Aveugle (rien à montrer), peut déranger, le prospect peut raccrocher</td></tr>
+        <tr><td><strong>SMS mailing</strong></td><td>Coût attractif, très bon taux de lecture, instantané</td><td>Canal intrusif, message très court</td></tr>
+        <tr><td><strong>Mailing postal</strong> (publipostage)</td><td>Personnalisable, permet d'joindre des documents, bon taux de conversion</td><td>Long (conception + acheminement), coût élevé</td></tr>
+        <tr><td><strong>Prospection terrain</strong> (visite, porte à porte)</td><td>Contact direct physique, valorise le prospect, effet de surprise</td><td>Rentabilité limitée, coûts de déplacement élevés</td></tr>
+        <tr><td><strong>Salon professionnel</strong></td><td>Forte visibilité, réseau, contact direct, étude de marché et concurrence</td><td>Coût parfois très élevé</td></tr>
+      </table>
+
+      <h4>Techniques digitales (inbound)</h4>
+      <table>
+        <tr><th>Technique</th><th>En simple</th><th>Avantage clé</th></tr>
+        <tr><td><strong>E-mailing</strong></td><td>Email commercial ciblé et personnalisé</td><td>Coût réduit, statistiques précises (taux d'ouverture, de clic). Limite : risque spam, taux de conversion ~1%</td></tr>
+        <tr><td><strong>Social selling</strong></td><td>Publier sur LinkedIn/Facebook pour attirer des prospects</td><td>Se positionner comme expert, contacts très ciblés, possibilité d'InMail LinkedIn</td></tr>
+        <tr><td><strong>Publicité programmatique</strong></td><td>Google Ads / LinkedIn Ads ciblées</td><td>Ciblage précis, mesure des impressions et taux de clics</td></tr>
+        <tr><td><strong>Marketing automation</strong></td><td>Logiciel qui envoie automatiquement un email quand le prospect visite le site</td><td>Gain de temps, contacts très ciblés (ex : Hubspot, Sarbacane)</td></tr>
+        <tr><td><strong>Retargeting</strong></td><td>Re-cibler un prospect qui a visité le site sans acheter</td><td>Rappel au bon moment, taux de conversion amélioré</td></tr>
+      </table>
+
+      <h4>La méthode CROC — pour le phoning</h4>
+      <div class="info-box info-blue">
+        Script structuré pour un appel sortant :<br><br>
+        <strong>C — Contact</strong> : Bonjour, prénom + nom + fonction + entreprise. Valider l'interlocuteur : "Je parle bien à M./Mme… ?"<br>
+        <strong>R — Raison</strong> : Rappeler l'historique ou l'objet de l'appel pour créer un climat de confiance<br>
+        <strong>O — Objectif</strong> : Exposer clairement ce qu'on cherche (prendre un RDV, transmettre une info, prendre une commande)<br>
+        <strong>C — Congé</strong> : Reformuler, rassurer, remercier, prendre congé personnalisé ("Au revoir M./Mme X")
+      </div>
+
+      <div class="exercice">
+        <div class="exercice-label">Question type E2 — choisir la bonne technique</div>
+        <p>Votre entreprise veut prospecter 500 PME d'Île-de-France pour présenter un nouveau logiciel. Budget limité à 3 000 €. Quelle combinaison de techniques proposez-vous ? Justifiez.</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          Avec un budget limité, on privilégie les techniques à faible coût :<br><br>
+          <strong>1. E-mailing de prospection</strong> (J0) : coût très faible, permet de présenter le logiciel avec un lien vers une démonstration en ligne. On mesure les taux d'ouverture pour identifier les plus intéressés.<br><br>
+          <strong>2. Phoning de relance</strong> (J+3) : appeler uniquement les prospects ayant ouvert l'email (prospect tiède ou chaud). Plus efficace et moins coûteux que d'appeler tout le fichier.<br><br>
+          <strong>3. Visites terrain</strong> : uniquement pour les prospects chauds ayant accepté un RDV, pour une démonstration en direct.<br><br>
+          Cette stratégie multicanale (outbound + inbound) optimise le budget en concentrant les efforts coûteux (terrain) sur les prospects qualifiés.
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOC 3 : ARGUMENTATION ET VENTE -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#0F6E56;"></div>
+      <span class="module-title">Bloc 3 — Argumenter, traiter les objections, conclure</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <h4>Les étapes de la vente / prospection</h4>
+      <table>
+        <tr><th>Étape</th><th>Ce qu'on fait</th><th>Outils/Techniques</th></tr>
+        <tr><td><strong>1. Prise de contact</strong></td><td>Créer un climat de confiance, se présenter</td><td>Sourire, poignée de main, nom de l'interlocuteur</td></tr>
+        <tr><td><strong>2. Découverte</strong></td><td>Identifier les besoins, motivations et freins du prospect</td><td>Questions ouvertes, écoute active, reformulation</td></tr>
+        <tr><td><strong>3. Argumentation</strong></td><td>Présenter l'offre en répondant aux besoins identifiés</td><td>Méthode CAP : Caractéristique → Avantage → Preuve</td></tr>
+        <tr><td><strong>4. Traitement des objections</strong></td><td>Répondre aux réserves du prospect sans le braquer</td><td>Écouter, reformuler, répondre, vérifier</td></tr>
+        <tr><td><strong>5. Conclusion</strong></td><td>Formaliser l'accord, prendre congé positivement</td><td>Bon de commande, confirmation par email</td></tr>
+      </table>
+
+      <h4>La méthode CAP — argumenter efficacement</h4>
+      <div class="info-box info-blue">
+        <strong>C</strong>aractéristique → ce que c'est (description du produit/service)<br>
+        <strong>A</strong>vantage → ce que ça apporte au client<br>
+        <strong>P</strong>reuve → ce qui prouve l'avantage (chiffre, témoignage, démonstration)<br><br>
+        Exemple : "Notre logiciel [C] traite 10 000 données par jour [A] ce qui vous fait économiser 2h de travail par semaine [P] comme en témoignent nos 50 clients PME actuels."
+      </div>
+
+      <h4>Les types d'objections et comment y répondre</h4>
+      <table>
+        <tr><th>Type d'objection</th><th>Exemple</th><th>Comment répondre</th></tr>
+        <tr><td>Prix trop élevé</td><td>"C'est trop cher"</td><td>Valoriser le retour sur investissement, comparer avec le coût du problème actuel</td></tr>
+        <tr><td>Pas de besoin perçu</td><td>"Je n'en ai pas besoin"</td><td>Revenir sur la phase de découverte, montrer un bénéfice non identifié</td></tr>
+        <tr><td>Besoin de réfléchir</td><td>"Je vais y penser"</td><td>Fixer une date de rappel, proposer un essai ou une démo</td></tr>
+        <tr><td>Fidélité concurrent</td><td>"J'ai déjà un fournisseur"</td><td>Valoriser les points différenciants sans dénigrer le concurrent</td></tr>
+      </table>
+
+      <div class="exercice">
+        <div class="exercice-label">Question type E2</div>
+        <p>Un prospect vous dit : "Votre offre m'intéresse mais c'est plus cher que votre concurrent." Comment répondez-vous ?</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          Je reconnais d'abord l'objection sans la nier (écoute active) : "Je comprends que le prix soit un critère important pour vous."<br><br>
+          Ensuite je valorise la différence : "Notre offre est effectivement positionnée différemment. Avez-vous bien pris en compte [avantage spécifique : service après-vente inclus / formation offerte / garantie plus longue] ? Sur la durée, nos clients constatent que le coût total est comparable voire inférieur."<br><br>
+          Je conclus avec une preuve : "Je peux vous mettre en contact avec un client dans votre secteur qui a fait la comparaison."
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOC 4 : DOCUMENTS ET SUIVI -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#534AB7;"></div>
+      <span class="module-title">Bloc 4 — Documents commerciaux et suivi des résultats</span>
+      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-bg);color:var(--amber-text);">Priorité ★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <h4>Les documents commerciaux — dans l'ordre de la vente</h4>
+      <table>
+        <tr><th>Document</th><th>À quel moment ?</th><th>C'est quoi ?</th></tr>
+        <tr><td><strong>CGV</strong> (Conditions Générales de Vente)</td><td>Avant tout</td><td>Cadre juridique de la vente : prix, délais, garanties, responsabilités</td></tr>
+        <tr><td><strong>Devis</strong></td><td>Négociation</td><td>Proposition chiffrée détaillée, engage le vendeur si accepté</td></tr>
+        <tr><td><strong>Bon de commande</strong></td><td>Commande</td><td>Document qui formalise l'achat (quantités, prix, références)</td></tr>
+        <tr><td><strong>Bon de livraison</strong></td><td>Livraison</td><td>Accompagne la marchandise, signé à réception</td></tr>
+        <tr><td><strong>Facture</strong></td><td>Facturation</td><td>Document de paiement, valeur juridique et comptable</td></tr>
+      </table>
+
+      <h4>Mesurer les résultats — les indicateurs clés</h4>
+      <div class="info-box info-blue">
+        · <strong>Taux de transformation</strong> = nombre de ventes ÷ nombre de contacts × 100. Mesure l'efficacité commerciale.<br>
+        · <strong>Panier moyen</strong> = CA total ÷ nombre de clients. Plus il est élevé, mieux c'est.<br>
+        · <strong>Indice de vente</strong> = nombre d'articles vendus ÷ nombre de tickets. Mesure les ventes complémentaires.<br>
+        · <strong>Taux de satisfaction</strong> = clients satisfaits ÷ total clients interrogés × 100
+      </div>
+
+      <h4>Le compte-rendu de prospection</h4>
+      <div class="info-box info-blue">
+        Après chaque action de prospection, il faut rédiger un compte-rendu et mettre à jour le SIC. Ce document contient :<br>
+        · Le nom du prospect et ses coordonnées<br>
+        · La date et le type de contact (appel, visite, email)<br>
+        · Le résultat (intéressé, à recontacter, refus, commande)<br>
+        · Les prochaines actions prévues et leur date
+      </div>
+
+      <div class="exercice">
+        <div class="exercice-label">Question type E2 — lecture d'un tableau de bord</div>
+        <p>Sur 80 appels passés ce mois, 12 ont abouti à un rendez-vous et 3 à une commande directe. Calculez le taux de transformation appel→rendez-vous. Que pouvez-vous en conclure ?</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          Taux de transformation appel→RDV = 12 ÷ 80 × 100 = <strong>15%</strong><br><br>
+          Ce taux signifie que sur 100 appels, seulement 15 aboutissent à un rendez-vous. C'est un taux relativement faible qui peut indiquer :<br>
+          · Le fichier prospects n'est pas assez qualifié (on appelle des gens qui ne sont pas la bonne cible)<br>
+          · Le discours téléphonique (plan d'appel) doit être amélioré<br>
+          · Le moment des appels n'est pas adapté<br><br>
+          Action corrective : réviser le ciblage et former les commerciaux sur leur accroche téléphonique.
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOC 5 : GLOSSAIRE PRO -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#3B6D11;"></div>
+      <span class="module-title">📖 Vocabulaire pro — les termes à maîtriser</span>
+      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-bg);color:var(--amber-text);">Priorité ★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <table>
+        <tr><th>Terme</th><th>Explication simple</th></tr>
+        <tr><td><strong>B to B</strong> (Business to Business)</td><td>Vente entre professionnels (entreprise → entreprise). Ex: fournisseur → magasin</td></tr>
+        <tr><td><strong>B to C</strong> (Business to Consumer)</td><td>Vente d'une entreprise à un particulier. Ex: magasin → client</td></tr>
+        <tr><td><strong>CAP</strong></td><td>Méthode d'argumentation : Caractéristique → Avantage → Preuve</td></tr>
+        <tr><td><strong>CGV</strong></td><td>Conditions Générales de Vente — le cadre juridique de la vente</td></tr>
+        <tr><td><strong>Ciblage</strong></td><td>Choisir les segments de marché sur lesquels on va concentrer ses efforts</td></tr>
+        <tr><td><strong>Concurrent direct</strong></td><td>Entreprise qui vend le même produit au même client</td></tr>
+        <tr><td><strong>Concurrent indirect</strong></td><td>Entreprise qui propose un produit différent mais qui répond au même besoin</td></tr>
+        <tr><td><strong>CRM / GRC</strong></td><td>Logiciel de Gestion de la Relation Client — centralise toutes les infos clients</td></tr>
+        <tr><td><strong>Datamining</strong></td><td>Analyse de grandes quantités de données pour trouver des tendances et comportements clients</td></tr>
+        <tr><td><strong>E-mailing</strong></td><td>Envoi d'emails commerciaux en masse, ciblés et personnalisés</td></tr>
+        <tr><td><strong>E-réputation</strong></td><td>Image d'une entreprise sur internet (avis, réseaux sociaux, forums)</td></tr>
+        <tr><td><strong>Force de vente</strong></td><td>L'ensemble des commerciaux d'une entreprise</td></tr>
+        <tr><td><strong>GRC</strong></td><td>Gestion de la Relation Client (= CRM en français)</td></tr>
+        <tr><td><strong>Lead</strong></td><td>Contact potentiel qui n'a pas encore été qualifié (= suspect)</td></tr>
+        <tr><td><strong>Mercatique directe</strong></td><td>Communication personnalisée vers des clients/prospects pour déclencher un achat rapide</td></tr>
+        <tr><td><strong>Omnicanal</strong></td><td>Tous les canaux de vente et de contact sont utilisés simultanément et de façon cohérente</td></tr>
+        <tr><td><strong>Phoning</strong></td><td>Prospection par téléphone (appels sortants)</td></tr>
+        <tr><td><strong>Plan de tournée</strong></td><td>Organisation géographique des visites commerciales pour optimiser les déplacements</td></tr>
+        <tr><td><strong>Portefeuille clients</strong></td><td>L'ensemble des clients et prospects dont un commercial a la charge</td></tr>
+        <tr><td><strong>Prospect</strong></td><td>Personne/entreprise identifiée comme client potentiel, non encore client</td></tr>
+        <tr><td><strong>Publipostage</strong></td><td>Envoi de courriers commerciaux par voie postale à une liste ciblée</td></tr>
+        <tr><td><strong>Scoring</strong></td><td>Attribution d'une note à un client/prospect selon son potentiel commercial</td></tr>
+        <tr><td><strong>Segmentation</strong></td><td>Division du marché en groupes homogènes selon des critères définis</td></tr>
+        <tr><td><strong>SIC</strong></td><td>Système d'Information Commercial — base de données clients/prospects de l'entreprise</td></tr>
+        <tr><td><strong>Taux de transformation</strong></td><td>% de contacts qui deviennent des clients (ventes ÷ contacts × 100)</td></tr>
+        <tr><td><strong>Vente au rebond</strong></td><td>Profiter d'un contact client (réclamation, suivi) pour proposer une vente complémentaire</td></tr>
+        <tr><td><strong>Veille commerciale</strong></td><td>Surveillance continue du marché, des concurrents et des clients pour anticiper les changements</td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box info-teal" style="margin-top:1rem;">
+    <div class="info-label">Stratégie le jour J — E2 3h</div>
+    · <strong>30 min</strong> : lire tout le dossier documentaire avant de répondre. Annoter les docs.<br>
+    · <strong>Identifier ton rôle</strong> dans la situation (commercial, assistant, chargé de prospection ?)<br>
+    · <strong>Vocabulaire pro obligatoire</strong> : utiliser les termes du cours (SIC, prospect chaud, taux de transformation…) rapporte des points immédiats.<br>
+    · <strong>Structure tes réponses</strong> : une réponse bien organisée (intro + développement + conclusion) même courte vaut mieux qu'une réponse longue et désordonnée.<br>
+    · <strong>Ne pas laisser de blanc</strong> : une réponse partielle qui montre la démarche vaut des points.
+  </div>
+</div>
+
+<!-- ============ FRANÇAIS ============ -->
+<div id="francais" class="page">
+  <div class="matiere-header">
+    <h2>Vente-conseil E31 — GC1 Conseiller et vendre</h2>
+    <div class="matiere-chips">
+      <span class="chip chip-red">Oral 10 juin · 30 min · Lodima Bruz</span>
+      <span class="chip chip-red">Coefficient 3</span>
+      <span class="chip chip-amber">Dossier 3 supports à apporter</span>
+    </div>
+  </div>
+
+  <div class="epreuve-card">
+    <h3>🎯 Format de l'épreuve E31</h3>
+    <p>Tu apportes 3 supports professionnels (documents issus de tes stages). La commission en choisit 1. Tu présentes 10 min sans interruption, puis 20 min d'entretien. Ce qu'on évalue : ta capacité à conseiller et vendre — pas à réciter un cours.</p>
+    <div class="info-box info-blue">
+      <div class="info-label">Les 6 critères d'évaluation</div>
+      1. Qualité des informations sur le marché, l'entreprise et ses produits<br>
+      2. Questionnement, écoute et reformulation des besoins<br>
+      3. Proposition d'une offre adaptée et cohérente<br>
+      4. Argumentation convaincante et efficace<br>
+      5. Modalités de règlement et livraison conformes<br>
+      6. Adaptation de la communication verbale et non verbale
+    </div>
+  </div>
+
+  <h3>Les notions clés — GC1</h3>
+
+  <!-- SONCAS -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#993C1D;"></div>
+      <span class="module-title">La méthode SONCAS(E) — identifier les motivations d'achat</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">C'est quoi ?</div>
+        Les clients n'achètent pas tous pour les mêmes raisons. Le SONCAS(E) est un outil pour identifier rapidement <strong>pourquoi</strong> ton client veut acheter, et adapter ton argumentation en conséquence.
+      </div>
+      <table>
+        <tr><th>Lettre</th><th>Motivation</th><th>Ce que veut le client</th><th>Comment argumenter</th></tr>
+        <tr><td><strong>S</strong></td><td>Sécurité</td><td>Être rassuré, éviter les risques</td><td>Garanties, fiabilité, marque reconnue, SAV</td></tr>
+        <tr><td><strong>O</strong></td><td>Orgueil</td><td>Se démarquer, se valoriser</td><td>Exclusivité, image, statut, "nos meilleurs clients"</td></tr>
+        <tr><td><strong>N</strong></td><td>Nouveauté</td><td>Innovation, être à la pointe</td><td>Dernière technologie, tendance, nouveauté</td></tr>
+        <tr><td><strong>C</strong></td><td>Confort</td><td>Praticité, simplicité, gain de temps</td><td>Facilité d'utilisation, ergonomie, livraison à domicile</td></tr>
+        <tr><td><strong>A</strong></td><td>Argent</td><td>Bonne affaire, économies</td><td>Prix compétitif, promo, ROI, comparatif</td></tr>
+        <tr><td><strong>S</strong></td><td>Sympathie</td><td>Coup de cœur, plaisir, esthétique</td><td>Design, ambiance, émotion, "il vous va bien"</td></tr>
+        <tr><td><strong>E</strong></td><td>Écologie</td><td>Impact environnemental</td><td>Labels éco, recyclage, fabrication locale, durabilité</td></tr>
+      </table>
+      <div class="exercice">
+        <div class="exercice-label">Exercice oral</div>
+        <p>Un client dit : "Je cherche un téléphone, mais j'ai peur de me tromper, les nouvelles technologies c'est compliqué." Quelle motivation identifiez-vous ? Comment adaptez-vous votre argumentation ?</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          Motivation dominante : <strong>Sécurité</strong> (peur de se tromper, crainte du risque).<br><br>
+          Argumentation adaptée : "Je comprends, c'est un achat important. Ce modèle est le plus simple à prendre en main — nos clients plus de 60 ans l'adorent justement pour ça. Il est garanti 2 ans, et notre SAV est disponible 6 jours/7. Je vous montre ?" On met en avant fiabilité, SAV, simplicité — pas les fonctionnalités techniques.
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAB -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#185FA5;"></div>
+      <span class="module-title">La méthode CAB — argumenter efficacement</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-blue">
+        <strong>C</strong>aractéristique → ce qu'est le produit (description technique ou commerciale)<br>
+        <strong>A</strong>vantage → ce que ça apporte au client (bénéfice concret)<br>
+        <strong>B</strong>énéfice/Preuve → pourquoi c'est vrai (chiffre, témoignage, démonstration, label)<br><br>
+        <strong>Règle d'or :</strong> on ne part pas des caractéristiques du produit mais du besoin identifié chez le client. Le CAB est une réponse personnalisée, pas un catalogue.
+      </div>
+      <div class="info-box info-amber">
+        <div class="info-label">Exemple concret — vente d'une machine à café</div>
+        Client : motivation <strong>Confort</strong> (gain de temps, simplicité)<br><br>
+        <strong>C</strong> — "Cette machine prépare un café en 30 secondes avec une capsule."<br>
+        <strong>A</strong> — "Vous n'avez plus à attendre ni à nettoyer — 0 entretien."<br>
+        <strong>B</strong> — "C'est notre modèle le plus vendu depuis 3 ans, 94% de clients satisfaits."
+      </div>
+      <div class="exercice">
+        <div class="exercice-label">Exercice — construire un CAB</div>
+        <p>Un client cherche un vélo pour aller au travail. Il habite à 5 km, veut éviter de suer et craint la panne. Construisez un argument CAB pour un vélo électrique.</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          <strong>C</strong> — "Ce vélo électrique a une assistance jusqu'à 25 km/h et une autonomie de 60 km."<br>
+          <strong>A</strong> — "Pour vos 5 km quotidiens, vous arrivez au bureau sans effort ni transpiration, même en côte."<br>
+          <strong>B</strong> — "La batterie se charge en 3h sur prise standard, et ce modèle est garanti 2 ans pièces et main d'œuvre — zéro souci de panne."
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIX -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#0F6E56;"></div>
+      <span class="module-title">Les prix et les marges — calculs essentiels</span>
+      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-bg);color:var(--amber-text);">Priorité ★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <h4>La structure d'un prix de vente</h4>
+      <div class="formula">Prix d'achat HT → + Marge → = Prix de vente HT → + TVA → = Prix de vente TTC</div>
+      <div class="info-box info-blue">
+        · <strong>Prix HT</strong> (Hors Taxes) = le prix sans TVA — celui que voit le commerçant<br>
+        · <strong>TVA</strong> = impôt sur la consommation collecté par l'entreprise et reversé à l'État<br>
+        &nbsp;&nbsp;&nbsp;Taux normal : 20% · Taux intermédiaire : 10% · Taux réduit : 5,5% · Taux particulier : 2,1%<br>
+        · <strong>Prix TTC</strong> (Toutes Taxes Comprises) = le prix affiché en magasin, payé par le client
+      </div>
+
+      <h4>Les réductions commerciales — 3 à distinguer</h4>
+      <table>
+        <tr><th>Type</th><th>Pourquoi ?</th><th>Exemple</th></tr>
+        <tr><td><strong>Rabais</strong></td><td>Compensation d'un défaut : qualité non conforme, retard de livraison</td><td>Produit abîmé → rabais de 15%</td></tr>
+        <tr><td><strong>Remise</strong></td><td>Geste commercial : volume important, fidélité, promotion</td><td>Commande de 100 unités → remise de 5%</td></tr>
+        <tr><td><strong>Ristourne</strong></td><td>Calculée sur le CA total d'un client sur une période</td><td>Client fidèle → ristourne annuelle de 3% sur tout le CA</td></tr>
+      </table>
+      <div class="info-box info-red">
+        <strong>Astuce mémo :</strong> Rabais = problème qualité · Remise = volume/promo · Ristourne = fidélité/CA global
+      </div>
+
+      <div class="exercice">
+        <div class="exercice-label">Calcul type épreuve</div>
+        <p>Prix d'achat HT d'un produit : 40 €. Le magasin applique un coefficient multiplicateur de 2. Quel est le prix de vente HT ? Et le prix TTC avec une TVA de 20% ?</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          Prix de vente HT = 40 × 2 = <strong>80 €</strong><br>
+          Montant TVA = 80 × 0,20 = 16 €<br>
+          Prix TTC = 80 + 16 = <strong>96 €</strong>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VENTE ADDITIONNELLE -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#534AB7;"></div>
+      <span class="module-title">La vente additionnelle — vendre plus à chaque client</span>
+      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-bg);color:var(--amber-text);">Priorité ★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-blue">
+        La vente additionnelle = proposer un produit complémentaire ou supplémentaire à ce que le client voulait acheter. C'est une étape à part entière de la vente — pas une option. Elle peut représenter une part significative du CA.
+      </div>
+      <table>
+        <tr><th>Type</th><th>C'est quoi</th><th>Exemple</th></tr>
+        <tr><td><strong>Vente complémentaire</strong></td><td>Produit qui complète l'achat principal (accessoire, service associé)</td><td>Achat d'un téléphone → housse de protection + assurance</td></tr>
+        <tr><td><strong>Vente supplémentaire</strong></td><td>Produit plus cher ou en plus grande quantité que prévu initialement</td><td>Client voulait 1 bouteille → "le lot de 3 est à −20%, ça revient moins cher"</td></tr>
+      </table>
+      <div class="info-box info-teal">
+        <strong>Timing :</strong> proposer la vente additionnelle <em>après</em> que l'accord principal est conclu (pas avant — ça brouille le message). Et toujours la justifier par le bénéfice client, jamais par l'intérêt commercial.
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHODE SMART GC4B -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#3B6D11;"></div>
+      <span class="module-title">Objectifs SMART et SWOT — pour l'E2 et l'oral</span>
+      <span class="priority-badge p-low"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--bg);color:var(--muted);border:0.5px solid var(--border);">Priorité ★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <h4>La méthode SMART — fixer des objectifs réalistes</h4>
+      <table>
+        <tr><th>Lettre</th><th>Signification</th><th>Question à se poser</th></tr>
+        <tr><td><strong>S</strong></td><td>Spécifique</td><td>L'objectif est-il clairement défini ? (Qui, quoi, où, combien ?)</td></tr>
+        <tr><td><strong>M</strong></td><td>Mesurable</td><td>Peut-on le mesurer en chiffres ? (nombre de contacts, CA, taux…)</td></tr>
+        <tr><td><strong>A</strong></td><td>Atteignable</td><td>Est-il réaliste avec les moyens disponibles ?</td></tr>
+        <tr><td><strong>R</strong></td><td>Réaliste</td><td>Tient-on compte des contraintes et imprévus ?</td></tr>
+        <tr><td><strong>T</strong></td><td>Temporel</td><td>Y a-t-il une date limite précise ?</td></tr>
+      </table>
+      <div class="info-box info-amber">
+        <div class="info-label">Exemple d'objectif SMART</div>
+        ❌ Non SMART : "Augmenter les ventes"<br>
+        ✅ SMART : "Obtenir 15 nouveaux rendez-vous qualifiés avec des PME du secteur agroalimentaire dans un rayon de 50 km, d'ici le 30 juin 2026."
+      </div>
+
+      <h4>Le SWOT — analyser avant d'agir</h4>
+      <table>
+        <tr><th colspan="2">INTERNE (ce qu'on maîtrise)</th></tr>
+        <tr><td><strong>Forces</strong> (ce qu'on fait bien)</td><td>Expertise, image de marque, prix compétitifs, réseau clients fidèles</td></tr>
+        <tr><td><strong>Faiblesses</strong> (ce qu'on fait moins bien)</td><td>Manque de notoriété, budget limité, peu de commerciaux</td></tr>
+        <tr><th colspan="2">EXTERNE (ce qu'on ne maîtrise pas)</th></tr>
+        <tr><td><strong>Opportunités</strong> (à saisir)</td><td>Marché en croissance, concurrent qui ferme, nouveau besoin client</td></tr>
+        <tr><td><strong>Menaces</strong> (à anticiper)</td><td>Nouveau concurrent, crise économique, changement de réglementation</td></tr>
+      </table>
+
+      <h4>Le social selling — prospecter via les réseaux</h4>
+      <div class="info-box info-blue">
+        Le social selling consiste à publier sur LinkedIn, Facebook, Twitter des contenus qui attirent les prospects et déclenchent des conversations commerciales. L'objectif : se positionner comme expert de son secteur.<br><br>
+        · Avantage : prospects qualifiés, contact moins intrusif que le phoning<br>
+        · Limite : résultats sur le long terme, nécessite une présence régulière et du contenu de qualité
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HISTOIRE GEO = E32 ============ -->
+<div id="histgeo" class="page">
+  <div class="matiere-header">
+    <h2>Suivi des ventes — E32 (GC2)</h2>
+    <div class="matiere-chips">
+      <span class="chip chip-red">Oral 10 juin · 30 min · Lodima Bruz</span>
+      <span class="chip chip-red">Coefficient 2</span>
+      <span class="chip chip-amber">Dossier 3 supports à apporter</span>
+    </div>
+  </div>
+
+  <div class="epreuve-card">
+    <h3>🎯 Format de l'épreuve E32</h3>
+    <p>Même format que l'E31 : 3 supports professionnels apportés le jour J, la commission en choisit 1. Présentation 10 min + entretien 20 min. Ce qu'on évalue : ta capacité à suivre une commande, traiter une réclamation, mesurer et améliorer la satisfaction client.</p>
+    <div class="info-box info-blue">
+      <div class="info-label">Les 7 critères d'évaluation</div>
+      1. Efficacité du suivi de la commande<br>
+      2. Qualité de la mise en œuvre du ou des services associés<br>
+      3. Pertinence du questionnement pour identifier le problème client<br>
+      4. Qualité de la solution proposée<br>
+      5. Qualité de l'information collectée et transmise sur la satisfaction<br>
+      6. Pertinence des propositions d'amélioration<br>
+      7. Adaptation de la communication verbale et non verbale
+    </div>
+  </div>
+
+  <h3>Les notions clés — GC2</h3>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#993C1D;"></div>
+      <span class="module-title">Les documents commerciaux — dans l'ordre de la vente</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">La chaîne des documents</div>
+        Préparation → Négociation → Commande → Livraison → Facturation
+      </div>
+      <table>
+        <tr><th>Document</th><th>C'est quoi ?</th><th>Point clé</th></tr>
+        <tr><td><strong>CGV</strong></td><td>Conditions Générales de Vente — cadre juridique de la vente</td><td>B to B : pas obligatoires mais très recommandées · B to C : obligatoires</td></tr>
+        <tr><td><strong>Devis</strong></td><td>Offre contractuelle fixant les termes de l'échange avec prix et délais</td><td>Accepté par "bon pour accord" + signature = contrat formé</td></tr>
+        <tr><td><strong>Bon de commande</strong></td><td>Document établi lors d'une vente, détaillant les éléments de la commande</td><td>Signé par l'acheteur = preuve de l'accord. Pas obligatoire légalement mais très utilisé</td></tr>
+        <tr><td><strong>Bon de livraison</strong></td><td>Accompagne la marchandise lors de la livraison</td><td>Signé à réception. Si anomalie : formuler des réserves dans les 72h par LRAR</td></tr>
+        <tr><td><strong>Facture</strong></td><td>Document de paiement avec valeur juridique et comptable</td><td>Obligatoire en B to B · Doit obligatoirement être délivrée en B to C</td></tr>
+      </table>
+      <div class="exercice">
+        <div class="exercice-label">Question type E32</div>
+        <p>À la réception d'une livraison, vous constatez que 3 colis sont abîmés. Quelle est la procédure à suivre ?</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          1. Ne pas signer le bon de livraison sans réserves — apposer la mention manuscrite précisant les anomalies constatées (nombre de colis, nature du dommage)<br>
+          2. Confirmer ces réserves par <strong>lettre recommandée avec accusé de réception (LRAR) dans les 72h</strong> auprès du transporteur et du fournisseur<br>
+          3. Prendre des photos des dommages comme preuves<br>
+          4. Enregistrer l'anomalie dans le SIC et remonter l'information au responsable
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#185FA5;"></div>
+      <span class="module-title">Traiter les réclamations — la méthode en 5 étapes</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">Pourquoi bien gérer les réclamations ?</div>
+        Pour deux raisons : augmenter la satisfaction des clients ET améliorer la qualité des produits/services. Une réclamation bien traitée peut transformer un client mécontent en client fidèle.
+      </div>
+      <table>
+        <tr><th>Étape</th><th>Action</th><th>Comment</th></tr>
+        <tr><td><strong>1. Collecter</strong></td><td>Recueillir la réclamation</td><td>En présentiel, par téléphone, email, réseaux sociaux, chat…</td></tr>
+        <tr><td><strong>2. Enregistrer</strong></td><td>Tracer dans le registre des réclamations</td><td>Date, nom/coordonnées du client, motif, objet, description. Envoyer un accusé de réception au client.</td></tr>
+        <tr><td><strong>3. Transmettre</strong></td><td>Faire parvenir au service compétent</td><td>Attention : toutes les réclamations ne sont pas légitimes — le service qualifié décidera</td></tr>
+        <tr><td><strong>4. Traiter</strong></td><td>Analyser, trouver une solution, informer le client</td><td>Mettre en place les actions correctives, archiver et solder la réclamation</td></tr>
+        <tr><td><strong>5. Suivre</strong></td><td>Vérifier la satisfaction après traitement</td><td>En externe : questionnaire de satisfaction · En interne : évaluer la qualité du traitement, prévoir actions correctives</td></tr>
+      </table>
+      <div class="info-box info-teal">
+        <strong>Astuce mémo oral :</strong> quand un client se plaint, ne jamais nier le problème. Toujours commencer par écouter, reformuler ("Si je comprends bien, vous dites que…"), s'excuser sincèrement, puis proposer une solution concrète et un délai précis.
+      </div>
+      <div class="exercice">
+        <div class="exercice-label">Question type E32 — mise en situation orale</div>
+        <p>Un client appelle, mécontent : il a commandé un article en taille M mais a reçu une taille S. Il est en colère. Comment gérez-vous cet appel ?</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          <strong>Étape 1 — Accueil et écoute</strong> : "Bonjour M./Mme X, je suis désolé(e) d'apprendre cela. Je comprends votre mécontentement, c'est tout à fait normal."<br><br>
+          <strong>Étape 2 — Reformulation</strong> : "Si je comprends bien, vous avez reçu une taille S au lieu de la taille M commandée, c'est bien ça ?"<br><br>
+          <strong>Étape 3 — Enregistrement</strong> : "Je note votre réclamation immédiatement dans notre système."<br><br>
+          <strong>Étape 4 — Solution</strong> : "Je vous propose de vous renvoyer la bonne taille en livraison express demain, aux frais de l'entreprise. Souhaitez-vous également retourner l'article reçu avec une étiquette prépayée ?"<br><br>
+          <strong>Étape 5 — Suivi</strong> : "Je vous enverrai un email de confirmation dans les 30 minutes. N'hésitez pas à me recontacter si besoin."
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#0F6E56;"></div>
+      <span class="module-title">Mesurer la satisfaction client — outils et indicateurs</span>
+      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-bg);color:var(--amber-text);">Priorité ★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <h4>Collecter les motifs d'insatisfaction</h4>
+      <div class="info-box info-blue">
+        · Avis clients sur le site web ou les réseaux sociaux<br>
+        · Boîte à idées, borne interactive en magasin<br>
+        · Enquête de satisfaction en face à face ou en ligne<br>
+        · <strong>Client mystère</strong> : faux client envoyé pour évaluer la qualité du service sans que les vendeurs le sachent
+      </div>
+      <h4>Le questionnaire de satisfaction — 5 étapes clés</h4>
+      <table>
+        <tr><th>Étape</th><th>Action</th></tr>
+        <tr><td>1</td><td>Sélectionner les grands thèmes (accueil, commande, livraison, SAV)</td></tr>
+        <tr><td>2</td><td>Définir les critères d'évaluation pour chaque thème</td></tr>
+        <tr><td>3</td><td>Ajouter des éléments d'identification (âge, CSP, type de client)</td></tr>
+        <tr><td>4</td><td>Choisir les types de questions (ouvertes, fermées, échelle de Likert)</td></tr>
+        <tr><td>5</td><td>Assembler le questionnaire final et le tester</td></tr>
+      </table>
+      <div class="info-box info-purple">
+        <div class="info-label">L'échelle de Likert — c'est quoi ?</div>
+        Une échelle de notation qui permet de mesurer le degré d'accord ou de satisfaction :<br>
+        1 = Très insatisfait · 2 = Insatisfait · 3 = Neutre · 4 = Satisfait · 5 = Très satisfait<br>
+        Très utilisée dans les questionnaires de satisfaction car elle donne des données facilement analysables.
+      </div>
+      <div class="exercice">
+        <div class="exercice-label">Question type E32</div>
+        <p>Votre responsable vous demande de mesurer la satisfaction des clients après livraison. Proposez 3 questions à inclure dans un questionnaire de satisfaction.</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          <strong>Q1</strong> (délai) : "Êtes-vous satisfait du délai de livraison ?" — Échelle 1 à 5<br>
+          <strong>Q2</strong> (conformité) : "Le produit reçu correspondait-il exactement à votre commande ?" — Oui / Non / Partiellement<br>
+          <strong>Q3</strong> (recommandation / NPS) : "Sur une échelle de 0 à 10, recommanderiez-vous notre service à un proche ?" + "Pourquoi ?" (question ouverte)
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box info-teal" style="margin-top:1rem;">
+    <div class="info-label">Préparation oral E32 — les 3 types de supports professionnels adaptés</div>
+    · Un <strong>bon de commande ou BDL</strong> sur lequel vous avez constaté une anomalie et géré le suivi<br>
+    · Un <strong>échange email avec un client mécontent</strong> que vous avez traité en stage<br>
+    · Un <strong>questionnaire de satisfaction</strong> que vous avez administré ou analysé
+  </div>
+</div>
+
+<!-- ============ ESPAGNOL = E33 ============ -->
+<div id="espagnol" class="page">
+  <div class="matiere-header">
+    <h2>Fidélisation de la clientèle — E33 (GC3)</h2>
+    <div class="matiere-chips">
+      <span class="chip chip-red">Oral 10 juin · 40 min · Lodima Bruz</span>
+      <span class="chip chip-red">Coefficient 3</span>
+      <span class="chip chip-red">Présentation numérique obligatoire</span>
+    </div>
+  </div>
+
+  <div class="epreuve-card">
+    <h3>🎯 Format de l'épreuve E33 — le plus complexe des 3 oraux</h3>
+    <p>L'E33 est différent des E31 et E32. Il s'appuie sur une <strong>présentation numérique</strong> (PowerPoint ou équivalent) que Fabio apporte sur son propre matériel. La présentation doit montrer une analyse de la situation de fidélisation de son entreprise de stage ET la mise en œuvre d'une action de fidélisation.</p>
+    <div class="info-box info-red">
+      <div class="info-label">⚠️ Point critique — sans présentation numérique = note 0</div>
+      Si la présentation numérique est absente le jour de l'épreuve, Fabio ne peut pas être interrogé et obtient 0. Il doit s'assurer au minimum une semaine avant de la compatibilité de son matériel avec celui du centre d'examen.
+    </div>
+    <div class="info-box info-blue">
+      <div class="info-label">Structure de la présentation numérique</div>
+      <strong>Partie 1</strong> : Analyse de la situation de fidélisation de l'entreprise de stage + proposition de 2 actions de FDRC (Fidélisation et Développement de la Relation Client)<br>
+      <strong>Partie 2</strong> : Mise en œuvre de l'action retenue + bilan commercial et personnel
+    </div>
+  </div>
+
+  <h3>Les notions clés — GC3</h3>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#993C1D;"></div>
+      <span class="module-title">La fidélisation — enjeux et types</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">Pourquoi fidéliser plutôt que prospecter ?</div>
+        Fidéliser un client coûte <strong>5 à 10 fois moins cher</strong> que d'en conquérir un nouveau. Un client fidèle achète plus, plus souvent, et peut devenir un <strong>ambassadeur</strong> qui recommande l'entreprise autour de lui.
+      </div>
+      <h4>Fidélisation comportementale vs attitudinale</h4>
+      <table>
+        <tr><th>Type</th><th>Ce que c'est</th><th>Exemple</th></tr>
+        <tr><td><strong>Comportementale</strong></td><td>Le client rachète régulièrement — par habitude, commodité ou barrières à la sortie (contrat, carte de fidélité)</td><td>Client qui fait toujours ses courses au même supermarché par habitude</td></tr>
+        <tr><td><strong>Attitudinale</strong></td><td>Le client a une attitude positive envers la marque — il la choisit vraiment, la recommande</td><td>Client fan d'Apple qui défend la marque et attend chaque nouveau produit</td></tr>
+      </table>
+      <div class="info-box info-teal">
+        <strong>Ce qui crée la fidélité attitudinale</strong> (la vraie fidélité) : qualité des produits · prix juste · qualité de l'expérience client · qualité de la relation commerciale · image de marque
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#185FA5;"></div>
+      <span class="module-title">Les outils de fidélisation — le panorama complet</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <table>
+        <tr><th>Outil</th><th>En simple</th><th>Objectif</th></tr>
+        <tr><td><strong>Carte de fidélité</strong></td><td>Points ou euros cumulés à chaque achat, utilisables selon conditions</td><td>Inciter à revenir, mieux connaître le comportement d'achat</td></tr>
+        <tr><td><strong>Code promo</strong></td><td>Réduction pendant une période donnée ou sur une gamme de produits</td><td>Inciter à revenir, lancer de nouvelles collections, améliorer le taux de conversion</td></tr>
+        <tr><td><strong>Cadeau</strong></td><td>Offert lors d'un achat ou d'un anniversaire client</td><td>Transmettre une image positive et généreuse, créer une relation émotionnelle</td></tr>
+        <tr><td><strong>Club / programme VIP</strong></td><td>Avantages exclusifs aux meilleurs clients selon leur niveau d'achat</td><td>Créer une relation durable, segmenter les clients par valeur</td></tr>
+        <tr><td><strong>Parrainage</strong></td><td>Client fidèle recommande l'entreprise, reçoit une récompense quand le filleul achète</td><td>Conquête de nouveaux clients à faible coût via le bouche à oreille</td></tr>
+        <tr><td><strong>E-mailing relationnel</strong></td><td>Emails de bienvenue, remerciement, relance panier abandonné, anniversaire</td><td>Maintenir le lien, créer une relation qui va au-delà du commercial</td></tr>
+        <tr><td><strong>Réseaux sociaux</strong></td><td>Publications régulières, création de communauté, interaction avec les clients</td><td>Développer l'image de marque, fidéliser par l'engagement</td></tr>
+        <tr><td><strong>Événements exclusifs</strong></td><td>Invitations privées pour les meilleurs clients (ventes privées, avant-premières)</td><td>Renforcer l'aspect émotionnel, créer un sentiment de privilège</td></tr>
+      </table>
+      <div class="exercice">
+        <div class="exercice-label">Question type E33</div>
+        <p>Votre entreprise de vêtements constate que 30% des clients n'ont pas fait d'achat depuis 6 mois. Proposez une action de fidélisation adaptée avec les outils à mobiliser.</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          <strong>Problème identifié</strong> : clients "endormis" ou "inactifs" — ils ont acheté mais ne reviennent plus.<br><br>
+          <strong>Action proposée : campagne de réactivation</strong><br><br>
+          <strong>Étape 1</strong> — Extraire du SIC la liste des clients n'ayant pas acheté depuis 6 mois (segmentation comportementale)<br><br>
+          <strong>Étape 2</strong> — E-mailing personnalisé de réactivation : "Vous nous manquez ! Voici −20% sur votre prochaine commande, valable 15 jours." + rappel de leur dernière commande pour personnaliser<br><br>
+          <strong>Étape 3</strong> — SMS de relance J+7 pour les non-ouvreurs d'email : "Votre code promo expire dans 8 jours !"<br><br>
+          <strong>Étape 4</strong> — Mesure des résultats : taux d'ouverture, taux de clic, taux de conversion (combien ont acheté), CA généré<br><br>
+          Outils mobilisés : SIC (extraction), logiciel d'emailing (Mailchimp/Sarbacane), SMS mailing
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#0F6E56;"></div>
+      <span class="module-title">La promotion des ventes — techniques et réglementation</span>
+      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-bg);color:var(--amber-text);">Priorité ★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">C'est quoi ?</div>
+        La promotion des ventes = ensemble de techniques de stimulation temporaire des ventes, pour déclencher un achat rapide. L'objectif principal : pousser le produit vers le consommateur.
+      </div>
+      <table>
+        <tr><th>Technique</th><th>En simple</th><th>Exemple</th></tr>
+        <tr><td><strong>Bon de réduction / coupon</strong></td><td>Réduction sur le produit ou un produit de la même marque</td><td>Coupon Ficello "1,50 € de réduction pour 3 produits achetés"</td></tr>
+        <tr><td><strong>Vente par lots / jumelée</strong></td><td>Ensemble de produits vendus ensemble à prix attractif</td><td>"Lot de 3 Prince chocolat" à prix réduit</td></tr>
+        <tr><td><strong>Offre de remboursement (ODR)</strong></td><td>Remboursement du produit ou d'une partie sur preuve d'achat</td><td>"100% remboursé" sur le 1er produit acheté</td></tr>
+        <tr><td><strong>Jeux / loteries</strong></td><td>Promesse de gain avec tirage au sort</td><td>Jeu KitKat "tentez de gagner"</td></tr>
+        <tr><td><strong>Primes et cadeaux</strong></td><td>Article offert à l'achat du produit principal</td><td>"1 pochette offerte pour tout achat ≥ 50 €"</td></tr>
+      </table>
+      <div class="info-box info-red">
+        <div class="info-label">⚠️ Réglementation à connaître</div>
+        · Les <strong>coupons</strong> doivent mentionner le nom de l'entreprise, de l'imprimeur, le nom de la marque<br>
+        · Les <strong>primes gratuites</strong> ne sont autorisées que si elles sont identiques au produit vendu, OU de faible valeur : 7% du prix pour les articles ≤ 80 €, 5 € + 1% pour les articles > 80 € (plafond 60 €)<br>
+        · Les promotions doivent respecter le Code de la consommation et les règles de l'UFC-Que Choisir
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#534AB7;"></div>
+      <span class="module-title">La GRC — Gestion de la Relation Client (IDIC)</span>
+      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-bg);color:var(--amber-text);">Priorité ★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-blue">
+        La GRC (ou CRM) = démarche qui vise à établir une relation personnalisée avec chaque client pour maximiser sa fidélité. La méthodologie : <strong>IDIC</strong>
+      </div>
+      <table>
+        <tr><th>Lettre</th><th>Étape</th><th>Ce qu'on fait</th></tr>
+        <tr><td><strong>I</strong></td><td>Identification</td><td>Qui sont les clients ? Quels sont leurs besoins, leurs comportements, leur potentiel ?</td></tr>
+        <tr><td><strong>D</strong></td><td>Différenciation</td><td>Segmenter les clients pour différencier les offres selon les profils</td></tr>
+        <tr><td><strong>I</strong></td><td>Interaction</td><td>Gérer tous les contacts via les bons canaux (téléphone, email, réseau social…)</td></tr>
+        <tr><td><strong>C</strong></td><td>Customisation</td><td>Personnaliser l'offre et la communication pour chaque segment ou client</td></tr>
+      </table>
+      <div class="info-box info-blue">
+        <div class="info-label">Les 3 niveaux d'utilisation de la GRC</div>
+        · <strong>Analytique</strong> : stocker et analyser les données, dresser des tendances comportementales<br>
+        · <strong>Opérationnel</strong> : automatiser les processus de vente, SAV, suivi clientèle<br>
+        · <strong>Collaboratif</strong> : étendre aux partenaires externes (fournisseurs, prestataires)
+      </div>
+      <div class="exercice">
+        <div class="exercice-label">Question type E33 — préparer son oral</div>
+        <p>Dans ton entreprise de stage, comment la GRC a-t-elle été utilisée pour fidéliser les clients ? Donne un exemple concret en utilisant les termes IDIC.</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir un exemple de réponse</button>
+        <div class="correction">
+          Structure de réponse type :<br><br>
+          "Dans mon entreprise de stage [nom], la GRC a été utilisée de la façon suivante :<br><br>
+          <strong>Identification</strong> : les clients étaient identifiés via leur carte de fidélité, permettant de connaître leur historique d'achats, leur fréquence de visite et leur panier moyen.<br><br>
+          <strong>Différenciation</strong> : les clients étaient segmentés en 3 groupes (clients actifs, clients endormis, clients perdus) pour adapter les actions.<br><br>
+          <strong>Interaction</strong> : les clients actifs recevaient une newsletter mensuelle par email, les clients endormis recevaient un email de réactivation avec un code promo.<br><br>
+          <strong>Customisation</strong> : les emails contenaient le prénom du client et rappelaient ses derniers achats pour personnaliser l'offre."
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box info-teal" style="margin-top:1rem;">
+    <div class="info-label">Préparer sa présentation E33 — structure recommandée</div>
+    <strong>Diapo 1</strong> : Présentation de l'entreprise de stage (secteur, taille, clientèle, canaux)<br>
+    <strong>Diapo 2-3</strong> : Analyse de la situation de fidélisation (forces/faiblesses des actions actuelles)<br>
+    <strong>Diapo 4-5</strong> : Proposition de 2 actions FDRC avec justification (outils, budget, cible, objectifs SMART)<br>
+    <strong>Diapo 6-7</strong> : Mise en œuvre de l'action retenue (planning, exécution, résultats)<br>
+    <strong>Diapo 8</strong> : Bilan commercial (résultats vs objectifs) et bilan personnel (ce que j'ai appris)
+  </div>
+</div>
+
+<!-- ============ ECO DROIT ============ -->
+<div id="ecodroit" class="page">
+  <div class="matiere-header">
+    <h2>Économie-Droit E1-A</h2>
+    <div class="matiere-chips">
+      <span class="chip chip-blue">29 mai 2026 · 14h00</span>
+      <span class="chip chip-blue">2h · LP Coetlogon Rennes</span>
+      <span class="chip chip-blue">Coefficient 1</span>
+      <span class="chip chip-amber">5 séquences au programme</span>
+    </div>
+  </div>
+
+  <!-- FORMAT EPREUVE -->
+  <div class="epreuve-card">
+    <h3>🎯 Ce qu'est l'épreuve — 2h, 2 parties</h3>
+    <p>Le sujet te place dans une situation professionnelle concrète (stagiaire dans une entreprise, association de consommateurs…). Tu reçois un dossier de documents variés : textes, tableaux, graphiques, infographies.</p>
+    <table>
+      <tr><th>Partie</th><th>Ce qu'on te demande</th><th>Temps conseillé</th></tr>
+      <tr><td><strong>Partie 1</strong></td><td>Lire les documents et répondre à des questions de compréhension (résumer, expliquer, compléter un tableau). Les réponses sont dans les documents + tes connaissances du cours.</td><td>~1h10</td></tr>
+      <tr><td><strong>Partie 2</strong></td><td>Rédiger une réponse structurée à une problématique (introduction + 2 parties + conclusion). Le plan est donné dans le sujet — tu n'as pas à l'inventer.</td><td>~40min</td></tr>
+    </table>
+    <div class="info-box info-green" style="margin-top:0.75rem;">
+      <div class="info-label">✅ Bonne nouvelle</div>
+      Le plan de la partie 2 est toujours indiqué dans le sujet. Tu ne pars jamais d'une page blanche. Il faut juste respecter la structure donnée et l'illustrer avec les documents et tes connaissances.
+    </div>
+  </div>
+
+  <!-- METHODE -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#185FA5;"></div>
+      <span class="module-title">Méthode — les 4 règles d'or pour bien répondre</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-blue">
+        <strong>Règle 1 — Lire la 1ère page en entier avant tout</strong><br>
+        Elle contient la thématique, le contexte, ton rôle dans la situation, et la problématique. Si tu la sautes, tu risques de répondre hors sujet.
+      </div>
+      <div class="info-box info-blue">
+        <strong>Règle 2 — Ne jamais copier-coller le document</strong><br>
+        Reformuler avec tes propres mots = montrer que tu as compris. Copier mot pour mot = zéro pour cette question. Relis le document, puis pose-le et écris sans le regarder.
+      </div>
+      <div class="info-box info-blue">
+        <strong>Règle 3 — Utiliser le vocabulaire économique et juridique</strong><br>
+        Exemple : ne pas dire "le patron veut que tu travailles" mais "l'employeur exerce son pouvoir de direction dans le cadre du lien de subordination". Le vocabulaire précis rapporte des points.
+      </div>
+      <div class="info-box info-blue">
+        <strong>Règle 4 — Relire ta copie les 5 dernières minutes</strong><br>
+        Pluriels oubliés, verbes à l'infinitif, majuscules manquantes — une relecture rapide peut te faire gagner 1 à 2 points. Et rends l'annexe si on t'en donne une !
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Les 5 séquences — notions clés à retenir</h3>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:1rem;">Clique sur chaque séquence pour voir les notions essentielles et les mots à connaître.</p>
+
+  <!-- SEQ 1 -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#993C1D;"></div>
+      <span class="module-title">Séquence 1 — Comment mesurer l'activité économique ?</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">L'idée centrale</div>
+        Comment sait-on si l'économie d'un pays va bien ou mal ? On utilise des indicateurs — des chiffres qui mesurent l'activité. Les deux principaux sont le PIB et la balance commerciale.
+      </div>
+
+      <h4>Le PIB — Produit Intérieur Brut</h4>
+      <div class="info-box info-blue">
+        <strong>En français simple :</strong> Le PIB, c'est la valeur totale de tout ce qui est produit dans un pays en un an. Si le PIB augmente = l'économie va mieux. S'il baisse = l'économie recule.<br><br>
+        <strong>Définition à connaître :</strong> Le PIB est la somme des <em>valeurs ajoutées</em> de toutes les entreprises sur le territoire national (françaises et étrangères).<br><br>
+        <strong>Valeur ajoutée</strong> = ce qu'une entreprise crée réellement. Exemple : un boulanger achète de la farine à 1 €, fait un pain vendu 3 €. Sa valeur ajoutée = 3 − 1 = 2 €.
+      </div>
+
+      <table>
+        <tr><th>Terme</th><th>Ce que ça veut dire</th></tr>
+        <tr><td><strong>Croissance</strong></td><td>Le PIB augmente plus vite que l'année d'avant → l'économie va bien</td></tr>
+        <tr><td><strong>Récession</strong></td><td>Le PIB augmente mais moins vite qu'avant → ralentissement</td></tr>
+        <tr><td><strong>Dépression</strong></td><td>Le PIB baisse → l'économie recule vraiment</td></tr>
+      </table>
+
+      <h4>La balance commerciale</h4>
+      <div class="info-box info-blue">
+        C'est le compte qui compare ce qu'on exporte (ce qu'on vend à l'étranger) et ce qu'on importe (ce qu'on achète à l'étranger).<br><br>
+        · Balance <strong>excédentaire</strong> : on exporte plus qu'on importe → bon signe<br>
+        · Balance <strong>déficitaire</strong> : on importe plus qu'on exporte → on dépense plus qu'on gagne à l'étranger
+      </div>
+
+      <h4>Le déficit et la dette — attention à ne pas les confondre</h4>
+      <table>
+        <tr><th></th><th>Déficit</th><th>Dette</th></tr>
+        <tr><td><strong>C'est quoi ?</strong></td><td>Manque à gagner sur UNE année (dépenses > recettes)</td><td>Cumul de tous les déficits non remboursés sur PLUSIEURS années</td></tr>
+        <tr><td><strong>Durée</strong></td><td>Court terme (1 an)</td><td>Long terme (années accumulées)</td></tr>
+        <tr><td><strong>Limite normale</strong></td><td>&lt; 3% du PIB</td><td>&lt; 60% du PIB</td></tr>
+      </table>
+      <div class="info-box info-teal" style="margin-top:0.5rem;">
+        <strong>Analogie pour retenir :</strong> Le déficit c'est quand à la fin du mois tu as dépensé plus que tu as gagné. La dette c'est le total de tout ce que tu dois à la banque depuis des années.
+      </div>
+
+      <h4>L'IDH — Indice de Développement Humain</h4>
+      <div class="info-box info-blue">
+        Le PIB ne mesure que la richesse produite. L'IDH mesure le <em>bien-être</em> des habitants en croisant 3 facteurs :<br>
+        · L'espérance de vie à la naissance<br>
+        · Le niveau d'éducation<br>
+        · Le revenu national brut par habitant<br><br>
+        <strong>Pourquoi c'est utile ?</strong> Un pays peut avoir un PIB élevé mais une population très inégalement riche → le PIB ne le voit pas, l'IDH oui.
+      </div>
+
+      <div class="exercice">
+        <div class="exercice-label">Question type bac</div>
+        <p>À l'aide d'un document, on vous demande de "présenter les limites du PIB comme indicateur de mesure du niveau de vie". Que répondez-vous ?</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          Le PIB ne prend pas en compte la répartition des richesses entre les habitants : un pays peut avoir un PIB élevé avec une population très pauvre dans sa majorité. De plus, le PIB augmente sous l'effet de facteurs préjudiciables (catastrophes naturelles, accidents industriels générant des dépenses de réparation). Enfin, il ne tient pas compte de l'économie souterraine ni d'une manière uniforme selon les pays, ce qui rend les comparaisons internationales difficiles.
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEQ 2 -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#854F0B;"></div>
+      <span class="module-title">Séquence 2 — Comment l'État agit-il sur l'économie ?</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-bg);color:var(--amber-text);">Priorité ★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">L'idée centrale</div>
+        Quand l'économie va mal (chômage, inflation, récession), l'État n'attend pas les bras croisés. Il dispose d'outils pour agir. On appelle ça les politiques économiques.
+      </div>
+
+      <h4>Les grands déséquilibres que l'État doit corriger</h4>
+      <table>
+        <tr><th>Déséquilibre</th><th>C'est quoi ?</th><th>Exemple concret</th></tr>
+        <tr><td><strong>Chômage</strong></td><td>Des personnes actives cherchent un emploi sans en trouver</td><td>Usine qui ferme, emplois supprimés</td></tr>
+        <tr><td><strong>Chômage conjoncturel</strong></td><td>Lié à un ralentissement temporaire de l'économie</td><td>Moins de commandes → moins de besoin de salariés</td></tr>
+        <tr><td><strong>Chômage structurel</strong></td><td>Lié à des transformations profondes et durables de l'économie</td><td>Les robots remplacent des emplois industriels</td></tr>
+        <tr><td><strong>Inflation</strong></td><td>Les prix augmentent → le pouvoir d'achat baisse</td><td>L'essence coûte plus cher, les courses aussi</td></tr>
+      </table>
+
+      <h4>Les politiques économiques</h4>
+      <div class="info-box info-blue">
+        <strong>Politique budgétaire</strong> = l'État joue sur ses dépenses et ses recettes (impôts).<br>
+        · Relance → augmenter les dépenses publiques (construire des routes, embaucher des fonctionnaires) pour créer de l'activité<br>
+        · Rigueur → réduire les dépenses pour diminuer le déficit<br><br>
+        <strong>Politique de l'emploi</strong> = actions de l'État pour lutter contre le chômage :<br>
+        · <strong>Active</strong> : aide à la reprise d'emploi, formations, subventions aux entreprises qui embauchent<br>
+        · <strong>Passive</strong> : indemnisation chômage (allocations) pour que les gens tiennent financièrement pendant leur recherche
+      </div>
+
+      <div class="exercice">
+        <div class="exercice-label">Question type bac</div>
+        <p>Distinguez une politique de l'emploi "active" d'une politique "passive". Donnez un exemple de chacune.</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          Une politique <strong>active</strong> incite le bénéficiaire à reprendre une activité : formation professionnelle, aide à l'embauche pour les entreprises, exonérations de charges. Elle vise à réinsérer la personne dans le marché du travail.<br><br>
+          Une politique <strong>passive</strong> soutient financièrement le demandeur d'emploi sans l'aider directement à retrouver un travail : allocations chômage, dispositifs de pré-retraite. Elle amortit les effets du chômage sans le réduire directement.
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEQ 3 -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#0F6E56;"></div>
+      <span class="module-title">Séquence 3 — Comment le numérique transforme-t-il le travail ?</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-bg);color:var(--amber-text);">Priorité ★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">L'idée centrale</div>
+        Le numérique change la façon dont on travaille : on peut travailler de chez soi, à plusieurs en même temps, être joignable 24h/24... Mais ça crée aussi des risques, donc le droit encadre tout ça.
+      </div>
+
+      <h4>Travail coopératif vs collaboratif — la distinction clé</h4>
+      <table>
+        <tr><th></th><th>Coopératif</th><th>Collaboratif</th></tr>
+        <tr><td><strong>Comment ?</strong></td><td>Les tâches sont divisées entre personnes. Chacun fait sa partie dans son coin.</td><td>Tout le monde travaille ensemble sur la même tâche en même temps.</td></tr>
+        <tr><td><strong>Analogie</strong></td><td>Chaque maçon construit un mur différent.</td><td>Plusieurs maçons construisent ensemble le même mur.</td></tr>
+      </table>
+
+      <h4>Le télétravail — définition et règles</h4>
+      <div class="info-box info-blue">
+        <strong>Définition :</strong> Le télétravail, c'est quand un salarié effectue son travail <em>en dehors des locaux de l'employeur</em> (chez lui, dans un espace de coworking) en utilisant les outils numériques, de façon volontaire.<br><br>
+        <strong>Règles importantes à retenir :</strong><br>
+        · Le télétravail est <strong>volontaire</strong> : l'employeur ne peut pas sanctionner un salarié qui le refuse<br>
+        · Les mêmes règles s'appliquent : durée légale 35h, temps de repos de 11h/jour et 35h/semaine<br>
+        · L'employeur fournit les outils de travail<br>
+        · Le salarié a un <strong>droit à la déconnexion</strong> : en dehors de ses heures de travail, il n'est pas obligé de répondre aux mails ou appels professionnels
+      </div>
+
+      <div class="info-box info-purple">
+        <div class="info-label">🔑 Mot-clé — Droit à la déconnexion</div>
+        En dehors de ses heures de travail, un salarié n'est pas tenu d'être joignable par son employeur pour des raisons professionnelles. Ce droit existe depuis le 1er janvier 2017 (Loi Travail du 8 août 2016).
+      </div>
+
+      <div class="exercice">
+        <div class="exercice-label">Question type bac</div>
+        <p>Un manager envoie des emails à son salarié en télétravail chaque soir après 20h et s'étonne qu'il ne réponde pas. Que peut invoquer le salarié ?</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          Le salarié peut invoquer son <strong>droit à la déconnexion</strong> (article L. 2242-17 du Code du travail, en vigueur depuis 2017). Ce droit garantit qu'en dehors de ses heures de travail, il n'est pas tenu d'être joignable par son employeur. Le télétravailleur bénéficie des mêmes protections qu'un salarié dans les locaux de l'entreprise : respect des temps de repos et de la vie personnelle.
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEQ 4 -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#534AB7;"></div>
+      <span class="module-title">Séquence 4 — Quelles sont les relations de travail ?</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">L'idée centrale</div>
+        Pas toutes les personnes qui travaillent ont le même statut. La distinction fondamentale : est-on salarié (avec un contrat de travail) ou travailleur indépendant ? Ça change tout sur les droits et obligations.
+      </div>
+
+      <h4>Le contrat de travail — les 3 éléments indispensables</h4>
+      <div class="info-box info-blue">
+        Un contrat de travail existe quand on réunit <strong>3 éléments en même temps</strong> :<br><br>
+        <strong>1. Une prestation de travail</strong> — la personne travaille pour quelqu'un d'autre<br>
+        <strong>2. Une rémunération</strong> — elle est payée (salaire)<br>
+        <strong>3. Un lien de subordination</strong> — elle travaille sous les ordres de quelqu'un qui peut :<br>
+        &nbsp;&nbsp;&nbsp;· lui donner des directives et des ordres<br>
+        &nbsp;&nbsp;&nbsp;· contrôler son travail<br>
+        &nbsp;&nbsp;&nbsp;· la sanctionner si elle ne respecte pas les règles<br><br>
+        <strong>Attention :</strong> Ce qui compte, c'est la réalité des faits, pas ce qui est écrit sur le contrat. Un chauffeur Uber déclaré "indépendant" peut être requalifié en salarié si dans les faits il y a un lien de subordination (affaire Uber, Cour de cassation 2020).
+      </div>
+
+      <h4>Les types de contrats à connaître</h4>
+      <table>
+        <tr><th>Contrat</th><th>En simple</th><th>Caractéristique principale</th></tr>
+        <tr><td><strong>CDI</strong> — Contrat à Durée Indéterminée</td><td>Le contrat "normal", sans date de fin</td><td>Contrat de droit commun. Peut être non écrit si temps plein. Prend fin par démission, licenciement, rupture conventionnelle ou retraite.</td></tr>
+        <tr><td><strong>CDD</strong> — Contrat à Durée Déterminée</td><td>Contrat avec une date de fin prévue</td><td>Autorisé uniquement pour des raisons précises : remplacement d'un absent, surcroît temporaire d'activité, emploi saisonnier. Interdit pour un poste permanent.</td></tr>
+        <tr><td><strong>CTT</strong> — Contrat de Travail Temporaire (intérim)</td><td>L'intérimaire travaille pour une agence qui le prête à une entreprise</td><td>Trois acteurs : le salarié, l'agence d'intérim (employeur), l'entreprise utilisatrice.</td></tr>
+      </table>
+
+      <h4>Salarié vs Travailleur indépendant</h4>
+      <table>
+        <tr><th></th><th>Salarié</th><th>Travailleur indépendant</th></tr>
+        <tr><td>Contrat</td><td>Contrat de travail</td><td>Contrat de prestation de service</td></tr>
+        <tr><td>Ordres ?</td><td>Oui — lien de subordination</td><td>Non — il est autonome</td></tr>
+        <tr><td>Clients ?</td><td>Non — il a un employeur</td><td>Oui — il choisit ses clients</td></tr>
+        <tr><td>Tarifs ?</td><td>Salaire fixé dans le contrat</td><td>Il fixe ses propres prix</td></tr>
+        <tr><td>Exemples</td><td>Vendeur en magasin, caissier</td><td>Freelance, artisan, micro-entrepreneur</td></tr>
+      </table>
+
+      <div class="exercice">
+        <div class="exercice-label">Question type bac — L'affaire Uber</div>
+        <p>Un chauffeur VTC travaille via l'application Uber. Uber lui impose ses tarifs, surveille ses notes, peut le déconnecter s'il refuse trop de courses. Le chauffeur demande à être reconnu comme salarié. Les juges lui donnent-ils raison ? Pourquoi ?</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          Oui, la Cour de cassation (2020) a reconnu l'existence d'un <strong>contrat de travail</strong>. Même si le chauffeur était officiellement "indépendant", les juges ont constaté dans les faits l'existence d'un <strong>lien de subordination</strong> :<br>
+          · Uber impose les tarifs → le chauffeur ne fixe pas librement ses prix<br>
+          · Uber lui impose des itinéraires → il ne choisit pas son organisation<br>
+          · Uber peut le déconnecter → il subit des sanctions<br><br>
+          Les conditions réelles d'exercice révèlent un lien de subordination. Le statut affiché ne compte pas, ce sont les faits qui déterminent la nature du contrat.
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEQ 5 -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#3B6D11;"></div>
+      <span class="module-title">Séquence 5 — Pourquoi se former tout au long de sa vie ?</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-bg);color:var(--amber-text);">Priorité ★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">L'idée centrale</div>
+        Dans une économie qui change vite (numérique, nouveaux métiers), une formation obtenue à 20 ans ne suffit pas pour toute une carrière. L'État et les entreprises ont mis en place des dispositifs pour que chacun puisse continuer à se former.
+      </div>
+
+      <h4>Formation initiale vs Formation continue</h4>
+      <table>
+        <tr><th></th><th>Formation initiale</th><th>Formation continue</th></tr>
+        <tr><td><strong>Quand ?</strong></td><td>Pendant la scolarité et les études (avant d'entrer dans la vie active)</td><td>Pendant la vie active, une fois qu'on travaille déjà</td></tr>
+        <tr><td><strong>Exemples</strong></td><td>Bac Pro, BTS, Licence, apprentissage</td><td>Formation dans son entreprise, CPF, reconversion</td></tr>
+      </table>
+
+      <h4>Le CPF — Compte Personnel de Formation</h4>
+      <div class="info-box info-blue">
+        <strong>C'est quoi ?</strong> Chaque salarié accumule chaque année <strong>500 € de crédit formation</strong> sur son compte personnel (plafonné à 5 000 €). Il peut utiliser cet argent pour se former quand il le souhaite.<br><br>
+        <strong>À quoi ça sert ?</strong> Maintenir son employabilité (rester capable de trouver du travail) ou sécuriser son parcours professionnel (se reconvertir, progresser).
+      </div>
+
+      <h4>Les 2 contrats en alternance à distinguer</h4>
+      <table>
+        <tr><th></th><th>Contrat d'apprentissage</th><th>Contrat de professionnalisation</th></tr>
+        <tr><td>Type de formation</td><td>Formation initiale</td><td>Formation continue</td></tr>
+        <tr><td>Pour qui ?</td><td>Jeunes de 16 à 29 ans</td><td>Jeunes 16–25 ans ET demandeurs d'emploi de 26 ans et plus</td></tr>
+        <tr><td>Durée</td><td>CDD de 6 mois à 3 ans (ou CDI)</td><td>CDD de 6 à 12 mois (ou CDI)</td></tr>
+        <tr><td>Encadrant</td><td>Maître d'apprentissage</td><td>Tuteur</td></tr>
+        <tr><td>Objectif</td><td>Obtenir un diplôme reconnu par l'État</td><td>Obtenir une qualification professionnelle ou un titre reconnu par une branche</td></tr>
+      </table>
+
+      <h4>La VAE — Validation des Acquis de l'Expérience</h4>
+      <div class="info-box info-blue">
+        Toute personne ayant <strong>au moins 1 an d'expérience professionnelle</strong> peut faire valider ses compétences pour obtenir un diplôme ou titre officiel, sans repasser par la case "école". On fait reconnaître ce qu'on sait faire par la pratique.
+      </div>
+
+      <div class="exercice">
+        <div class="exercice-label">Question type bac</div>
+        <p>Marc, 35 ans, salarié depuis 10 ans dans la vente, souhaite obtenir un BTS sans retourner à temps plein à l'école. Quel dispositif peut-il mobiliser ? Et comment peut-il financer cette formation ?</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          Marc peut envisager deux solutions :<br><br>
+          1. La <strong>VAE</strong> (Validation des Acquis de l'Expérience) : avec 10 ans d'expérience dans la vente, il peut faire valider ses compétences professionnelles pour obtenir tout ou partie d'un BTS Commerce sans reprendre les cours. C'est la solution la plus rapide.<br><br>
+          2. Le <strong>contrat de professionnalisation</strong> : s'il souhaite se former en alternance tout en continuant à travailler partiellement, ce contrat de formation continue lui permet de préparer un diplôme tout en étant en entreprise.<br><br>
+          Pour le financement, Marc peut mobiliser son <strong>CPF</strong> (Compte Personnel de Formation) : il a accumulé 500 €/an pendant 10 ans, soit jusqu'à 5 000 € de droits utilisables pour financer sa formation.
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GLOSSAIRE -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#185FA5;"></div>
+      <span class="module-title">📖 Glossaire — les mots compliqués expliqués simplement</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <table>
+        <tr><th>Mot</th><th>Explication simple</th></tr>
+        <tr><td><strong>Allocation</strong></td><td>Argent versé par l'État pour financer une mission (ex : aider les chômeurs)</td></tr>
+        <tr><td><strong>Balance commerciale</strong></td><td>Le compte qui compare les exports et les imports d'un pays</td></tr>
+        <tr><td><strong>Chômage structurel</strong></td><td>Chômage durable, causé par des transformations profondes de l'économie (ex: automatisation)</td></tr>
+        <tr><td><strong>Chômage conjoncturel</strong></td><td>Chômage temporaire lié à une mauvaise passe économique</td></tr>
+        <tr><td><strong>Compétences</strong></td><td>Ce qu'on sait faire (savoirs + savoir-faire + savoir-être)</td></tr>
+        <tr><td><strong>CPF</strong></td><td>Compte Personnel de Formation — crédit annuel de 500 € pour se former</td></tr>
+        <tr><td><strong>Croissance économique</strong></td><td>Période où le PIB augmente plus vite que l'an d'avant</td></tr>
+        <tr><td><strong>Décloisonnement</strong></td><td>La frontière entre vie privée et vie pro devient floue (ex: télétravail)</td></tr>
+        <tr><td><strong>Délégué syndical</strong></td><td>Représentant d'un syndicat auprès de l'employeur (négociations, revendications)</td></tr>
+        <tr><td><strong>Dette publique</strong></td><td>Total de tout ce que l'État doit rembourser (cumul des déficits des années passées)</td></tr>
+        <tr><td><strong>Développement économique</strong></td><td>Évolution durable de l'économie et de la société sur le long terme</td></tr>
+        <tr><td><strong>Droit à la déconnexion</strong></td><td>Droit de ne pas répondre aux emails/appels pro en dehors des heures de travail</td></tr>
+        <tr><td><strong>E-learning</strong></td><td>Formation en ligne, à distance, via internet</td></tr>
+        <tr><td><strong>Flexibilité du travail</strong></td><td>Capacité à adapter rapidement les conditions de travail aux changements</td></tr>
+        <tr><td><strong>Formation continue</strong></td><td>Formation pendant la vie active (après les études)</td></tr>
+        <tr><td><strong>Formation initiale</strong></td><td>Formation pendant la scolarité (avant d'entrer dans la vie active)</td></tr>
+        <tr><td><strong>IDH</strong></td><td>Indice de Développement Humain — mesure le bien-être (pas seulement la richesse)</td></tr>
+        <tr><td><strong>Lien de subordination</strong></td><td>L'employeur peut donner des ordres, contrôler et sanctionner le salarié</td></tr>
+        <tr><td><strong>PIB</strong></td><td>Produit Intérieur Brut — somme de tout ce qui est produit dans un pays en un an</td></tr>
+        <tr><td><strong>Politique active de l'emploi</strong></td><td>Aide les chômeurs à reprendre un emploi (formations, subventions...)</td></tr>
+        <tr><td><strong>Politique passive de l'emploi</strong></td><td>Soutient financièrement les chômeurs (allocations) sans les aider à retrouver un emploi directement</td></tr>
+        <tr><td><strong>Redistribution</strong></td><td>L'État prend aux plus riches (impôts) pour donner aux plus pauvres (aides sociales)</td></tr>
+        <tr><td><strong>Régulation</strong></td><td>L'État intervient pour corriger les dérives du marché (lois, sanctions)</td></tr>
+        <tr><td><strong>Télétravail</strong></td><td>Travailler hors des locaux de l'entreprise (chez soi) avec des outils numériques</td></tr>
+        <tr><td><strong>VAE</strong></td><td>Validation des Acquis de l'Expérience — obtenir un diplôme grâce à son expérience pro</td></tr>
+        <tr><td><strong>Valeur ajoutée</strong></td><td>Ce qu'une entreprise crée réellement = prix de vente − coût des matières achetées</td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box info-teal" style="margin-top:1rem;">
+    <div class="info-label">Le jour J — rappel des 3 réflexes</div>
+    1. Lire la 1ère page et les documents <strong>avant</strong> de répondre (20 min).<br>
+    2. Reformuler avec ses propres mots — ne jamais copier-coller.<br>
+    3. Pour la partie 2 : suivre exactement le plan donné dans le sujet, faire apparaître I. et II. clairement, et finir par une conclusion avec un avis personnel justifié.
+  </div>
+</div>
+
+<!-- ============ PSE ============ -->
+<div id="pse" class="page">
+  <div class="matiere-header">
+    <h2>PSE — Prévention Santé Environnement E3-D</h2>
+    <div class="matiere-chips">
+      <span class="chip chip-blue">1er juin 2026 · 08h30</span>
+      <span class="chip chip-blue">2h · LP Coetlogon Rennes</span>
+      <span class="chip chip-blue">Coefficient 1</span>
+    </div>
+  </div>
+  <div class="coming-soon">
+    <div class="icon">🏥</div>
+    <h3>Module en cours de construction</h3>
+    <p>Ce module sera complété dès réception des fiches de cours.</p>
+  </div>
+</div>
+
+<!-- ============ ARTS ============ -->
+<div id="arts" class="page">
+  <div class="matiere-header">
+    <h2>Arts appliqués et cultures artistiques E6</h2>
+    <div class="matiere-chips">
+      <span class="chip chip-blue">29 mai 2026 · 09h30</span>
+      <span class="chip chip-blue">2h · LP Coetlogon Rennes</span>
+      <span class="chip chip-blue">Coefficient 1</span>
+      <span class="chip chip-green">Matériel à apporter !</span>
+    </div>
+  </div>
+
+  <div class="info-box info-red">
+    <div class="info-label">Matériel obligatoire à apporter le jour J</div>
+    Crayon de papier · Gomme · Stylo · Règle · Crayons de couleur (minimum 12 couleurs) · Crayons feutres (minimum 12 couleurs) · Taille-crayons · Feutre noir fin. Sans ce matériel, l'épreuve ne peut pas être passée.
+  </div>
+
+  <div class="epreuve-card">
+    <h3>Format de l'épreuve — candidat CNED</h3>
+    <p>Fabio passe l'épreuve sous forme <strong>ponctuelle écrite de 2h</strong>. Un ensemble documentaire lui est fourni sur place (reproductions d'œuvres, photos, images). Il répond à une question en produisant :</p>
+    <ul>
+      <li>Une réponse <strong>écrite argumentée</strong> (analyse, mise en contexte, point de vue)</li>
+      <li>Des <strong>éléments graphiques</strong> (croquis, mise en couleur, schémas annotés)</li>
+    </ul>
+    <p style="margin-top:0.75rem;">Il n'y a pas de dossier à préparer à l'avance pour un candidat CNED — tout se passe sur place le jour J.</p>
+  </div>
+
+  <div class="epreuve-card">
+    <h3>Les 3 champs du programme</h3>
+    <table><tr><th>Champ</th><th>Questions typiques</th></tr>
+    <tr><td>Appréhender son espace de vie</td><td>Architecture, design d'espace, signalétique, aménagement urbain</td></tr>
+    <tr><td>Construire son identité culturelle</td><td>Analyse d'une affiche, d'un logo, d'un style visuel · situer dans son époque</td></tr>
+    <tr><td>Élargir sa culture artistique</td><td>Lien entre une œuvre et son contexte · comparer des styles</td></tr></table>
+  </div>
+
+  <div class="info-box info-amber">
+    <div class="info-label">Stratégie pour l'épreuve</div>
+    Coefficient 1 = priorité faible. Investir 2h de révision suffisent. L'essentiel : savoir <strong>décrire ce qu'on voit</strong> (formes, couleurs, matières, style) et <strong>le situer dans un contexte</strong> (époque, usage, intention du créateur). Les correcteurs valorisent l'argumentation personnelle, même simple.
+  </div>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#534AB7;"></div>
+      <span class="module-title">Méthode pour analyser une image ou une œuvre</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <p><strong>Étape 1 — Décrire (ce qu'on voit)</strong><br>Formes, couleurs dominantes, matières, composition, éléments présents. Pas d'interprétation encore.</p>
+      <p><strong>Étape 2 — Identifier (ce que c'est)</strong><br>Quel type d'objet ? Quelle fonction ? Affiche, logo, bâtiment, produit, tableau ?</p>
+      <p><strong>Étape 3 — Situer (où et quand)</strong><br>À quelle époque ? Dans quel pays/culture ? Pour quel public ? Quel style (minimaliste, chargé, classique, moderne) ?</p>
+      <p><strong>Étape 4 — Interpréter (pourquoi)</strong><br>Quel est le message ? Quelle émotion cherche-t-on à provoquer ? Pourquoi ces choix de couleurs, de formes ?</p>
+      <p><strong>Étape 5 — Donner son point de vue</strong><br>La réponse à la question posée, argumentée. "Je pense que… parce que…"</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ANGLAIS ============ -->
+<div id="anglais" class="page">
+  <div class="matiere-header">
+    <h2>Anglais E4-AA (écrit) + E4-AB (oral)</h2>
+    <div class="matiere-chips">
+      <span class="chip chip-green">Écrit : 20 mai · 14h · 1h</span>
+      <span class="chip chip-green">Oral : 8 juin · 13h30 · 10 min · La Guerche</span>
+      <span class="chip chip-green">Niveau correct · Préparation minimale</span>
+      <span class="chip chip-blue">Coefficient 2 total</span>
+    </div>
+  </div>
+  <div class="coming-soon">
+    <div class="icon">🇬🇧</div>
+    <h3>Module en cours de construction</h3>
+    <p>Niveau correct → révision légère uniquement. Focus : vocabulaire commerce, méthode compréhension de texte, formules pour l'oral.</p>
+  </div>
+</div>
+
+<!-- ============ FRANÇAIS GÉNÉRAL ============ -->
+<div id="francaisgen" class="page">
+  <div class="matiere-header">
+    <h2>Français E5-A</h2>
+    <div class="matiere-chips">
+      <span class="chip chip-amber">28 mai 2026 · 08h30</span>
+      <span class="chip chip-amber">3h · LP Coetlogon Rennes</span>
+      <span class="chip chip-amber">Coefficient 2,5</span>
+    </div>
+  </div>
+
+  <div class="epreuve-card">
+    <h3>Format de l'épreuve — 3h, 2 parties</h3>
+    <p><strong>Partie 1 — Lecture et analyse de textes</strong> (environ 1h30) : un corpus de 2 à 4 documents variés (texte littéraire, article, image…). Questions de compréhension, analyse, comparaison.</p>
+    <p><strong>Partie 2 — Écriture personnelle</strong> (environ 1h30) : un sujet d'écriture en lien avec le corpus. On attend un texte personnel, organisé, avec un point de vue argumenté.</p>
+    <div class="info-box info-blue" style="margin-top:0.75rem;">
+      <div class="info-label">Ce qui rapporte des points en écriture</div>
+      · Introduction qui annonce le plan · Paragraphes organisés (idée + exemple + commentaire) · Connecteurs logiques (d'abord, ensuite, enfin, cependant, en revanche…) · Conclusion avec prise de position personnelle · Orthographe soignée
+    </div>
+  </div>
+
+  <h3>🔤 Anti-fautes — les règles essentielles</h3>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:1rem;">Objectif : éviter les fautes les plus basiques qui font perdre des points inutilement. Pas besoin d'être parfait — juste éviter les erreurs qui sautent aux yeux du correcteur.</p>
+
+  <!-- ER / É / EZ -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#993C1D;"></div>
+      <span class="module-title">ER / É / EZ — la faute la plus fréquente au bac</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">Le test magique — remplace par "vendre"</div>
+        Tu hésites entre <em>mangé</em>, <em>manger</em> ou <em>mangez</em> ? Remplace le verbe par <strong>vendre</strong> et écoute ce qui sonne juste :<br><br>
+        · Si ça sonne "vendu" → écris <strong>É</strong> (participé passé) : "J'ai mangé" = "J'ai vendu" ✓<br>
+        · Si ça sonne "vendre" → écris <strong>ER</strong> (infinitif) : "Je vais manger" = "Je vais vendre" ✓<br>
+        · Si tu parles à quelqu'un → écris <strong>EZ</strong> : "Vous mangez" = "Vous vendez" ✓
+      </div>
+      <table>
+        <tr><th>Forme</th><th>Quand ?</th><th>Exemple</th><th>Test vendre</th></tr>
+        <tr><td><strong>ER</strong> (infinitif)</td><td>Après un verbe conjugué ou une préposition</td><td>Je veux <u>manger</u>. Pour <u>avancer</u>.</td><td>"Je veux vendre" ✓</td></tr>
+        <tr><td><strong>É</strong> (participe passé)</td><td>Après avoir ou être</td><td>J'ai <u>mangé</u>. Il est <u>arrivé</u>.</td><td>"J'ai vendu" ✓</td></tr>
+        <tr><td><strong>EZ</strong> (2e pers. pluriel)</td><td>Sujet = vous</td><td>Vous <u>mangez</u>.</td><td>"Vous vendez" ✓</td></tr>
+      </table>
+      <div class="exercice">
+        <div class="exercice-label">Teste-toi</div>
+        <p>Choisis la bonne forme : "Il faut (travailler/travaillé) pour (réussir/réussi)."</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la réponse</button>
+        <div class="correction">
+          "Il faut <strong>travailler</strong> pour <strong>réussir</strong>."<br>
+          Test : "Il faut vendre" ✓ · "pour vendre" ✓ → infinitif dans les deux cas.
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AVOIR vs ÊTRE -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#185FA5;"></div>
+      <span class="module-title">Conjugaison avec AVOIR et ÊTRE — les temps utiles</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+
+      <h4>AVOIR — auxiliaire le plus courant</h4>
+      <table>
+        <tr><th>Temps</th><th>Je</th><th>Tu</th><th>Il/Elle</th><th>Nous</th><th>Vous</th><th>Ils/Elles</th></tr>
+        <tr><td><strong>Présent</strong></td><td>ai</td><td>as</td><td>a</td><td>avons</td><td>avez</td><td>ont</td></tr>
+        <tr><td><strong>Imparfait</strong></td><td>avais</td><td>avais</td><td>avait</td><td>avions</td><td>aviez</td><td>avaient</td></tr>
+        <tr><td><strong>Futur</strong></td><td>aurai</td><td>auras</td><td>aura</td><td>aurons</td><td>aurez</td><td>auront</td></tr>
+        <tr><td><strong>Passé composé</strong></td><td colspan="6">j'ai eu · tu as eu · il a eu · nous avons eu · vous avez eu · ils ont eu</td></tr>
+      </table>
+
+      <h4 style="margin-top:1rem;">ÊTRE — à connaître aussi bien qu'AVOIR</h4>
+      <table>
+        <tr><th>Temps</th><th>Je</th><th>Tu</th><th>Il/Elle</th><th>Nous</th><th>Vous</th><th>Ils/Elles</th></tr>
+        <tr><td><strong>Présent</strong></td><td>suis</td><td>es</td><td>est</td><td>sommes</td><td>êtes</td><td>sont</td></tr>
+        <tr><td><strong>Imparfait</strong></td><td>étais</td><td>étais</td><td>était</td><td>étions</td><td>étiez</td><td>étaient</td></tr>
+        <tr><td><strong>Futur</strong></td><td>serai</td><td>seras</td><td>sera</td><td>serons</td><td>serez</td><td>seront</td></tr>
+        <tr><td><strong>Passé composé</strong></td><td colspan="6">j'ai été · tu as été · il a été · nous avons été · vous avez été · ils ont été</td></tr>
+      </table>
+
+      <div class="info-box info-blue" style="margin-top:0.75rem;">
+        <div class="info-label">🧠 Mémo — les verbes qui se conjuguent avec ÊTRE au passé composé</div>
+        <strong>La maison du DR. et MRS. VANDERTRAMP</strong> (un moyen mnémotechnique classique) :<br><br>
+        <strong>D</strong>evenir · <strong>R</strong>evenir · <strong>M</strong>onter · <strong>R</strong>ester · <strong>S</strong>ortir · <strong>V</strong>enir · <strong>A</strong>ller · <strong>N</strong>aître · <strong>D</strong>escendre · <strong>E</strong>ntrer · <strong>R</strong>entrer · <strong>T</strong>omber · <strong>R</strong>etourner · <strong>A</strong>rriver · <strong>M</strong>ourir · <strong>P</strong>artir<br><br>
+        + tous les verbes pronominaux : se lever, se coucher, se souvenir…<br><br>
+        Tous les autres → AVOIR (j'ai mangé, j'ai travaillé, j'ai dit…)
+      </div>
+
+      <h4>Accord du participe passé</h4>
+      <div class="info-box info-teal">
+        <strong>Avec ÊTRE</strong> → le participe s'accorde avec le sujet :<br>
+        Elle est <u>arrivée</u>. Ils sont <u>partis</u>. Elles sont <u>venues</u>.<br><br>
+        <strong>Avec AVOIR</strong> → pas d'accord avec le sujet (sauf COD placé avant, mais c'est rare à l'écrit) :<br>
+        Elle a <u>mangé</u> une pomme. (pas de s, pas de e)<br>
+        Les pommes qu'elle a <u>mangées</u>. (COD "pommes" avant le verbe → accord)
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A / À -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#0F6E56;"></div>
+      <span class="module-title">A / À — 2 lettres, 2 sens totalement différents</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">🧠 Le test infaillible — remplace par "avait"</div>
+        Si tu peux remplacer par <strong>avait</strong> → écris <strong>A</strong> (sans accent, verbe avoir)<br>
+        Si tu ne peux pas remplacer par avait → écris <strong>À</strong> (avec accent, préposition)<br><br>
+        · "Il <u>a</u> faim" → "Il avait faim" ✓ → <strong>A</strong> sans accent<br>
+        · "Il pense <u>à</u> toi" → "Il pense avait toi" ✗ → <strong>À</strong> avec accent<br>
+        · "Il va <u>à</u> Paris" → "Il va avait Paris" ✗ → <strong>À</strong> avec accent
+      </div>
+      <table>
+        <tr><th>A (sans accent)</th><th>À (avec accent)</th></tr>
+        <tr><td>Verbe avoir au présent (il a, elle a)</td><td>Préposition de lieu, de temps, de but</td></tr>
+        <tr><td>"Elle <strong>a</strong> réussi son bac"</td><td>"Elle va <strong>à</strong> Paris"</td></tr>
+        <tr><td>"Il <strong>a</strong> travaillé toute la nuit"</td><td>"<strong>À</strong> demain !"</td></tr>
+        <tr><td>"On <strong>a</strong> besoin de toi"</td><td>"Tasse <strong>à</strong> café"</td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ON / ONT / OÙ / OU -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#534AB7;"></div>
+      <span class="module-title">ON/ONT · OU/OÙ · CE/SE · SON/SONT</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <table>
+        <tr><th>Confusion</th><th>Test</th><th>Exemples</th></tr>
+        <tr>
+          <td><strong>ON / ONT</strong></td>
+          <td>Remplace par "il" → si ça marche → <strong>ON</strong><br>Remplace par "avaient" → si ça marche → <strong>ONT</strong></td>
+          <td><strong>On</strong> part demain (il part ✓)<br>Ils <strong>ont</strong> fini (ils avaient fini ✓)</td>
+        </tr>
+        <tr>
+          <td><strong>OU / OÙ</strong></td>
+          <td>Remplace par "ou bien" → si ça marche → <strong>OU</strong> (sans accent)<br>Sinon → <strong>OÙ</strong> (lieu ou temps)</td>
+          <td>Café <strong>ou</strong> thé ? (ou bien ✓)<br>La ville <strong>où</strong> il vit (lieu)</td>
+        </tr>
+        <tr>
+          <td><strong>CE / SE</strong></td>
+          <td><strong>CE</strong> = cela/ça (démonstratif)<br><strong>SE</strong> = forme du verbe pronominal</td>
+          <td><strong>Ce</strong> que tu dis (= cela)<br>Il <strong>se</strong> lève tôt (verbe se lever)</td>
+        </tr>
+        <tr>
+          <td><strong>SON / SONT</strong></td>
+          <td>Remplace par "était" → si ça marche → <strong>SONT</strong><br>Sinon → <strong>SON</strong></td>
+          <td>Ils <strong>sont</strong> partis (ils étaient partis ✓)<br><strong>Son</strong> livre (= le livre de lui)</td>
+        </tr>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRÉSENT INDICATIF -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#854F0B;"></div>
+      <span class="module-title">Présent indicatif — les terminaisons à ne pas rater</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">🧠 Mémo — terminaisons du présent selon le groupe</div>
+        <strong>Verbes en -ER (1er groupe)</strong> : je mange<strong>s</strong>? Non → je mang<strong>e</strong>, tu mang<strong>es</strong>, il mang<strong>e</strong><br>
+        Attention : je → pas de S · tu → toujours S · il/elle → pas de S<br><br>
+        <strong>Verbes en -IR (2e groupe)</strong> : je fin<strong>is</strong>, tu fin<strong>is</strong>, il fin<strong>it</strong>, nous finiss<strong>ons</strong><br><br>
+        <strong>Verbes irréguliers courants à connaître par cœur :</strong>
+      </div>
+      <table>
+        <tr><th>Verbe</th><th>Je</th><th>Tu</th><th>Il/Elle</th><th>Nous</th><th>Vous</th><th>Ils/Elles</th></tr>
+        <tr><td><strong>Aller</strong></td><td>vais</td><td>vas</td><td>va</td><td>allons</td><td>allez</td><td>vont</td></tr>
+        <tr><td><strong>Faire</strong></td><td>fais</td><td>fais</td><td>fait</td><td>faisons</td><td>faites</td><td>font</td></tr>
+        <tr><td><strong>Pouvoir</strong></td><td>peux</td><td>peux</td><td>peut</td><td>pouvons</td><td>pouvez</td><td>peuvent</td></tr>
+        <tr><td><strong>Vouloir</strong></td><td>veux</td><td>veux</td><td>veut</td><td>voulons</td><td>voulez</td><td>veulent</td></tr>
+        <tr><td><strong>Venir</strong></td><td>viens</td><td>viens</td><td>vient</td><td>venons</td><td>venez</td><td>viennent</td></tr>
+        <tr><td><strong>Dire</strong></td><td>dis</td><td>dis</td><td>dit</td><td>disons</td><td><strong>dites</strong></td><td>disent</td></tr>
+      </table>
+      <div class="info-box info-red">
+        <div class="info-label">⚠️ Les pièges classiques</div>
+        · "Vous <strong>faites</strong>" (pas faisez) · "Vous <strong>dites</strong>" (pas disez) · "Vous <strong>êtes</strong>" (pas êtez)<br>
+        · "Ils <strong>peuvent</strong>" (pas peuveut) · "Il <strong>faut</strong>" (jamais fauts)
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCORDS -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#3B6D11;"></div>
+      <span class="module-title">Accords en genre et nombre — les réflexes</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-blue">
+        <strong>Règle de base :</strong> l'adjectif s'accorde toujours avec le nom qu'il qualifie.<br>
+        · Nom masculin singulier → adjectif de base : "un client <u>satisfait</u>"<br>
+        · Nom féminin singulier → ajouter E : "une cliente <u>satisfaite</u>"<br>
+        · Nom masculin pluriel → ajouter S : "des clients <u>satisfaits</u>"<br>
+        · Nom féminin pluriel → ajouter ES : "des clientes <u>satisfaites</u>"
+      </div>
+      <div class="info-box info-teal">
+        <div class="info-label">🧠 Le truc pour les adjectifs au féminin</div>
+        Pour savoir si un adjectif prend un E au féminin : prononce-le à voix haute. Si tu entends une consonne supplémentaire au féminin → il y a un E.<br><br>
+        · "satisfait" → "satisfaite" (on entend le T au féminin → +E) ✓<br>
+        · "rapide" → "rapide" (pareil à l'oral → déjà un E, pas de changement)
+      </div>
+      <table>
+        <tr><th>Cas particulier</th><th>Masculin</th><th>Féminin</th></tr>
+        <tr><td>Adjectifs en -EUX</td><td>heureux</td><td>heureus<strong>e</strong></td></tr>
+        <tr><td>Adjectifs en -ER</td><td>premier</td><td>premi<strong>ère</strong></td></tr>
+        <tr><td>Adjectifs en -EL</td><td>professionnel</td><td>professionnel<strong>le</strong></td></tr>
+        <tr><td>Adjectifs en -EN</td><td>ancien</td><td>ancien<strong>ne</strong></td></tr>
+        <tr><td>Adjectifs en -F</td><td>actif</td><td>acti<strong>ve</strong></td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PONCTUATION ET MAJUSCULES -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#185FA5;"></div>
+      <span class="module-title">Ponctuation, majuscules et erreurs visuelles fréquentes</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <table>
+        <tr><th>Règle</th><th>Bonne pratique</th><th>Erreur fréquente</th></tr>
+        <tr><td><strong>Majuscule</strong></td><td>Après un point. Au début du prénom, nom propre, nom de pays</td><td>Commencer une phrase sans majuscule · "la france" au lieu de "la France"</td></tr>
+        <tr><td><strong>Point</strong></td><td>À la fin de chaque phrase</td><td>Oublier le point final · Enchaîner deux phrases sans ponctuation</td></tr>
+        <tr><td><strong>Virgule</strong></td><td>Entre les éléments d'une liste · Avant "mais, car, donc, or"</td><td>Virgule avant "que" ou "qui" (interdit)</td></tr>
+        <tr><td><strong>Apostrophe</strong></td><td>le → l' devant voyelle (l'ami, l'école)</td><td>"le ami" au lieu de "l'ami"</td></tr>
+        <tr><td><strong>Trait d'union</strong></td><td>Après le verbe quand le sujet est inversé : "dit-il", "est-ce"</td><td>"dit il" sans trait d'union</td></tr>
+      </table>
+
+      <div class="info-box info-amber">
+        <div class="info-label">🧠 Les mots souvent mal orthographiés</div>
+        <table>
+          <tr><th>On écrit ✓</th><th>Pas ✗</th></tr>
+          <tr><td>beaucoup</td><td>baucoup / beaucoups</td></tr>
+          <tr><td>aujourd'hui</td><td>aujourd'hui (avec apostrophe)</td></tr>
+          <tr><td>parce que</td><td>parsque / par-ce-que</td></tr>
+          <tr><td>peut-être</td><td>peut être (sans trait d'union)</td></tr>
+          <tr><td>c'est-à-dire</td><td>c'est à dire</td></tr>
+          <tr><td>quelqu'un</td><td>quelqu'un (avec apostrophe)</td></tr>
+          <tr><td>tout à coup</td><td>tout à cours / toutacoup</td></tr>
+          <tr><td>d'accord</td><td>dacord / d'acord</td></tr>
+          <tr><td>malheureusement</td><td>maleureusement</td></tr>
+          <tr><td>cependant</td><td>cepandant / cependant</td></tr>
+        </table>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MÉTHODE RELECTURE -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#993C1D;"></div>
+      <span class="module-title">🔍 La méthode de relecture en 5 min — indispensable</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        Réserver les 5 dernières minutes pour relire. Un seul passage suffit si on sait quoi chercher. Ne pas tout relire à la fois : relire une chose à la fois.
+      </div>
+      <div class="info-box info-blue">
+        <strong>Passage 1 — les verbes</strong> : pour chaque verbe, se demander "qui fait l'action ?" → vérifier que la terminaison correspond au sujet.<br><br>
+        <strong>Passage 2 — les accords</strong> : pour chaque adjectif, regarder le nom à côté → singulier/pluriel, masculin/féminin → ajuster si besoin.<br><br>
+        <strong>Passage 3 — les homophones</strong> : scanner le texte pour les mots : a/à · on/ont · ou/où · son/sont · ce/se · er/é · et/est<br><br>
+        <strong>Passage 4 — la ponctuation</strong> : vérifier qu'il y a un point à chaque fin de phrase et une majuscule après chaque point.
+      </div>
+      <div class="info-box info-green">
+        <div class="info-label">✅ Le truc des correcteurs professionnels</div>
+        Lire à voix basse (en murmurant) plutôt que dans sa tête. L'oreille capte des erreurs que l'œil rate — notamment les oublis de S, les mauvais accords, et les phrases trop longues ou sans sens.
+      </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ HISTOIRE GÉO GÉNÉRAL ============ -->
+<div id="histgeogen" class="page">
+  <div class="matiere-header">
+    <h2>Histoire-Géographie EMC E5-B</h2>
+    <div class="matiere-chips">
+      <span class="chip chip-amber">28 mai 2026 · 14h00</span>
+      <span class="chip chip-amber">2h30 · LP Coetlogon Rennes</span>
+      <span class="chip chip-amber">Coefficient 2,5</span>
+    </div>
+  </div>
+  <div class="info-box info-amber">
+    <div class="info-label">⏳ Module en cours de construction</div>
+    Ce module sera complété dès réception des fiches de cours.
+  </div>
+  <div class="epreuve-card">
+    <h3>Format de l'épreuve — 2h30, 3 parties</h3>
+    <p><strong>Partie Histoire</strong> : répondre à des questions à partir de documents + rédiger un développement structuré sur une thématique du programme.</p>
+    <p><strong>Partie Géographie</strong> : analyser un ou plusieurs documents (carte, graphique, texte) + répondre à des questions de compréhension.</p>
+    <p><strong>Partie EMC</strong> (Enseignement Moral et Civique) : courte réponse argumentée sur une question de société ou de citoyenneté.</p>
+    <div class="info-box info-blue" style="margin-top:0.75rem;">
+      <div class="info-label">Les thèmes du programme Bac Pro MCV</div>
+      Histoire : Guerres mondiales · Décolonisation · Construction européenne · Mondialisation<br>
+      Géographie : Mondialisation · Développement durable · Dynamiques territoriales · Migrations<br>
+      EMC : Démocratie · Droits et devoirs · Laïcité · Engagement citoyen
+    </div>
+  </div>
+</div>
+
+<!-- ============ ESPAGNOL GÉNÉRAL ============ -->
+<div id="espagnolgen" class="page">
+  <div class="matiere-header">
+    <h2>Espagnol E4-BA (écrit) + E4-BB (oral)</h2>
+    <div class="matiere-chips">
+      <span class="chip chip-blue">Écrit : 21 mai · 14h · 1h · LP Coetlogon</span>
+      <span class="chip chip-blue">Oral : 9 juin · 13h30 · 10 min · Lodima Bruz</span>
+      <span class="chip chip-blue">Coefficient 2 total</span>
+    </div>
+  </div>
+  <div class="info-box info-amber">
+    <div class="info-label">⏳ Module en cours de construction</div>
+    Ce module sera complété. Focus prévu : méthode compréhension de texte, vocabulaire commerce, formules pour l'oral.
+  </div>
+  <div class="epreuve-card">
+    <h3>Format des épreuves</h3>
+    <p><strong>Écrit (1h)</strong> : un texte en espagnol (thème commercial ou de société). Questions de compréhension en espagnol + expression écrite courte (5 à 8 lignes).</p>
+    <p><strong>Oral (10 min)</strong> : présentation d'un document + échange avec l'examinateur. Niveau B1 du CECRL attendu — pas besoin d'être parfait, juste compréhensible et fluide.</p>
+    <div class="info-box info-blue" style="margin-top:0.75rem;">
+      <div class="info-label">Vocabulaire commerce à réviser en priorité</div>
+      empresa · cliente · producto · venta · precio · descuento · pedido · factura · entrega · atención al cliente · negociación · oferta · demanda · mercado · competencia
+    </div>
+  </div>
+</div>
+
+<script>
+
+function showMaths(id, btn) {
+  document.querySelectorAll('.maths-sub').forEach(s => s.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+  // Update sub-nav buttons
+  if (btn) {
+    btn.closest('div').querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+}
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) b.classList.add('active');
+  });
+  window.scrollTo(0, 0);
+}
+
+function toggleMod(header) {
+  const body = header.nextElementSibling;
+  const chev = header.querySelector('.module-chevron');
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+function toggleCorr(btn) {
+  const box = btn.nextElementSibling;
+  box.classList.toggle('open');
+  btn.textContent = box.classList.contains('open') ? 'Masquer' : 'Voir la correction';
+}
+
+function updateCountdowns() {
+  const today = new Date();
+  const epreuves = [
+    { label: 'Maths', date: '2026-05-19' },
+    { label: 'Anglais', date: '2026-05-20' },
+    { label: 'Espagnol', date: '2026-05-21' },
+    { label: 'Français', date: '2026-05-28' },
+    { label: 'E2 Pro', date: '2026-06-02' },
+    { label: 'E3 Oral', date: '2026-06-10' },
+  ];
+  const container = document.getElementById('countdowns');
+  container.innerHTML = '';
+  epreuves.forEach(e => {
+    const d = new Date(e.date);
+    const diff = Math.ceil((d - today) / 86400000);
+    if (diff >= 0) {
+      container.innerHTML += `<div class="count-badge"><span class="num">${diff}j</span><span class="label">${e.label}</span></div>`;
+    }
+  });
+}
+updateCountdowns();
+</script>
+</body>
+</html>

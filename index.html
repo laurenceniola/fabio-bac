@@ -175,10 +175,10 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; }
   <button class="nav-btn" onclick="showPage('ecodroit')">Éco-Droit ★</button>
   <button class="nav-btn" onclick="showPage('pse')">PSE ★</button>
   <button class="nav-btn" onclick="showPage('arts')">Arts appliqués</button>
-  <button class="nav-btn" onclick="showPage('anglais')">Anglais</button>
-  <button class="nav-btn" onclick="showPage('francaisgen')">Français E5-A</button>
-  <button class="nav-btn" onclick="showPage('histgeogen')">Histoire-Géo E5-B</button>
-  <button class="nav-btn" onclick="showPage('espagnolgen')">Espagnol E4</button>
+  <button class="nav-btn" onclick="showPage('anglais')">Anglais ★ · Coef 2</button>
+  <button class="nav-btn" onclick="showPage('francaisgen')">Français E5-A ★★</button>
+  <button class="nav-btn" onclick="showPage('histgeogen')">Histoire-Géo E5-B ★★</button>
+  <button class="nav-btn" onclick="showPage('espagnolgen')">Espagnol ★ · Coef 2</button>
 </nav>
 
 <!-- ============ PLANNING ============ -->
@@ -3289,23 +3289,259 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; }
       <span class="chip chip-amber">28 mai 2026 · 08h30</span>
       <span class="chip chip-amber">3h · LP Coetlogon Rennes</span>
       <span class="chip chip-amber">Coefficient 2,5</span>
+      <span class="chip chip-blue">Thème : Rythmes et cadences de la vie moderne</span>
     </div>
   </div>
 
   <div class="epreuve-card">
-    <h3>Format de l'épreuve — 3h, 2 parties</h3>
-    <p><strong>Partie 1 — Lecture et analyse de textes</strong> (environ 1h30) : un corpus de 2 à 4 documents variés (texte littéraire, article, image…). Questions de compréhension, analyse, comparaison.</p>
-    <p><strong>Partie 2 — Écriture personnelle</strong> (environ 1h30) : un sujet d'écriture en lien avec le corpus. On attend un texte personnel, organisé, avec un point de vue argumenté.</p>
+    <h3>🎯 Format de l'épreuve — 3h, 20 points</h3>
+    <table>
+      <tr><th>Partie</th><th>Ce qu'on fait</th><th>Points</th><th>Temps conseillé</th></tr>
+      <tr><td><strong>Partie 1 — Compétences de lecture</strong></td><td>Lire un corpus de 2-4 documents variés (textes, images, articles). Répondre à des questions de compréhension, d'analyse et de mise en relation.</td><td>10 pts</td><td>~1h20</td></tr>
+      <tr><td><strong>Partie 2 — Compétences d'écriture</strong></td><td>Rédiger un développement argumenté d'une quarantaine de lignes en réponse à une question liée au corpus.</td><td>10 pts</td><td>~1h20</td></tr>
+    </table>
     <div class="info-box info-blue" style="margin-top:0.75rem;">
-      <div class="info-label">Ce qui rapporte des points en écriture</div>
-      · Introduction qui annonce le plan · Paragraphes organisés (idée + exemple + commentaire) · Connecteurs logiques (d'abord, ensuite, enfin, cependant, en revanche…) · Conclusion avec prise de position personnelle · Orthographe soignée
+      <div class="info-label">📚 Thème du programme — ce que Fabio doit connaître</div>
+      Le thème au bac est <strong>"Rythmes et cadences de la vie moderne : quel temps pour soi ?"</strong>. Les documents du corpus tournent autour de la vitesse de la vie moderne, du temps libre, de l'introspection, du mouvement slow. L'œuvre étudiée : <strong>Leïla Slimani, "Le parfum des fleurs la nuit"</strong> (temps pour soi, écriture, solitude créatrice).
+    </div>
+  </div>
+
+  <h3>Partie 1 — Réussir les compétences de lecture</h3>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#993C1D;"></div>
+      <span class="module-title">Comprendre ce que demandent les questions — les verbes clés</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">Chaque verbe dans une consigne indique un type de réponse différent. Lire la consigne sans identifier le verbe = hors-sujet assuré.</div>
+      <table>
+        <tr><th>Verbe de la consigne</th><th>Ce qu'il faut faire</th><th>Type de réponse</th></tr>
+        <tr><td><strong>Montrer</strong></td><td>Présenter de façon neutre, sans jugement</td><td>Quelques lignes mêlant citations et vos propres mots</td></tr>
+        <tr><td><strong>Identifier / Relever</strong></td><td>Nommer ou recopier des éléments du texte</td><td>Réponse courte, liste d'éléments tirés du document</td></tr>
+        <tr><td><strong>Expliquer</strong></td><td>Déterminer le sens, définir</td><td>En vos propres mots uniquement — pas de copier-coller</td></tr>
+        <tr><td><strong>Reformuler</strong></td><td>Réécrire avec vos propres mots</td><td>Reformulation complète — interdiction de reprendre les mêmes mots</td></tr>
+        <tr><td><strong>Analyser / Décrire</strong></td><td>Observer les procédés d'écriture, les effets</td><td>Quelques lignes structurées avec des exemples tirés du texte</td></tr>
+        <tr><td><strong>Confronter / Comparer</strong></td><td>Mettre en relation des documents pour en tirer une conclusion</td><td>Réponse avec connecteurs logiques · points communs + différences</td></tr>
+        <tr><td><strong>Argumenter</strong></td><td>Démontrer un raisonnement, donner son opinion</td><td>Opinion + argument + exemple. Connecteurs obligatoires.</td></tr>
+      </table>
+
+      <h4>La question sur le corpus — toujours la dernière, toujours la plus importante</h4>
+      <div class="info-box info-blue">
+        La dernière question confronte tous les documents. Elle peut demander :<br>
+        · Les points communs et différences entre les documents<br>
+        · De choisir un titre pour le corpus et de justifier<br><br>
+        <strong>Structure de réponse conseillée :</strong><br>
+        1. Présentation succincte du corpus (nature, thème)<br>
+        2. Points communs (avec exemples tirés de chaque document)<br>
+        3. Différences (points de vue, genres, intentions des auteurs)
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#185FA5;"></div>
+      <span class="module-title">Analyser une image — méthode en 3 étapes</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-bg);color:var(--amber-text);">Priorité ★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-blue">
+        <strong>Étape 1 — Décrire</strong> : Ce qu'on voit (personnages, lieu, couleurs, plan, composition). Sans interpréter encore.<br><br>
+        <strong>Étape 2 — Analyser</strong> : Les effets visuels (flou, contraste, lumière) et leurs significations. Ce que l'auteur cherche à montrer.<br><br>
+        <strong>Étape 3 — Mettre en lien</strong> : Relier l'image au thème du corpus et aux autres documents.
+      </div>
+      <div class="info-box info-teal">
+        <strong>Vocabulaire utile pour décrire une image :</strong><br>
+        Au premier plan / en arrière-plan · En haut à gauche / à droite · Les couleurs sombres/vives contrastent avec... · Le cadrage serré/large · L'effet de flou suggère... · Cette mise en scène cherche à...
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#185FA5;"></div>
+      <span class="module-title">Introduire une citation — les règles et formules</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-bg);color:var(--amber-text);">Priorité ★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-blue">
+        <strong>Règles obligatoires :</strong><br>
+        · Guillemets « » autour de la citation<br>
+        · Citer la source (auteur + titre de l'œuvre souligné)<br>
+        · Signaler une coupure par [...] <br>
+        · Respecter la disposition d'origine
+      </div>
+      <h4>3 façons d'introduire une citation</h4>
+      <table>
+        <tr><th>Méthode</th><th>Exemple</th></tr>
+        <tr><td><strong>Verbe déclaratif</strong> (montrer, expliquer, déclarer, observer, préciser...)</td><td>Louis Aragon, dans <u>Le Roman inachevé</u>, nous confirme ainsi : « Le temps d'apprendre à vivre, il est déjà trop tard. »</td></tr>
+        <tr><td><strong>Expression introductive</strong> (tel que, c'est le cas de, comme le prouve...)</td><td>C'est important, comme on le voit dans cette citation : « Le temps d'apprendre à vivre, il est déjà trop tard. »</td></tr>
+        <tr><td><strong>Intégration dans le texte</strong> (déstructurer la citation)</td><td>On peut regretter « Le temps » qui passe trop vite. Comme le précise Aragon, profitons de la vie avant qu'il ne soit « déjà trop tard ».</td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#534AB7;"></div>
+      <span class="module-title">Les figures de style — à identifier et à utiliser</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-bg);color:var(--amber-text);">Priorité ★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <table>
+        <tr><th>Figure</th><th>Définition</th><th>Exemple</th></tr>
+        <tr><td><strong>Comparaison</strong></td><td>Comparaison explicite avec "comme", "tel", "ainsi que"</td><td>"Il était furieux <u>comme</u> un lion en cage."</td></tr>
+        <tr><td><strong>Métaphore</strong></td><td>Comparaison implicite, sans outil de comparaison</td><td>"Ses larmes étaient des perles de tristesse."</td></tr>
+        <tr><td><strong>Personnification</strong></td><td>Donner des caractéristiques humaines à un objet ou une idée</td><td>"La tristesse enveloppait la pièce de son manteau sombre."</td></tr>
+        <tr><td><strong>Hyperbole</strong></td><td>Exagération pour mettre en relief une émotion ou une idée</td><td>"Je meurs de honte."</td></tr>
+        <tr><td><strong>Euphémisme</strong></td><td>Adoucir une réalité brutale ou choquante</td><td>"Il nous a quittés." (= il est mort)</td></tr>
+        <tr><td><strong>Anaphore</strong></td><td>Répétition d'un même mot en début de phrases successives</td><td>"Il y a des petits poissons, il y a des gros poissons..."</td></tr>
+        <tr><td><strong>Énumération</strong></td><td>Lister successivement des éléments se rapportant à une même idée</td><td>"Il y avait des fruits, des légumes, des épices et des herbes."</td></tr>
+        <tr><td><strong>Allégorie</strong></td><td>Exprimer une idée abstraite par une forme concrète</td><td>La colombe = la paix · Marianne = la République française</td></tr>
+      </table>
+      <div class="info-box info-teal">
+        <strong>Champ lexical</strong> = ensemble des mots se rapportant à un même thème.<br>
+        Exemple : champ lexical de la tristesse dans "Spleen" de Baudelaire : "bas", "lourd", "gémissant", "ennuis", "noir", "triste", "cachot", "pourris"...
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Partie 2 — Réussir les compétences d'écriture</h3>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#993C1D;"></div>
+      <span class="module-title">Structure du développement argumenté — la méthode CNED</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">Ce qu'on attend — les 3 critères d'évaluation (10 points)</div>
+        · <strong>Argumentation</strong> (4 pts) : introduction + développement + conclusion · arguments pertinents · esprit critique<br>
+        · <strong>Lecture/Connaissances</strong> (3 pts) : éléments du corpus mobilisés · œuvre étudiée utilisée · culture personnelle<br>
+        · <strong>Expression</strong> (3 pts) : phrases correctes · orthographe globalement correcte · modalisateurs et connecteurs présents
+      </div>
+      <div class="info-box info-blue">
+        <div class="info-label">Structure obligatoire</div>
+        <strong>INTRODUCTION</strong><br>
+        · Définition du thème / reformulation du sujet<br>
+        · Annonce du plan (2 ou 3 parties)<br><br>
+        <strong>DÉVELOPPEMENT — 2 ou 3 paragraphes</strong><br>
+        Chaque paragraphe = <strong>1 argument</strong> + <strong>1 preuve/exemple</strong> tiré du corpus ou de la culture personnelle + (optionnel) petite conclusion + transition vers le paragraphe suivant<br><br>
+        <strong>CONCLUSION</strong><br>
+        · Résumé des arguments<br>
+        · Réponse à la question initiale<br>
+        · Ouverture du sujet (si possible)
+      </div>
+      <div class="exercice">
+        <div class="exercice-label">Exercice — construire un plan en 5 minutes</div>
+        <p>Sujet : "Notre quotidien est-il trop rapide ? Devrions-nous chercher à faire lentement et bien ?" — Construis un plan en 2 parties.</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir un exemple de plan</button>
+        <div class="correction">
+          <strong>Introduction</strong> : Le rythme de vie moderne s'est considérablement accéléré avec les nouvelles technologies. On peut se demander si cette accélération est inévitable ou si nous devons chercher à ralentir. Je montrerai d'abord que notre quotidien tend effectivement à s'emballer, puis j'examinerai pourquoi il serait bénéfique de retrouver un rythme plus lent.<br><br>
+          <strong>I. Notre quotidien est de plus en plus rapide</strong><br>
+          Argument : Les technologies numériques ont multiplié les sollicitations et raccourci les délais.<br>
+          Exemple (corpus) : Comme le montre Christophe Rymarski dans le document 1, nous avons paradoxalement l'impression de manquer de temps malgré les outils censés nous en faire gagner.<br><br>
+          <strong>II. Ralentir est nécessaire pour retrouver la qualité et le bien-être</strong><br>
+          Argument : Le mouvement slow et l'introspection permettent de mieux vivre.<br>
+          Exemple (corpus + œuvre) : Leïla Slimani, dans <u>Le parfum des fleurs la nuit</u>, montre que la solitude et le temps contraint à l'écriture permettent paradoxalement de se recentrer sur soi.<br><br>
+          <strong>Conclusion</strong> : Notre quotidien est effectivement trop rapide, mais nous avons la capacité de résister à cette accélération en choisissant délibérément de ralentir. Comme le dit Paul Morand, mieux vaut "faire lentement et bien".
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#0F6E56;"></div>
+      <span class="module-title">Les connecteurs logiques — tableau complet</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <table>
+        <tr><th>Relation logique</th><th>Connecteurs à utiliser</th></tr>
+        <tr><td><strong>Ajouter / Additionner</strong></td><td>Et, de plus, en outre, par ailleurs, de surcroît, d'ailleurs, non seulement… mais aussi, d'abord, puis, ensuite</td></tr>
+        <tr><td><strong>Classer</strong></td><td>D'abord, puis, premièrement, deuxièmement, ensuite, d'une part… d'autre part</td></tr>
+        <tr><td><strong>Opposer</strong></td><td>Mais, cependant, en revanche, or, toutefois, pourtant, au contraire, néanmoins, tandis que, alors que, bien que</td></tr>
+        <tr><td><strong>Exprimer la cause</strong></td><td>Car, parce que, grâce à, en effet, en raison de, du fait que, puisque, comme, étant donné que</td></tr>
+        <tr><td><strong>Exprimer la conséquence</strong></td><td>Ainsi, c'est pourquoi, en conséquence, par conséquent, si bien que, donc, dès lors</td></tr>
+        <tr><td><strong>Expliquer / Illustrer</strong></td><td>C'est-à-dire, en effet, en d'autres termes, par exemple, comme, autrement dit</td></tr>
+        <tr><td><strong>Comparer</strong></td><td>À l'image de, comme, aussi…que, de même que, à la façon de</td></tr>
+        <tr><td><strong>Conclure</strong></td><td>Tout bien considéré, en somme, en conclusion, finalement, en définitive, pour conclure, en bref, enfin</td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#854F0B;"></div>
+      <span class="module-title">Les modalisateurs — nuancer et donner son opinion</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-bg);color:var(--amber-text);">Priorité ★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-blue">
+        Les modalisateurs expriment l'attitude de l'auteur face à ce qu'il dit : certitude, doute, opinion, obligation. Leur présence est explicitement évaluée dans la grille du correcteur (critère "Expression").
+      </div>
+      <table>
+        <tr><th>Nuance</th><th>Modalisateurs</th><th>Exemple</th></tr>
+        <tr><td><strong>Certitude</strong></td><td>certainement, évidemment, sans doute, bien sûr, il est clair que</td><td>"Il est évident que notre société s'est accélérée."</td></tr>
+        <tr><td><strong>Incertitude</strong></td><td>peut-être, probablement, il se peut que, possiblement</td><td>"Il semble que cette accélération soit inévitable."</td></tr>
+        <tr><td><strong>Opinion personnelle</strong></td><td>à mon avis, selon moi, je pense que, il me semble que, je considère que</td><td>"À mon avis, ralentir est une nécessité, non un luxe."</td></tr>
+        <tr><td><strong>Obligation / Nécessité</strong></td><td>il faut que, il est nécessaire de, on doit, il est indispensable de</td><td>"Il est nécessaire de prendre du temps pour soi."</td></tr>
+        <tr><td><strong>Intensité</strong></td><td>vraiment, absolument, légèrement, tout à fait</td><td>"Ce phénomène est absolument préoccupant."</td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#3B6D11;"></div>
+      <span class="module-title">Rédiger une argumentation — le plan d'un paragraphe</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-bg);color:var(--red-text);">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-blue">
+        Chaque paragraphe du développement doit suivre ce schéma :<br><br>
+        <strong>1. Idée directrice</strong> (affirmation claire, 1 phrase)<br>
+        <strong>2. Argument</strong> (pourquoi c'est vrai, 1-2 phrases)<br>
+        <strong>3. Preuve/Exemple</strong> tiré du corpus ou de la culture personnelle (avec citation introduite correctement)<br>
+        <strong>4. Mini-conclusion</strong> + connecteur vers le paragraphe suivant (optionnel mais valorisé)
+      </div>
+      <div class="info-box info-teal">
+        <strong>Le mot "délibérer"</strong> dans la consigne signifie : rédiger un texte argumentatif qui examine différents points de vue (thèse + antithèse + synthèse). Ce n'est pas juste donner son avis — c'est montrer qu'on a considéré les deux côtés.
+      </div>
+      </div>
     </div>
   </div>
 
   <h3>🔤 Anti-fautes — les règles essentielles</h3>
-  <p style="color:var(--muted);font-size:13px;margin-bottom:1rem;">Objectif : éviter les fautes les plus basiques qui font perdre des points inutilement. Pas besoin d'être parfait — juste éviter les erreurs qui sautent aux yeux du correcteur.</p>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:1rem;">Objectif : éviter les fautes les plus basiques. Pas besoin d'être parfait — juste éviter les erreurs qui sautent aux yeux du correcteur.</p>
 
-  <!-- ER / É / EZ -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
       <div class="module-dot" style="background:#993C1D;"></div>
@@ -3315,276 +3551,192 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; }
     <div class="module-body">
       <div style="margin-top:0.75rem;">
       <div class="info-box info-amber">
-        <div class="info-label">Le test magique — remplace par "vendre"</div>
-        Tu hésites entre <em>mangé</em>, <em>manger</em> ou <em>mangez</em> ? Remplace le verbe par <strong>vendre</strong> et écoute ce qui sonne juste :<br><br>
-        · Si ça sonne "vendu" → écris <strong>É</strong> (participé passé) : "J'ai mangé" = "J'ai vendu" ✓<br>
-        · Si ça sonne "vendre" → écris <strong>ER</strong> (infinitif) : "Je vais manger" = "Je vais vendre" ✓<br>
-        · Si tu parles à quelqu'un → écris <strong>EZ</strong> : "Vous mangez" = "Vous vendez" ✓
+        <div class="info-label">Le test officiel CNED — remplace par "finir"</div>
+        La fiche CNED recommande de remplacer le verbe par <strong>finir</strong> (2e groupe) pour entendre la différence :<br><br>
+        · "Je dois mang<strong>er</strong>" → "Je dois finir" ✓ → <strong>ER</strong> (infinitif)<br>
+        · "Il a mang<strong>é</strong>" → "Il a fini" ✓ → <strong>É</strong> (participe passé)<br><br>
+        Tu peux aussi utiliser le test "vendre" (même logique) : si ça sonne "vendu" → É · si ça sonne "vendre" → ER
       </div>
       <table>
-        <tr><th>Forme</th><th>Quand ?</th><th>Exemple</th><th>Test vendre</th></tr>
-        <tr><td><strong>ER</strong> (infinitif)</td><td>Après un verbe conjugué ou une préposition</td><td>Je veux <u>manger</u>. Pour <u>avancer</u>.</td><td>"Je veux vendre" ✓</td></tr>
-        <tr><td><strong>É</strong> (participe passé)</td><td>Après avoir ou être</td><td>J'ai <u>mangé</u>. Il est <u>arrivé</u>.</td><td>"J'ai vendu" ✓</td></tr>
-        <tr><td><strong>EZ</strong> (2e pers. pluriel)</td><td>Sujet = vous</td><td>Vous <u>mangez</u>.</td><td>"Vous vendez" ✓</td></tr>
+        <tr><th>Forme</th><th>Quand ?</th><th>Exemple correct</th></tr>
+        <tr><td><strong>ER</strong> (infinitif)</td><td>Après un verbe conjugué ou une préposition</td><td>"Je veux <u>manger</u>. / Pour <u>avancer</u>."</td></tr>
+        <tr><td><strong>É</strong> (participe passé)</td><td>Après avoir ou être</td><td>"J'ai <u>mangé</u>. / Il est <u>arrivé</u>."</td></tr>
+        <tr><td><strong>EZ</strong> (2e pers. pluriel)</td><td>Sujet = vous</td><td>"Vous <u>mangez</u>."</td></tr>
       </table>
-      <div class="exercice">
-        <div class="exercice-label">Teste-toi</div>
-        <p>Choisis la bonne forme : "Il faut (travailler/travaillé) pour (réussir/réussi)."</p>
-        <button class="btn-corr" onclick="toggleCorr(this)">Voir la réponse</button>
-        <div class="correction">
-          "Il faut <strong>travailler</strong> pour <strong>réussir</strong>."<br>
-          Test : "Il faut vendre" ✓ · "pour vendre" ✓ → infinitif dans les deux cas.
-        </div>
-      </div>
       </div>
     </div>
   </div>
 
-  <!-- AVOIR vs ÊTRE -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#185FA5;"></div>
-      <span class="module-title">Conjugaison avec AVOIR et ÊTRE — les temps utiles</span>
+      <div class="module-dot" style="background:#993C1D;"></div>
+      <span class="module-title">ET/EST · OU/OÙ · ON/ONT · A/À · CE/SE · SON/SONT — les 6 pièges</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
       <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">Ces 6 confusions viennent directement de la fiche méthode officielle CNED "Éviter les erreurs orthographiques courantes".</div>
+      <table>
+        <tr><th>Confusion</th><th>Le test CNED</th><th>Exemple</th></tr>
+        <tr><td><strong>ET / EST</strong></td><td>Remplace par "et puis" → si ça marche → <strong>ET</strong>. Sinon → <strong>EST</strong> (vérifier : "était")</td><td>"Il prépare son épreuve de français <strong>et</strong> d'histoire. / Il <strong>est</strong> fier de sa réussite."</td></tr>
+        <tr><td><strong>OU / OÙ</strong></td><td>Remplace par "ou bien" → si ça marche → <strong>OU</strong>. Sinon → <strong>OÙ</strong> (lieu ou temps)</td><td>"Le bureau <strong>où</strong> je travaille ouvre à 8h <strong>ou</strong> à 9h."</td></tr>
+        <tr><td><strong>ON / ONT</strong></td><td>Remplace par "nous" → si ça marche → <strong>ON</strong>. Sinon → <strong>ONT</strong> (vérifier : "avaient")</td><td>"En Italie, <strong>on</strong> a passé de bonnes vacances. / Ils <strong>ont</strong> mangé des lasagnes."</td></tr>
+        <tr><td><strong>A / À</strong></td><td>Remplace par "avait" → si ça marche → <strong>A</strong>. Sinon → <strong>À</strong></td><td>"Il <strong>a</strong> terminé son travail car je pense qu'il finit <strong>à</strong> 17h."</td></tr>
+        <tr><td><strong>CE / SE</strong></td><td>Remplace par "le/la" → si ça marche → <strong>CE</strong>. Sinon → <strong>SE</strong> (vérifier : je me)</td><td>"<strong>Ce</strong> garçon est sérieux. Il <strong>se</strong> prépare consciencieusement."</td></tr>
+        <tr><td><strong>SON / SONT</strong></td><td>Remplace par "était/étaient" → si ça marche → <strong>SONT</strong>. Sinon → <strong>SON</strong></td><td>"Ils <strong>sont</strong> partis (étaient partis ✓). / <strong>Son</strong> livre est intéressant."</td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
 
-      <h4>AVOIR — auxiliaire le plus courant</h4>
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:#185FA5;"></div>
+      <span class="module-title">Conjugaison AVOIR et ÊTRE — tableaux complets + DR MRS VANDERTRAMP</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <h4>AVOIR</h4>
       <table>
         <tr><th>Temps</th><th>Je</th><th>Tu</th><th>Il/Elle</th><th>Nous</th><th>Vous</th><th>Ils/Elles</th></tr>
         <tr><td><strong>Présent</strong></td><td>ai</td><td>as</td><td>a</td><td>avons</td><td>avez</td><td>ont</td></tr>
         <tr><td><strong>Imparfait</strong></td><td>avais</td><td>avais</td><td>avait</td><td>avions</td><td>aviez</td><td>avaient</td></tr>
         <tr><td><strong>Futur</strong></td><td>aurai</td><td>auras</td><td>aura</td><td>aurons</td><td>aurez</td><td>auront</td></tr>
-        <tr><td><strong>Passé composé</strong></td><td colspan="6">j'ai eu · tu as eu · il a eu · nous avons eu · vous avez eu · ils ont eu</td></tr>
       </table>
-
-      <h4 style="margin-top:1rem;">ÊTRE — à connaître aussi bien qu'AVOIR</h4>
+      <h4 style="margin-top:0.75rem;">ÊTRE</h4>
       <table>
         <tr><th>Temps</th><th>Je</th><th>Tu</th><th>Il/Elle</th><th>Nous</th><th>Vous</th><th>Ils/Elles</th></tr>
         <tr><td><strong>Présent</strong></td><td>suis</td><td>es</td><td>est</td><td>sommes</td><td>êtes</td><td>sont</td></tr>
         <tr><td><strong>Imparfait</strong></td><td>étais</td><td>étais</td><td>était</td><td>étions</td><td>étiez</td><td>étaient</td></tr>
         <tr><td><strong>Futur</strong></td><td>serai</td><td>seras</td><td>sera</td><td>serons</td><td>serez</td><td>seront</td></tr>
-        <tr><td><strong>Passé composé</strong></td><td colspan="6">j'ai été · tu as été · il a été · nous avons été · vous avez été · ils ont été</td></tr>
       </table>
-
       <div class="info-box info-blue" style="margin-top:0.75rem;">
-        <div class="info-label">🧠 Mémo — les verbes qui se conjuguent avec ÊTRE au passé composé</div>
-        <strong>La maison du DR. et MRS. VANDERTRAMP</strong> (un moyen mnémotechnique classique) :<br><br>
+        <div class="info-label">DR MRS VANDERTRAMP — verbes conjugués avec ÊTRE au passé composé</div>
         <strong>D</strong>evenir · <strong>R</strong>evenir · <strong>M</strong>onter · <strong>R</strong>ester · <strong>S</strong>ortir · <strong>V</strong>enir · <strong>A</strong>ller · <strong>N</strong>aître · <strong>D</strong>escendre · <strong>E</strong>ntrer · <strong>R</strong>entrer · <strong>T</strong>omber · <strong>R</strong>etourner · <strong>A</strong>rriver · <strong>M</strong>ourir · <strong>P</strong>artir<br><br>
-        + tous les verbes pronominaux : se lever, se coucher, se souvenir…<br><br>
-        Tous les autres → AVOIR (j'ai mangé, j'ai travaillé, j'ai dit…)
-      </div>
-
-      <h4>Accord du participe passé</h4>
-      <div class="info-box info-teal">
-        <strong>Avec ÊTRE</strong> → le participe s'accorde avec le sujet :<br>
-        Elle est <u>arrivée</u>. Ils sont <u>partis</u>. Elles sont <u>venues</u>.<br><br>
-        <strong>Avec AVOIR</strong> → pas d'accord avec le sujet (sauf COD placé avant, mais c'est rare à l'écrit) :<br>
-        Elle a <u>mangé</u> une pomme. (pas de s, pas de e)<br>
-        Les pommes qu'elle a <u>mangées</u>. (COD "pommes" avant le verbe → accord)
+        + tous les verbes pronominaux (se lever, se coucher, s'habiller...)<br><br>
+        <strong>Accord du participe passé avec ÊTRE :</strong> s'accorde avec le sujet.<br>
+        Elle est arrivé<strong>e</strong>. / Ils sont parti<strong>s</strong>. / Elles sont venu<strong>es</strong>.<br><br>
+        <strong>Accord avec AVOIR :</strong> pas d'accord avec le sujet.<br>
+        Elle a mangé (pas de e). / Les pommes qu'elle a mangée<strong>s</strong> (COD avant le verbe → accord).
       </div>
       </div>
     </div>
   </div>
 
-  <!-- A / À -->
-  <div class="module-card">
-    <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#0F6E56;"></div>
-      <span class="module-title">A / À — 2 lettres, 2 sens totalement différents</span>
-      <span class="module-chevron">▶</span>
-    </div>
-    <div class="module-body">
-      <div style="margin-top:0.75rem;">
-      <div class="info-box info-amber">
-        <div class="info-label">🧠 Le test infaillible — remplace par "avait"</div>
-        Si tu peux remplacer par <strong>avait</strong> → écris <strong>A</strong> (sans accent, verbe avoir)<br>
-        Si tu ne peux pas remplacer par avait → écris <strong>À</strong> (avec accent, préposition)<br><br>
-        · "Il <u>a</u> faim" → "Il avait faim" ✓ → <strong>A</strong> sans accent<br>
-        · "Il pense <u>à</u> toi" → "Il pense avait toi" ✗ → <strong>À</strong> avec accent<br>
-        · "Il va <u>à</u> Paris" → "Il va avait Paris" ✗ → <strong>À</strong> avec accent
-      </div>
-      <table>
-        <tr><th>A (sans accent)</th><th>À (avec accent)</th></tr>
-        <tr><td>Verbe avoir au présent (il a, elle a)</td><td>Préposition de lieu, de temps, de but</td></tr>
-        <tr><td>"Elle <strong>a</strong> réussi son bac"</td><td>"Elle va <strong>à</strong> Paris"</td></tr>
-        <tr><td>"Il <strong>a</strong> travaillé toute la nuit"</td><td>"<strong>À</strong> demain !"</td></tr>
-        <tr><td>"On <strong>a</strong> besoin de toi"</td><td>"Tasse <strong>à</strong> café"</td></tr>
-      </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- ON / ONT / OÙ / OU -->
-  <div class="module-card">
-    <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#534AB7;"></div>
-      <span class="module-title">ON/ONT · OU/OÙ · CE/SE · SON/SONT</span>
-      <span class="module-chevron">▶</span>
-    </div>
-    <div class="module-body">
-      <div style="margin-top:0.75rem;">
-      <table>
-        <tr><th>Confusion</th><th>Test</th><th>Exemples</th></tr>
-        <tr>
-          <td><strong>ON / ONT</strong></td>
-          <td>Remplace par "il" → si ça marche → <strong>ON</strong><br>Remplace par "avaient" → si ça marche → <strong>ONT</strong></td>
-          <td><strong>On</strong> part demain (il part ✓)<br>Ils <strong>ont</strong> fini (ils avaient fini ✓)</td>
-        </tr>
-        <tr>
-          <td><strong>OU / OÙ</strong></td>
-          <td>Remplace par "ou bien" → si ça marche → <strong>OU</strong> (sans accent)<br>Sinon → <strong>OÙ</strong> (lieu ou temps)</td>
-          <td>Café <strong>ou</strong> thé ? (ou bien ✓)<br>La ville <strong>où</strong> il vit (lieu)</td>
-        </tr>
-        <tr>
-          <td><strong>CE / SE</strong></td>
-          <td><strong>CE</strong> = cela/ça (démonstratif)<br><strong>SE</strong> = forme du verbe pronominal</td>
-          <td><strong>Ce</strong> que tu dis (= cela)<br>Il <strong>se</strong> lève tôt (verbe se lever)</td>
-        </tr>
-        <tr>
-          <td><strong>SON / SONT</strong></td>
-          <td>Remplace par "était" → si ça marche → <strong>SONT</strong><br>Sinon → <strong>SON</strong></td>
-          <td>Ils <strong>sont</strong> partis (ils étaient partis ✓)<br><strong>Son</strong> livre (= le livre de lui)</td>
-        </tr>
-      </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- PRÉSENT INDICATIF -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
       <div class="module-dot" style="background:#854F0B;"></div>
-      <span class="module-title">Présent indicatif — les terminaisons à ne pas rater</span>
+      <span class="module-title">Présent indicatif — terminaisons et verbes irréguliers</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
       <div style="margin-top:0.75rem;">
-      <div class="info-box info-amber">
-        <div class="info-label">🧠 Mémo — terminaisons du présent selon le groupe</div>
-        <strong>Verbes en -ER (1er groupe)</strong> : je mange<strong>s</strong>? Non → je mang<strong>e</strong>, tu mang<strong>es</strong>, il mang<strong>e</strong><br>
-        Attention : je → pas de S · tu → toujours S · il/elle → pas de S<br><br>
-        <strong>Verbes en -IR (2e groupe)</strong> : je fin<strong>is</strong>, tu fin<strong>is</strong>, il fin<strong>it</strong>, nous finiss<strong>ons</strong><br><br>
-        <strong>Verbes irréguliers courants à connaître par cœur :</strong>
-      </div>
       <table>
         <tr><th>Verbe</th><th>Je</th><th>Tu</th><th>Il/Elle</th><th>Nous</th><th>Vous</th><th>Ils/Elles</th></tr>
         <tr><td><strong>Aller</strong></td><td>vais</td><td>vas</td><td>va</td><td>allons</td><td>allez</td><td>vont</td></tr>
-        <tr><td><strong>Faire</strong></td><td>fais</td><td>fais</td><td>fait</td><td>faisons</td><td>faites</td><td>font</td></tr>
+        <tr><td><strong>Faire</strong></td><td>fais</td><td>fais</td><td>fait</td><td>faisons</td><td><strong>faites</strong></td><td>font</td></tr>
+        <tr><td><strong>Dire</strong></td><td>dis</td><td>dis</td><td>dit</td><td>disons</td><td><strong>dites</strong></td><td>disent</td></tr>
         <tr><td><strong>Pouvoir</strong></td><td>peux</td><td>peux</td><td>peut</td><td>pouvons</td><td>pouvez</td><td>peuvent</td></tr>
         <tr><td><strong>Vouloir</strong></td><td>veux</td><td>veux</td><td>veut</td><td>voulons</td><td>voulez</td><td>veulent</td></tr>
         <tr><td><strong>Venir</strong></td><td>viens</td><td>viens</td><td>vient</td><td>venons</td><td>venez</td><td>viennent</td></tr>
-        <tr><td><strong>Dire</strong></td><td>dis</td><td>dis</td><td>dit</td><td>disons</td><td><strong>dites</strong></td><td>disent</td></tr>
       </table>
       <div class="info-box info-red">
-        <div class="info-label">⚠️ Les pièges classiques</div>
-        · "Vous <strong>faites</strong>" (pas faisez) · "Vous <strong>dites</strong>" (pas disez) · "Vous <strong>êtes</strong>" (pas êtez)<br>
-        · "Ils <strong>peuvent</strong>" (pas peuveut) · "Il <strong>faut</strong>" (jamais fauts)
+        <div class="info-label">⚠️ Pièges classiques</div>
+        · "Vous <strong>faites</strong>" (jamais faisez) · "Vous <strong>dites</strong>" (jamais disez) · "Vous <strong>êtes</strong>" (jamais êtez)<br>
+        · "Ils <strong>peuvent</strong>" (jamais peuveut) · "Il <strong>faut</strong>" (jamais fauts)
       </div>
       </div>
     </div>
   </div>
 
-  <!-- ACCORDS -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
       <div class="module-dot" style="background:#3B6D11;"></div>
-      <span class="module-title">Accords en genre et nombre — les réflexes</span>
+      <span class="module-title">Accords en genre et nombre + mots souvent mal écrits</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
       <div style="margin-top:0.75rem;">
+      <h4>Accords de l'adjectif</h4>
       <div class="info-box info-blue">
-        <strong>Règle de base :</strong> l'adjectif s'accorde toujours avec le nom qu'il qualifie.<br>
-        · Nom masculin singulier → adjectif de base : "un client <u>satisfait</u>"<br>
-        · Nom féminin singulier → ajouter E : "une cliente <u>satisfaite</u>"<br>
-        · Nom masculin pluriel → ajouter S : "des clients <u>satisfaits</u>"<br>
-        · Nom féminin pluriel → ajouter ES : "des clientes <u>satisfaites</u>"
+        · Masc. sing. → adjectif de base : "un client <u>satisfait</u>"<br>
+        · Fém. sing. → +E : "une cliente <u>satisfaite</u>"<br>
+        · Masc. plur. → +S : "des clients <u>satisfaits</u>"<br>
+        · Fém. plur. → +ES : "des clientes <u>satisfaites</u>"<br><br>
+        <strong>Cas particuliers :</strong> -EUX → -EUSE · -ER → -ÈRE · -EL → -ELLE · -EN → -ENNE · -F → -VE
       </div>
-      <div class="info-box info-teal">
-        <div class="info-label">🧠 Le truc pour les adjectifs au féminin</div>
-        Pour savoir si un adjectif prend un E au féminin : prononce-le à voix haute. Si tu entends une consonne supplémentaire au féminin → il y a un E.<br><br>
-        · "satisfait" → "satisfaite" (on entend le T au féminin → +E) ✓<br>
-        · "rapide" → "rapide" (pareil à l'oral → déjà un E, pas de changement)
-      </div>
+      <h4>Mots souvent mal orthographiés — liste CNED complétée</h4>
       <table>
-        <tr><th>Cas particulier</th><th>Masculin</th><th>Féminin</th></tr>
-        <tr><td>Adjectifs en -EUX</td><td>heureux</td><td>heureus<strong>e</strong></td></tr>
-        <tr><td>Adjectifs en -ER</td><td>premier</td><td>premi<strong>ère</strong></td></tr>
-        <tr><td>Adjectifs en -EL</td><td>professionnel</td><td>professionnel<strong>le</strong></td></tr>
-        <tr><td>Adjectifs en -EN</td><td>ancien</td><td>ancien<strong>ne</strong></td></tr>
-        <tr><td>Adjectifs en -F</td><td>actif</td><td>acti<strong>ve</strong></td></tr>
+        <tr><th>On écrit ✓</th><th>Pas ✗</th><th>On écrit ✓</th><th>Pas ✗</th></tr>
+        <tr><td>beaucoup</td><td>beaucoups</td><td>parce que</td><td>parsque</td></tr>
+        <tr><td>aujourd'hui</td><td>aujourd'hui (apostrophe)</td><td>peut-être</td><td>peut être</td></tr>
+        <tr><td>c'est-à-dire</td><td>c'est à dire</td><td>quelqu'un</td><td>quelqu un</td></tr>
+        <tr><td>d'accord</td><td>dacord</td><td>tout à coup</td><td>toutacoup</td></tr>
+        <tr><td>malheureusement</td><td>maleureusement</td><td>cependant</td><td>cepandant</td></tr>
+        <tr><td>quoique (bien que)</td><td>quoi que (même si séparé = autre sens)</td><td>davantage (plus)</td><td>d'avantage</td></tr>
+        <tr><td>malgré</td><td>malgré (jamais +s)</td><td>plutôt (préférence)</td><td>plus tôt (heure)</td></tr>
       </table>
       </div>
     </div>
   </div>
 
-  <!-- PONCTUATION ET MAJUSCULES -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
       <div class="module-dot" style="background:#185FA5;"></div>
-      <span class="module-title">Ponctuation, majuscules et erreurs visuelles fréquentes</span>
+      <span class="module-title">📖 Glossaire français — les termes à connaître</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
       <div style="margin-top:0.75rem;">
       <table>
-        <tr><th>Règle</th><th>Bonne pratique</th><th>Erreur fréquente</th></tr>
-        <tr><td><strong>Majuscule</strong></td><td>Après un point. Au début du prénom, nom propre, nom de pays</td><td>Commencer une phrase sans majuscule · "la france" au lieu de "la France"</td></tr>
-        <tr><td><strong>Point</strong></td><td>À la fin de chaque phrase</td><td>Oublier le point final · Enchaîner deux phrases sans ponctuation</td></tr>
-        <tr><td><strong>Virgule</strong></td><td>Entre les éléments d'une liste · Avant "mais, car, donc, or"</td><td>Virgule avant "que" ou "qui" (interdit)</td></tr>
-        <tr><td><strong>Apostrophe</strong></td><td>le → l' devant voyelle (l'ami, l'école)</td><td>"le ami" au lieu de "l'ami"</td></tr>
-        <tr><td><strong>Trait d'union</strong></td><td>Après le verbe quand le sujet est inversé : "dit-il", "est-ce"</td><td>"dit il" sans trait d'union</td></tr>
+        <tr><th>Terme</th><th>Définition simple</th></tr>
+        <tr><td><strong>Allégorie</strong></td><td>Figure qui exprime une idée abstraite par une forme concrète (colombe = paix, Marianne = République)</td></tr>
+        <tr><td><strong>Anaphore</strong></td><td>Répétition d'un mot ou expression en début de phrases successives → effet de rythme et d'insistance</td></tr>
+        <tr><td><strong>Argument</strong></td><td>Raisonnement destiné à convaincre le lecteur du bien-fondé d'une idée</td></tr>
+        <tr><td><strong>Champ lexical</strong></td><td>Ensemble des mots se rapportant à un même domaine ou thème dans un texte</td></tr>
+        <tr><td><strong>Comparaison</strong></td><td>Mise en relation de deux réalités avec un mot comparatif (comme, tel, ainsi que)</td></tr>
+        <tr><td><strong>Délibérer</strong></td><td>Rédiger un texte argumentatif qui examine différents points de vue (thèse, antithèse, synthèse)</td></tr>
+        <tr><td><strong>Éditorial</strong></td><td>Texte d'opinion d'un rédacteur en chef dans un journal → texte argumentatif, non neutre</td></tr>
+        <tr><td><strong>Exemple</strong></td><td>Fait concret qui illustre un argument et l'ancre dans la réalité</td></tr>
+        <tr><td><strong>Fiction</strong></td><td>Histoire fondée sur des faits imaginaires (roman, nouvelle)</td></tr>
+        <tr><td><strong>Identité</strong></td><td>Légale (qui on est aux yeux de tous) + personnelle (qui on est selon ses choix)</td></tr>
+        <tr><td><strong>Incipit</strong></td><td>Les premiers moments d'un roman/texte. But : accrocher le lecteur, poser le cadre et les personnages</td></tr>
+        <tr><td><strong>In medias res</strong></td><td>Incipit qui commence au cœur de l'action, sans présentation préalable</td></tr>
+        <tr><td><strong>Introspection</strong></td><td>Réflexion sur ses propres pensées, émotions et comportements → développement personnel</td></tr>
+        <tr><td><strong>Métaphore</strong></td><td>Comparaison implicite sans outil de comparaison ("ses larmes étaient des perles")</td></tr>
+        <tr><td><strong>Modalisateur</strong></td><td>Mot ou expression qui exprime l'attitude de l'auteur (certitude, doute, opinion, obligation)</td></tr>
+        <tr><td><strong>Paratexte</strong></td><td>Tout ce qui entoure le texte : titre, sous-titre, date, source, auteur, illustration</td></tr>
+        <tr><td><strong>Thèse</strong></td><td>Point de vue soutenu dans un texte argumentatif</td></tr>
       </table>
-
-      <div class="info-box info-amber">
-        <div class="info-label">🧠 Les mots souvent mal orthographiés</div>
-        <table>
-          <tr><th>On écrit ✓</th><th>Pas ✗</th></tr>
-          <tr><td>beaucoup</td><td>baucoup / beaucoups</td></tr>
-          <tr><td>aujourd'hui</td><td>aujourd'hui (avec apostrophe)</td></tr>
-          <tr><td>parce que</td><td>parsque / par-ce-que</td></tr>
-          <tr><td>peut-être</td><td>peut être (sans trait d'union)</td></tr>
-          <tr><td>c'est-à-dire</td><td>c'est à dire</td></tr>
-          <tr><td>quelqu'un</td><td>quelqu'un (avec apostrophe)</td></tr>
-          <tr><td>tout à coup</td><td>tout à cours / toutacoup</td></tr>
-          <tr><td>d'accord</td><td>dacord / d'acord</td></tr>
-          <tr><td>malheureusement</td><td>maleureusement</td></tr>
-          <tr><td>cependant</td><td>cepandant / cependant</td></tr>
-        </table>
-      </div>
       </div>
     </div>
   </div>
 
-  <!-- MÉTHODE RELECTURE -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
       <div class="module-dot" style="background:#993C1D;"></div>
-      <span class="module-title">🔍 La méthode de relecture en 5 min — indispensable</span>
+      <span class="module-title">🔍 Méthode de relecture en 5 min — les 4 passages</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
       <div style="margin-top:0.75rem;">
-      <div class="info-box info-amber">
-        Réserver les 5 dernières minutes pour relire. Un seul passage suffit si on sait quoi chercher. Ne pas tout relire à la fois : relire une chose à la fois.
-      </div>
       <div class="info-box info-blue">
-        <strong>Passage 1 — les verbes</strong> : pour chaque verbe, se demander "qui fait l'action ?" → vérifier que la terminaison correspond au sujet.<br><br>
-        <strong>Passage 2 — les accords</strong> : pour chaque adjectif, regarder le nom à côté → singulier/pluriel, masculin/féminin → ajuster si besoin.<br><br>
-        <strong>Passage 3 — les homophones</strong> : scanner le texte pour les mots : a/à · on/ont · ou/où · son/sont · ce/se · er/é · et/est<br><br>
-        <strong>Passage 4 — la ponctuation</strong> : vérifier qu'il y a un point à chaque fin de phrase et une majuscule après chaque point.
+        <strong>Passage 1 — les verbes</strong> : pour chaque verbe, "qui fait l'action ?" → vérifier la terminaison<br>
+        <strong>Passage 2 — les accords</strong> : pour chaque adjectif, regarder le nom → singulier/pluriel, masc/fém<br>
+        <strong>Passage 3 — les homophones</strong> : scanner : a/à · on/ont · ou/où · son/sont · ce/se · er/é · et/est<br>
+        <strong>Passage 4 — la ponctuation</strong> : point à chaque fin de phrase + majuscule après chaque point
       </div>
       <div class="info-box info-green">
-        <div class="info-label">✅ Le truc des correcteurs professionnels</div>
-        Lire à voix basse (en murmurant) plutôt que dans sa tête. L'oreille capte des erreurs que l'œil rate — notamment les oublis de S, les mauvais accords, et les phrases trop longues ou sans sens.
+        <div class="info-label">✅ Le truc des correcteurs</div>
+        Lire à voix basse en murmurant. L'oreille capte des erreurs que l'œil rate — oublis de S, mauvais accords, phrases sans sens. La fiche CNED précise : "Ne soyez pas pressé de sortir. La durée de l'épreuve comprend ce temps de relecture."
       </div>
       </div>
     </div>
   </div>
 
 </div>
+
 
 <!-- ============ HISTOIRE GÉO GÉNÉRAL ============ -->
 <div id="histgeogen" class="page">

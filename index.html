@@ -6,186 +6,732 @@
 <title>Espace de révision — Fabio · Bac Pro MCV 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap');
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
 :root {
-  --bg: #0e0e0f;
-  --surface: #161618;
-  --surface2: #1e1e21;
+  /* Core dark palette */
+  --bg: #0a0a0b;
+  --bg-2: #111114;
+  --bg-3: #18181d;
+  --surface: #1c1c22;
+  --surface-2: #222228;
   --border: rgba(255,255,255,0.07);
-  --border-mid: rgba(255,255,255,0.13);
-  --text: #f0f0ee;
-  --muted: #6b6b6e;
-  --muted2: #9a9a9f;
-  --accent: #c8f135;
-  --accent-dim: rgba(200,241,53,0.12);
-  --accent-dim2: rgba(200,241,53,0.06);
-  /* semantic */
-  --blue: #4a9eff; --blue-bg: rgba(74,158,255,0.1); --blue-text: #80bcff;
-  --green: #2dd4a0; --green-bg: rgba(45,212,160,0.1); --green-text: #6eeac8;
-  --amber: #f5a623; --amber-bg: rgba(245,166,35,0.1); --amber-text: #f5c060;
-  --red: #ff5c5c; --red-bg: rgba(255,92,92,0.1); --red-text: #ff8f8f;
-  --purple: #a78bfa; --purple-bg: rgba(167,139,250,0.1); --purple-text: #c4b5fd;
-  --teal: #2dd4a0; --teal-bg: rgba(45,212,160,0.1); --teal-text: #6eeac8;
+  --border-2: rgba(255,255,255,0.12);
+  --text: #f0f0f5;
+  --text-2: #a0a0b0;
+  --text-3: #666678;
+
+  /* Accent colors — bright on dark */
+  --blue: #4f8ef7;
+  --blue-dim: rgba(79,142,247,0.12);
+  --blue-border: rgba(79,142,247,0.25);
+  --blue-text: #93bfff;
+
+  --green: #34d68f;
+  --green-dim: rgba(52,214,143,0.1);
+  --green-border: rgba(52,214,143,0.25);
+  --green-text: #6ee7b0;
+
+  --amber: #f5a623;
+  --amber-dim: rgba(245,166,35,0.1);
+  --amber-border: rgba(245,166,35,0.25);
+  --amber-text: #fbbf24;
+
+  --red: #f05252;
+  --red-dim: rgba(240,82,82,0.1);
+  --red-border: rgba(240,82,82,0.25);
+  --red-text: #f87171;
+
+  --purple: #a78bfa;
+  --purple-dim: rgba(167,139,250,0.1);
+  --purple-border: rgba(167,139,250,0.25);
+  --purple-text: #c4b5fd;
+
+  --teal: #22d3ee;
+  --teal-dim: rgba(34,211,238,0.09);
+  --teal-border: rgba(34,211,238,0.22);
+  --teal-text: #67e8f9;
+
+  /* Coef color scale */
+  --coef-crit: #f05252;
+  --coef-high: #f5a623;
+  --coef-med: #4f8ef7;
+  --coef-low: #444458;
 }
-body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; font-size: 15px; }
 
-/* HEADER */
-.header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.1rem 1.5rem 0.9rem; }
-.header h1 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); margin-bottom: 2px; }
-.header p { font-size: 11px; color: var(--muted); letter-spacing: 0.02em; }
-.header-row { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; }
-.header-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 3px; }
-.countdown-grid { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
-.count-badge { background: var(--surface2); border: 1px solid var(--border-mid); border-radius: 8px; padding: 5px 10px; font-size: 12px; text-align: center; min-width: 44px; }
-.count-badge .num { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; display: block; color: var(--accent); line-height: 1; }
-.count-badge .label { font-size: 9px; color: var(--muted); margin-top: 2px; letter-spacing: 0.04em; display: block; }
-.count-badge.urgent-badge .num { color: var(--red); }
+html { scroll-behavior: smooth; }
 
-/* ALERTE */
-.alert { background: var(--red-bg); border: 1px solid rgba(255,92,92,0.2); border-left: 3px solid var(--red); border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; margin: 1rem; }
-.alert-title { font-weight: 500; color: var(--red); font-size: 13.5px; margin-bottom: 3px; }
-.alert p { font-size: 13px; color: var(--red-text); line-height: 1.6; }
+body {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
 
-/* NAV */
-.nav { background: var(--surface); border-bottom: 1px solid var(--border); display: flex; overflow-x: auto; padding: 0 1rem; gap: 2px; position: sticky; top: 0; z-index: 100; scrollbar-width: none; }
+/* ═══════════════════════ HEADER ═══════════════════════ */
+.header {
+  background: linear-gradient(135deg, #0e0e14 0%, #131320 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 1.75rem 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(79,142,247,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.header h1 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  margin-bottom: 3px;
+}
+.header p {
+  font-size: 12.5px;
+  color: var(--text-3);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+.countdown-grid {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.count-badge {
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: 10px;
+  padding: 7px 14px;
+  font-size: 11px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.2s;
+}
+.count-badge:hover { border-color: var(--blue-border); }
+.count-badge .num {
+  font-size: 19px;
+  font-weight: 600;
+  display: block;
+  color: var(--blue);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+.count-badge .label {
+  font-size: 10.5px;
+  color: var(--text-3);
+  letter-spacing: 0.03em;
+}
+
+/* ═══════════════════════ ALERT ═══════════════════════ */
+.alert {
+  background: linear-gradient(135deg, rgba(240,82,82,0.08) 0%, rgba(240,82,82,0.04) 100%);
+  border: 1px solid var(--red-border);
+  border-left: 3px solid var(--red);
+  padding: 1rem 1.25rem;
+  margin: 1rem 1rem 0;
+  border-radius: 0 10px 10px 0;
+  animation: slideIn 0.4s ease;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.alert-title {
+  font-weight: 600;
+  color: var(--red-text);
+  font-size: 13.5px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.alert-title::before { content: '⚠'; font-size: 13px; }
+.alert p {
+  font-size: 13px;
+  color: rgba(248,113,113,0.8);
+  line-height: 1.6;
+}
+
+/* ═══════════════════════ NAV ═══════════════════════ */
+.nav {
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  overflow-x: auto;
+  padding: 0 0.75rem;
+  gap: 1px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  scrollbar-width: none;
+}
 .nav::-webkit-scrollbar { display: none; }
-.nav-btn { padding: 11px 13px; font-size: 12.5px; font-family: 'DM Sans', sans-serif; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; color: var(--muted2); white-space: nowrap; transition: color 0.15s; }
-.nav-btn:hover { color: var(--text); }
-.nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 500; }
+.nav-btn {
+  padding: 11px 14px;
+  font-size: 12.5px;
+  font-family: inherit;
+  font-weight: 500;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  color: var(--text-3);
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  letter-spacing: 0.005em;
+}
+.nav-btn:hover { color: var(--text-2); }
+.nav-btn.active {
+  color: var(--blue);
+  border-bottom-color: var(--blue);
+}
 
-/* PAGES */
-.page { display: none; padding: 1.25rem; max-width: 860px; margin: 0 auto; }
-.page.active { display: block; }
+/* ═══════════════════════ PAGES ═══════════════════════ */
+.page { display: none; padding: 1.5rem 1.25rem; max-width: 860px; margin: 0 auto; }
+.page.active { display: block; animation: fadeUp 0.25s ease; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-/* PLANNING */
-.planning-header { margin-bottom: 1.5rem; }
-.planning-header h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 600; margin-bottom: 4px; color: var(--text); }
-.planning-header p { font-size: 13px; color: var(--muted2); }
+/* ═══════════════════════ PLANNING ═══════════════════════ */
+.planning-header { margin-bottom: 1.75rem; }
+.planning-header h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+}
+.planning-header p { font-size: 13px; color: var(--text-3); }
 
-.week-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin: 1.25rem 0 0.5rem; }
+.week-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin: 1.5rem 0 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.week-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
 
-.epreuve-row { display: flex; align-items: stretch; gap: 10px; margin-bottom: 7px; }
-.epreuve-date { width: 72px; flex-shrink: 0; font-size: 11.5px; color: var(--muted); text-align: right; padding-top: 10px; }
-.epreuve-bar { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 13px; display: flex; align-items: center; gap: 10px; transition: border-color 0.15s; }
-.epreuve-bar:hover { border-color: var(--border-mid); }
-.epreuve-bar.urgent { border-left: 3px solid var(--red); }
-.epreuve-bar.high { border-left: 3px solid var(--amber); }
-.epreuve-bar.medium { border-left: 3px solid var(--blue); }
-.epreuve-bar.low { border-left: 3px solid var(--border-mid); }
-.epreuve-bar.done { opacity: 0.45; }
-.epreuve-bar.alert-row { background: var(--red-bg); border-color: rgba(255,92,92,0.2); border-left: 3px solid var(--red); }
+.epreuve-row {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.epreuve-date {
+  width: 76px;
+  flex-shrink: 0;
+  font-size: 11.5px;
+  color: var(--text-3);
+  text-align: right;
+  padding-top: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.epreuve-bar {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.epreuve-bar:hover { border-color: var(--border-2); }
+.epreuve-bar.urgent { border-left: 2px solid var(--red); background: rgba(240,82,82,0.04); }
+.epreuve-bar.high { border-left: 2px solid var(--amber); background: rgba(245,166,35,0.04); }
+.epreuve-bar.medium { border-left: 2px solid var(--blue); background: rgba(79,142,247,0.04); }
+.epreuve-bar.low { border-left: 2px solid var(--border-2); }
+.epreuve-bar.done { background: var(--bg-2); opacity: 0.5; }
+.epreuve-bar.alert-row {
+  background: rgba(240,82,82,0.06);
+  border-color: var(--red-border);
+  border-left: 2px solid var(--red);
+}
 .epreuve-name { font-size: 13.5px; font-weight: 500; flex: 1; color: var(--text); }
-.epreuve-meta { font-size: 11.5px; color: var(--muted); }
-.coef-badge { font-size: 10.5px; padding: 2px 8px; border-radius: 12px; font-weight: 500; flex-shrink: 0; }
-.coef-9 { background: rgba(255,92,92,0.18); color: var(--red); border: 1px solid rgba(255,92,92,0.3); }
-.coef-4 { background: rgba(255,92,92,0.12); color: #ff8f8f; border: 1px solid rgba(255,92,92,0.2); }
-.coef-25 { background: rgba(245,166,35,0.12); color: var(--amber-text); border: 1px solid rgba(245,166,35,0.2); }
-.coef-2 { background: rgba(74,158,255,0.12); color: var(--blue-text); border: 1px solid rgba(74,158,255,0.2); }
-.coef-1 { background: var(--surface2); color: var(--muted2); border: 1px solid var(--border); }
-.coef-done { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
-.check-circle { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--border-mid); cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--muted); }
-.check-circle.done-check { background: var(--green); border-color: var(--green); color: #0e0e0f; }
+.epreuve-meta { font-size: 11.5px; color: var(--text-3); }
+.coef-badge {
+  font-size: 10.5px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 600;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+.coef-9 { background: rgba(240,82,82,0.2); color: var(--red-text); border: 1px solid var(--red-border); }
+.coef-4 { background: rgba(240,82,82,0.12); color: #fca5a5; border: 1px solid rgba(240,82,82,0.2); }
+.coef-25 { background: var(--amber-dim); color: var(--amber-text); border: 1px solid var(--amber-border); }
+.coef-2 { background: var(--blue-dim); color: var(--blue-text); border: 1px solid var(--blue-border); }
+.coef-1 { background: var(--surface-2); color: var(--text-3); border: 1px solid var(--border); }
+.coef-done { background: var(--bg-2); color: var(--text-3); border: 1px solid var(--border); }
 
-.strategy-box { background: var(--accent-dim2); border: 1px solid rgba(200,241,53,0.15); border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 1.5rem; }
-.strategy-box h3 { font-size: 13px; font-weight: 500; color: var(--accent); margin-bottom: 5px; letter-spacing: 0.02em; }
-.strategy-box p { font-size: 13px; color: #d4f76a; line-height: 1.6; }
+.check-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-2);
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+}
+.check-circle.done-check {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
 
-/* MATIERE PAGE */
-.matiere-header { border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem; }
-.matiere-header h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 600; margin-bottom: 4px; color: var(--text); }
+.strategy-box {
+  background: linear-gradient(135deg, rgba(79,142,247,0.07) 0%, rgba(79,142,247,0.03) 100%);
+  border: 1px solid var(--blue-border);
+  border-radius: 12px;
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 1.75rem;
+}
+.strategy-box h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue-text);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.strategy-box p { font-size: 13.5px; color: rgba(147,191,255,0.85); line-height: 1.7; }
+
+/* ═══════════════════════ MATIERE HEADER ═══════════════════════ */
+.matiere-header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+.matiere-header h2 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
 .matiere-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-.chip { font-size: 11.5px; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border-mid); color: var(--muted2); background: var(--surface2); }
-.chip-blue { background: var(--blue-bg); color: var(--blue-text); border-color: rgba(74,158,255,0.25); }
-.chip-red { background: var(--red-bg); color: var(--red-text); border-color: rgba(255,92,92,0.25); }
-.chip-amber { background: var(--amber-bg); color: var(--amber-text); border-color: rgba(245,166,35,0.25); }
-.chip-green { background: var(--green-bg); color: var(--green-text); border-color: rgba(45,212,160,0.25); }
-.chip-purple { background: var(--purple-bg); color: var(--purple-text); border-color: rgba(167,139,250,0.25); }
+.chip {
+  font-size: 11.5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-3);
+}
+.chip-blue { background: var(--blue-dim); color: var(--blue-text); border-color: var(--blue-border); }
+.chip-red { background: var(--red-dim); color: var(--red-text); border-color: var(--red-border); }
+.chip-amber { background: var(--amber-dim); color: var(--amber-text); border-color: var(--amber-border); }
+.chip-green { background: var(--green-dim); color: var(--green-text); border-color: var(--green-border); }
+.chip-purple { background: var(--purple-dim); color: var(--purple-text); border-color: var(--purple-border); }
 
-.epreuve-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
-.epreuve-card h3 { font-size: 15px; font-weight: 500; margin-bottom: 0.6rem; color: var(--text); }
-.epreuve-card p, .epreuve-card li { font-size: 14px; line-height: 1.7; color: var(--muted2); }
+/* ═══════════════════════ INFO BOXES ═══════════════════════ */
+.info-box {
+  border-radius: 10px;
+  padding: 0.85rem 1.1rem;
+  margin-bottom: 0.85rem;
+  font-size: 13.5px;
+  line-height: 1.65;
+  border: 1px solid var(--border);
+}
+.info-blue { background: var(--blue-dim); color: var(--blue-text); border-color: var(--blue-border); }
+.info-amber { background: var(--amber-dim); color: var(--amber-text); border-color: var(--amber-border); }
+.info-red { background: var(--red-dim); color: var(--red-text); border-color: var(--red-border); }
+.info-green { background: var(--green-dim); color: var(--green-text); border-color: var(--green-border); }
+.info-purple { background: var(--purple-dim); color: var(--purple-text); border-color: var(--purple-border); }
+.info-teal { background: var(--teal-dim); color: var(--teal-text); border-color: var(--teal-border); }
+.info-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+
+/* ═══════════════════════ EPREUVE CARDS ═══════════════════════ */
+.epreuve-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 1rem;
+}
+.epreuve-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  letter-spacing: -0.01em;
+}
+.epreuve-card p, .epreuve-card li { font-size: 14px; line-height: 1.75; color: var(--text-2); }
 .epreuve-card ul { padding-left: 1.4rem; }
 
-.info-box { border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 0.75rem; font-size: 14px; line-height: 1.6; }
-.info-blue { background: var(--blue-bg); color: var(--blue-text); border: 1px solid rgba(74,158,255,0.15); }
-.info-amber { background: var(--amber-bg); color: var(--amber-text); border: 1px solid rgba(245,166,35,0.15); }
-.info-red { background: var(--red-bg); color: var(--red-text); border: 1px solid rgba(255,92,92,0.15); }
-.info-green { background: var(--green-bg); color: var(--green-text); border: 1px solid rgba(45,212,160,0.15); }
-.info-purple { background: var(--purple-bg); color: var(--purple-text); border: 1px solid rgba(167,139,250,0.15); }
-.info-teal { background: var(--teal-bg); color: var(--teal-text); border: 1px solid rgba(45,212,160,0.15); }
-.info-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; opacity: 0.7; }
-
-.module-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; overflow: hidden; transition: border-color 0.15s; }
-.module-card:hover { border-color: var(--border-mid); }
-.module-header { display: flex; align-items: center; gap: 10px; padding: 11px 14px; cursor: pointer; }
-.module-header:hover { background: var(--surface2); }
+/* ═══════════════════════ MODULE CARDS ═══════════════════════ */
+.module-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.module-card:hover { border-color: var(--border-2); }
+.module-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+.module-header:hover { background: rgba(255,255,255,0.02); }
 .module-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .module-title { font-size: 13.5px; font-weight: 500; flex: 1; color: var(--text); }
-.module-chevron { font-size: 10px; color: var(--muted); transition: transform 0.2s; }
+.module-chevron {
+  font-size: 10px;
+  color: var(--text-3);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
 .module-chevron.open { transform: rotate(90deg); }
-.module-body { display: none; padding: 0 1rem 1rem; border-top: 1px solid var(--border); }
+.module-body {
+  display: none;
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--border);
+}
 .module-body.open { display: block; }
-.section-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin: 1rem 0 0.5rem; }
+.section-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin: 1.1rem 0 0.5rem;
+}
 
-.exercice { background: var(--teal-bg); border: 1px solid rgba(45,212,160,0.15); border-radius: 8px; padding: 0.9rem 1rem; margin-bottom: 0.75rem; }
-.exercice-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 6px; }
-.exercice p { font-size: 14px; line-height: 1.7; color: var(--teal-text); }
-.btn-corr, .btn-correction { background: transparent; border: 1px solid rgba(45,212,160,0.35); color: var(--teal); font-size: 12.5px; padding: 4px 13px; border-radius: 20px; cursor: pointer; margin-top: 8px; font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
-.btn-corr:hover, .btn-correction:hover { background: rgba(45,212,160,0.1); }
-.correction { display: none; background: var(--surface2); border: 1px solid rgba(45,212,160,0.2); border-radius: 8px; padding: 0.75rem 1rem; margin-top: 8px; font-size: 14px; line-height: 1.7; color: var(--text); }
+/* ═══════════════════════ EXERCICES ═══════════════════════ */
+.exercice {
+  background: rgba(34,211,238,0.06);
+  border: 1px solid var(--teal-border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 0.85rem;
+}
+.exercice-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--teal);
+  margin-bottom: 7px;
+}
+.exercice p { font-size: 13.5px; line-height: 1.7; color: var(--text-2); }
+
+.btn-corr, .btn-correction {
+  background: transparent;
+  border: 1px solid var(--teal-border);
+  color: var(--teal);
+  font-size: 12.5px;
+  font-family: inherit;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-corr:hover, .btn-correction:hover {
+  background: rgba(34,211,238,0.1);
+  border-color: var(--teal);
+}
+
+.correction {
+  display: none;
+  background: var(--surface-2);
+  border: 1px solid var(--teal-border);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  margin-top: 10px;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--text-2);
+  animation: fadeUp 0.2s ease;
+}
 .correction.open { display: block; }
 
-.formula { background: var(--surface2); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 0.55rem 0.85rem; font-family: monospace; font-size: 13.5px; color: var(--accent); margin: 0.6rem 0; }
-table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 14px; }
-th { background: var(--surface2); color: var(--text); padding: 8px 10px; text-align: left; font-weight: 500; font-size: 12.5px; border-bottom: 1px solid var(--border-mid); }
-td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--muted2); }
-td strong { color: var(--text); }
-tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
-h3 { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 600; margin: 1.25rem 0 0.5rem; color: var(--text); }
-h4 { font-size: 14px; font-weight: 500; margin: 1rem 0 0.4rem; color: var(--text); }
-p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted2); }
-.key { display: inline-block; background: var(--surface2); color: var(--accent); border: 1px solid var(--border-mid); padding: 1px 7px; border-radius: 4px; font-family: monospace; font-size: 12px; margin: 1px; }
+/* ═══════════════════════ FORMULES ═══════════════════════ */
+.formula {
+  background: var(--bg-3);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 8px 8px 0;
+  padding: 0.65rem 1rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 13.5px;
+  color: var(--blue-text);
+  margin: 0.75rem 0;
+  letter-spacing: 0.02em;
+}
 
-/* Progress bar */
-.progress-section { margin-bottom: 1.5rem; }
-.progress-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-.progress-name { font-size: 13px; width: 160px; flex-shrink: 0; color: var(--muted2); }
-.progress-bg { flex: 1; height: 4px; background: var(--surface2); border-radius: 3px; }
-.progress-fill { height: 4px; border-radius: 3px; transition: width 0.3s; }
-.progress-pct { font-size: 12px; width: 32px; text-align: right; color: var(--muted); }
+/* ═══════════════════════ TYPOGRAPHY ═══════════════════════ */
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 1.4rem 0 0.6rem;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 1rem 0 0.4rem;
+  color: var(--text);
+}
+p {
+  font-size: 14px;
+  line-height: 1.75;
+  margin-bottom: 0.65rem;
+  color: var(--text-2);
+}
+strong { color: var(--text); font-weight: 600; }
+.page-intro { color: var(--text-3); font-size: 13.5px; margin-bottom: 1.2rem; }
 
-/* Coming soon */
-.coming-soon { text-align: center; padding: 3rem 1rem; color: var(--muted); }
-.coming-soon .icon { font-size: 28px; margin-bottom: 0.75rem; }
-.coming-soon h3 { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
-.coming-soon p { font-size: 14px; max-width: 360px; margin: 0 auto; color: var(--muted2); }
+/* ═══════════════════════ TABLES ═══════════════════════ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.85rem 0;
+  font-size: 13.5px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+th {
+  background: var(--surface-2);
+  color: var(--text-2);
+  padding: 9px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--border-2);
+}
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-2);
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.02); }
 
-/* Maths-specific extras */
-.page-intro { font-size: 14px; color: var(--muted2); margin-bottom: 1rem; line-height: 1.6; }
-.box { border-radius: 8px; padding: 0.8rem 1rem; margin: 0.75rem 0; font-size: 14px; line-height: 1.65; }
-.box-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 5px; opacity: 0.75; }
-.box-amber { background: var(--amber-bg); color: var(--amber-text); border: 1px solid rgba(245,166,35,0.15); }
-.box-blue { background: var(--blue-bg); color: var(--blue-text); border: 1px solid rgba(74,158,255,0.15); }
-.box-red { background: var(--red-bg); color: var(--red-text); border: 1px solid rgba(255,92,92,0.15); }
-.box-green { background: var(--green-bg); color: var(--green-text); border: 1px solid rgba(45,212,160,0.15); }
-.box-purple { background: var(--purple-bg); color: var(--purple-text); border: 1px solid rgba(167,139,250,0.15); }
-.box-teal { background: var(--teal-bg); color: var(--teal-text); border: 1px solid rgba(45,212,160,0.15); }
-.box-accent { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(200,241,53,0.2); }
+/* ═══════════════════════ KEYBOARD KEY ═══════════════════════ */
+.key {
+  display: inline-block;
+  background: var(--surface-2);
+  color: var(--text-2);
+  border: 1px solid var(--border-2);
+  padding: 1px 8px;
+  border-radius: 5px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11.5px;
+  margin: 1px;
+}
+
+/* ═══════════════════════ BOX VARIANTS (maths) ═══════════════════════ */
+.box {
+  border-radius: 10px;
+  padding: 1rem 1.15rem;
+  margin: 0.85rem 0;
+  font-size: 13.5px;
+  line-height: 1.7;
+  border: 1px solid var(--border);
+}
+.box-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  opacity: 0.65;
+}
+.box-blue { background: var(--blue-dim); color: var(--blue-text); border-color: var(--blue-border); }
+.box-blue .box-label { color: var(--blue); }
+.box-green { background: var(--green-dim); color: var(--green-text); border-color: var(--green-border); }
+.box-green .box-label { color: var(--green); }
+.box-amber { background: var(--amber-dim); color: var(--amber-text); border-color: var(--amber-border); }
+.box-amber .box-label { color: var(--amber); }
+.box-red { background: var(--red-dim); color: var(--red-text); border-color: var(--red-border); }
+.box-red .box-label { color: var(--red); }
+.box-purple { background: var(--purple-dim); color: var(--purple-text); border-color: var(--purple-border); }
+.box-purple .box-label { color: var(--purple); }
+
+/* ═══════════════════════ STEPS ═══════════════════════ */
 .steps { margin: 0.75rem 0; }
-.step-item { display: flex; gap: 12px; margin-bottom: 0.75rem; font-size: 14px; line-height: 1.6; color: var(--muted2); }
-.step-item strong { color: var(--text); }
-.step-item em { color: var(--muted); font-style: italic; }
-.step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--accent-dim); color: var(--accent); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; font-family: 'Syne', sans-serif; }
-.section-divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+.step-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+.step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--blue-dim);
+  border: 1px solid var(--blue-border);
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
 
-/* Priority badges override (inline styles use CSS vars, so we patch the vars) */
-.priority-badge { font-size: 10.5px !important; padding: 2px 8px !important; border-radius: 12px !important; }
+/* ═══════════════════════ SECTION DIVIDER ═══════════════════════ */
+.section-divider, hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.5rem 0;
+}
 
+/* ═══════════════════════ PROGRESS ═══════════════════════ */
+.progress-section { margin-bottom: 1.75rem; }
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.progress-name {
+  font-size: 12.5px;
+  width: 160px;
+  flex-shrink: 0;
+  color: var(--text-3);
+}
+.progress-bg {
+  flex: 1;
+  height: 5px;
+  background: var(--surface-2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 5px;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+.progress-pct {
+  font-size: 11.5px;
+  width: 34px;
+  text-align: right;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ═══════════════════════ COMING SOON ═══════════════════════ */
+.coming-soon {
+  text-align: center;
+  padding: 3.5rem 1rem;
+  color: var(--text-3);
+}
+.coming-soon .icon { font-size: 36px; margin-bottom: 1rem; }
+.coming-soon h3 {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+.coming-soon p { font-size: 13.5px; max-width: 360px; margin: 0 auto; }
+
+/* ═══════════════════════ PRIORITY BADGE ═══════════════════════ */
+.priority-badge {
+  font-size: 11px;
+  padding: 2px 9px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+.p-high { background: var(--red-dim); color: var(--red-text); border: 1px solid var(--red-border); }
+.p-med { background: var(--amber-dim); color: var(--amber-text); border: 1px solid var(--amber-border); }
+.p-low { background: var(--blue-dim); color: var(--blue-text); border: 1px solid var(--blue-border); }
+
+/* ═══════════════════════ GREEN CALC BOX ═══════════════════════ */
+.calc-strategique {
+  background: linear-gradient(135deg, rgba(52,214,143,0.07) 0%, rgba(52,214,143,0.03) 100%);
+  border: 1px solid var(--green-border);
+  border-radius: 12px;
+  padding: 1rem 1.4rem;
+  margin-top: 1.5rem;
+}
+
+/* ═══════════════════════ MATHS SUB-NAV ═══════════════════════ */
+.maths-subnav {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+}
+.maths-subnav .nav-btn {
+  font-size: 12px;
+  padding: 8px 12px;
+}
+
+/* ═══════════════════════ LISTS ═══════════════════════ */
+ul, ol {
+  padding-left: 1.4rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-2);
+}
+li { font-size: 14px; line-height: 1.75; margin-bottom: 2px; }
+
+/* ═══════════════════════ LINKS ═══════════════════════ */
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ═══════════════════════ RESPONSIVE ═══════════════════════ */
 @media (max-width: 600px) {
-  .epreuve-date { width: 50px; font-size: 11px; }
+  .header { padding: 1.1rem; }
+  .page { padding: 1rem 0.9rem; }
+  .epreuve-date { width: 52px; font-size: 10.5px; }
   .epreuve-name { font-size: 13px; }
+  .planning-header h2, .matiere-header h2 { font-size: 19px; }
+  .count-badge .num { font-size: 16px; }
 }
 </style>
 </head>
@@ -194,9 +740,8 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 <div class="header">
   <div class="header-row">
     <div>
-      <div class="header-eyebrow">Bac Pro MCV · Option B · 2026</div>
       <h1>Espace de révision · Fabio</h1>
-      <p>Académie de Rennes · Session 2026</p>
+      <p>Bac Pro MCV option B · Session 2026 · Académie de Rennes</p>
     </div>
   </div>
   <div class="countdown-grid" id="countdowns"></div>
@@ -443,9 +988,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
     </div>
   </div>
 
-  <div style="background:rgba(45,212,160,0.08);border:1px solid rgba(45,212,160,0.2);border-radius:10px;padding:1rem 1.25rem;margin-top:1.5rem;">
-    <p style="font-size:13px;color:#6eeac8;font-weight:500;margin-bottom:4px;">Calcul stratégique</p>
-    <p style="font-size:13px;color:#6eeac8;">Total coefficients : 26. Pour obtenir 10/20 de moyenne, il faut obtenir 260 points. L'E3 (coef 9) et l'E2 (coef 4) représentent à eux seuls 50% du total. Fabio peut compenser des notes faibles en épreuves générales (coef 1 chacune) si E2 et E3 sont solides.</p>
+  <div style="background:var(--green-dim);border:0.5px solid #97c459;border-radius:10px;padding:1rem 1.25rem;margin-top:1.5rem;">
+    <p style="font-size:13px;color:#6ee7b0;font-weight:500;margin-bottom:4px;">Calcul stratégique</p>
+    <p style="font-size:13px;color:#6ee7b0;">Total coefficients : 26. Pour obtenir 10/20 de moyenne, il faut obtenir 260 points. L'E3 (coef 9) et l'E2 (coef 4) représentent à eux seuls 50% du total. Fabio peut compenser des notes faibles en épreuves générales (coef 1 chacune) si E2 et E3 sont solides.</p>
   </div>
 </div>
 
@@ -688,74 +1233,289 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div id="m-derivees" class="maths-sub" style="display:none">
   <h2>Les fonctions dérivées</h2>
-  <p class="page-intro">Séquence 1 du programme. Objectif : trouver le maximum ou minimum d'une fonction.</p>
+  <p class="page-intro">Séquence 1 du programme CNED. Objectif : comprendre ce qu'est f', savoir la calculer, et l'utiliser pour trouver le maximum ou minimum d'une fonction.</p>
 
+  <!-- ── BLOC 0 : C'EST QUOI f' ? ── -->
   <div class="box box-amber">
-    <div class="box-label">🚗 L'idée concrète</div>
-    Sur une autoroute, le compteur de vitesse te dit si tu accélères ou si tu freines. La dérivée, c'est pareil : elle mesure si la fonction monte ou descend, et à quelle vitesse. Quand la dérivée vaut 0, on est au sommet (ou au fond) — ni montée, ni descente. C'est là qu'est le maximum ou le minimum.
+    <div class="box-label">🚗 Avant tout — c'est quoi f'(x) ?</div>
+    <strong>f'(x)</strong> se lit "f prime de x". C'est une <em>nouvelle fonction</em> qu'on construit à partir de f(x).<br><br>
+    Elle mesure <strong>la pente de la courbe</strong> en chaque point x. Autrement dit : est-ce que la courbe monte, descend, ou est au sommet ?<br><br>
+    · Si f'(x) &gt; 0 → la courbe <strong>monte</strong> à cet endroit<br>
+    · Si f'(x) &lt; 0 → la courbe <strong>descend</strong> à cet endroit<br>
+    · Si f'(x) = 0 → on est au <strong>sommet ou au creux</strong> (maximum ou minimum)
   </div>
 
-  <h3>Les 4 règles de base — une par une</h3>
-  <p>Ces règles sont données en annexe le jour J. Ici on les explique vraiment.</p>
+  <!-- GRAPHIQUE 1 : idée visuelle de la dérivée comme pente -->
+  <div style="margin: 1.25rem 0;">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-3);margin-bottom:10px;">Illustration — la pente de la courbe en 3 points</div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;overflow:hidden;">
+      <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+        <!-- Grille légère -->
+        <defs>
+          <marker id="arrowB" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#666678"/>
+          </marker>
+          <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#4f8ef7"/>
+          </marker>
+          <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#34d68f"/>
+          </marker>
+          <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#f05252"/>
+          </marker>
+        </defs>
+        <!-- Axes -->
+        <line x1="40" y1="190" x2="490" y2="190" stroke="#444458" stroke-width="1.5" marker-end="url(#arrowB)"/>
+        <line x1="40" y1="190" x2="40" y2="20" stroke="#444458" stroke-width="1.5" marker-end="url(#arrowB)"/>
+        <text x="494" y="195" fill="#666678" font-size="12" font-family="DM Mono, monospace">x</text>
+        <text x="30" y="16" fill="#666678" font-size="12" font-family="DM Mono, monospace">f(x)</text>
 
+        <!-- Parabole f(x) = -0.7x² + 21x - 86 , x de 9 à 21 → on mappe [9,21] → [60, 460] et [0,80] → [180,30] -->
+        <!-- Mapping: px = 60 + (x-9)*(400/12), py = 190 - f(x)*1.9 -->
+        <!-- Points calculés : x=9→f=27.7, x=10→54, x=11→75.3, x=12→91.6, x=13→102.9, x=14→109.2, x=15→110.5, x=16→106.8, x=17→98.1, x=18→84.4, x=19→65.7, x=20→42, x=21→13.3 -->
+        <path d="M60,137.4 L93.3,87.4 L126.7,47.0 L160,16.0 L193.3,5.5 L226.7,5.8 L260,7.1 L293.3,26.7 L326.7,53.6 L360,91.2 L393.3,140.1 L426.7,190 L460,164.7"
+          fill="none" stroke="#4f8ef7" stroke-width="2.5" stroke-linejoin="round"/>
+
+        <!-- Point A — courbe monte — x=10 -->
+        <circle cx="93.3" cy="87.4" r="5" fill="#34d68f" stroke="#0a0a0b" stroke-width="1.5"/>
+        <!-- Tangente montante en A (pente positive) -->
+        <line x1="65" y1="115" x2="125" y2="60" stroke="#34d68f" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="55" y="130" fill="#34d68f" font-size="11" font-family="DM Sans, sans-serif" font-weight="600">f'&gt;0</text>
+        <text x="50" y="143" fill="#34d68f" font-size="10" font-family="DM Sans, sans-serif">monte ↗</text>
+
+        <!-- Point B — sommet — x=15 -->
+        <circle cx="226.7" cy="5.8" r="5" fill="#f5a623" stroke="#0a0a0b" stroke-width="1.5"/>
+        <!-- Tangente horizontale au sommet -->
+        <line x1="180" y1="5.8" x2="275" y2="5.8" stroke="#f5a623" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="210" y="25" fill="#f5a623" font-size="11" font-family="DM Sans, sans-serif" font-weight="600">f'=0</text>
+        <text x="198" y="38" fill="#f5a623" font-size="10" font-family="DM Sans, sans-serif">maximum ★</text>
+
+        <!-- Point C — courbe descend — x=19 -->
+        <circle cx="393.3" cy="140.1" r="5" fill="#f05252" stroke="#0a0a0b" stroke-width="1.5"/>
+        <!-- Tangente descendante en C -->
+        <line x1="365" y1="110" x2="425" y2="170" stroke="#f05252" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="415" y="115" fill="#f05252" font-size="11" font-family="DM Sans, sans-serif" font-weight="600">f'&lt;0</text>
+        <text x="412" y="128" fill="#f05252" font-size="10" font-family="DM Sans, sans-serif">descend ↘</text>
+
+        <!-- Étiquette courbe -->
+        <text x="300" y="60" fill="#4f8ef7" font-size="12" font-family="DM Mono, monospace">f(x)</text>
+
+        <!-- Axe x labels -->
+        <text x="88" y="204" fill="#666678" font-size="10" font-family="DM Mono, monospace">10</text>
+        <text x="220" y="204" fill="#666678" font-size="10" font-family="DM Mono, monospace">15</text>
+        <text x="387" y="204" fill="#666678" font-size="10" font-family="DM Mono, monospace">19</text>
+      </svg>
+      <p style="text-align:center;font-size:12px;color:var(--text-3);margin:4px 0 0;">Courbe de f(x) = −0,7x² + 21x − 86 · La tangente (pointillée) montre la pente = valeur de f'</p>
+    </div>
+  </div>
+
+  <!-- ── BLOC : DÉFINITION OFFICIELLE ── -->
+  <div class="box box-purple">
+    <div class="box-label">📐 Définition — ce que dit le programme CNED</div>
+    La <strong>fonction dérivée f'</strong> est la fonction qui, à chaque valeur x, associe la pente de la courbe de f en ce point.<br><br>
+    <strong>Notation officielle :</strong> f'(x) — on lit "f prime de x"<br><br>
+    On calcule f' grâce à des <strong>règles de dérivation</strong> (données en annexe au bac) :<br>
+    <span style="display:inline-block;margin-top:6px;">
+      · f(x) = k &nbsp;→&nbsp; f'(x) = 0<br>
+      · f(x) = ax + b &nbsp;→&nbsp; f'(x) = a<br>
+      · f(x) = x² &nbsp;→&nbsp; f'(x) = 2x<br>
+      · f(x) = x³ &nbsp;→&nbsp; f'(x) = 3x²<br>
+      · f(x) = k·u(x) &nbsp;→&nbsp; f'(x) = k·u'(x)&nbsp;&nbsp; (constante × fonction)<br>
+      · f(x) = u(x) + v(x) &nbsp;→&nbsp; f'(x) = u'(x) + v'(x)&nbsp;&nbsp; (somme)
+    </span>
+  </div>
+
+  <!-- ── BLOC : LES 4 RÈGLES ── -->
+  <h3>Les règles de dérivation — une par une</h3>
+  <p>Ces règles sont données en annexe le jour J. Mais les comprendre évite les erreurs.</p>
+
+  <!-- GRAPHIQUE 2 : règle 1 — constante -->
   <div class="box box-blue">
-    <div class="box-label">Règle 1 — Une constante seule disparaît</div>
+    <div class="box-label">Règle 1 — Une constante seule → f'(x) = 0</div>
     <strong>f(x) = k &nbsp;→&nbsp; f'(x) = 0</strong><br><br>
     Exemple : f(x) = 86 &nbsp;→&nbsp; f'(x) = 0<br><br>
-    Pourquoi ? Une constante ne change jamais, donc sa "vitesse de changement" est nulle. Sur un graphique, c'est une ligne horizontale — pas de pente.
+    <em>Pourquoi ?</em> Sur un graphique, f(x) = 86 est une <strong>droite horizontale</strong>. Sa pente est nulle partout — elle ne monte ni ne descend. Donc f' = 0.
+    <div style="margin-top:12px;background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;overflow:hidden;">
+      <svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+        <line x1="20" y1="90" x2="285" y2="90" stroke="#444458" stroke-width="1"/>
+        <line x1="20" y1="90" x2="20" y2="10" stroke="#444458" stroke-width="1"/>
+        <!-- Droite horizontale -->
+        <line x1="30" y1="50" x2="270" y2="50" stroke="#93bfff" stroke-width="2.5"/>
+        <text x="275" y="54" fill="#93bfff" font-size="10" font-family="DM Mono,monospace">f(x)=86</text>
+        <!-- Pente nulle -->
+        <text x="120" y="42" fill="#93bfff" font-size="10" font-family="DM Sans,sans-serif">pente = 0 partout</text>
+        <text x="100" y="82" fill="#666678" font-size="9" font-family="DM Mono,monospace">→ f'(x) = 0</text>
+      </svg>
+    </div>
   </div>
 
+  <!-- GRAPHIQUE 3 : règle 2 — droite -->
   <div class="box box-blue">
-    <div class="box-label">Règle 2 — Un x seul (avec ou sans nombre devant)</div>
+    <div class="box-label">Règle 2 — Fonction affine (droite) → f'(x) = a</div>
     <strong>f(x) = ax + b &nbsp;→&nbsp; f'(x) = a</strong><br><br>
     Exemples :<br>
     · f(x) = 21x &nbsp;→&nbsp; f'(x) = <strong>21</strong><br>
-    · f(x) = 5x + 3 &nbsp;→&nbsp; f'(x) = <strong>5</strong> (le +3 disparaît, c'est une constante)<br>
+    · f(x) = 5x + 3 &nbsp;→&nbsp; f'(x) = <strong>5</strong>&nbsp;&nbsp; (le +3 disparaît, c'est une constante)<br>
     · f(x) = x &nbsp;→&nbsp; f'(x) = <strong>1</strong><br><br>
-    Pourquoi ? Sur un graphique, ax + b est une droite. La pente de cette droite, c'est exactement a. La dérivée mesure la pente — donc elle vaut a, tout simplement.
+    <em>Pourquoi ?</em> Une droite a une pente <em>constante</em> partout. Cette pente, c'est le coefficient a devant x.
+    <div style="margin-top:12px;background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;overflow:hidden;">
+      <svg viewBox="0 0 300 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+        <line x1="20" y1="95" x2="285" y2="95" stroke="#444458" stroke-width="1"/>
+        <line x1="20" y1="95" x2="20" y2="10" stroke="#444458" stroke-width="1"/>
+        <!-- Droite montante -->
+        <line x1="30" y1="85" x2="250" y2="20" stroke="#93bfff" stroke-width="2.5"/>
+        <text x="252" y="24" fill="#93bfff" font-size="10" font-family="DM Mono,monospace">f(x)=ax+b</text>
+        <!-- Annotation pente -->
+        <line x1="120" y1="60" x2="170" y2="60" stroke="#f5a623" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="170" y1="60" x2="170" y2="45" stroke="#f5a623" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <text x="128" y="72" fill="#f5a623" font-size="9" font-family="DM Mono,monospace">Δx</text>
+        <text x="174" y="56" fill="#f5a623" font-size="9" font-family="DM Mono,monospace">Δy</text>
+        <text x="80" y="100" fill="#666678" font-size="9" font-family="DM Mono,monospace">pente = Δy/Δx = a → f'(x) = a</text>
+      </svg>
+    </div>
   </div>
 
   <div class="box box-blue">
-    <div class="box-label">Règle 3 — x² tout seul</div>
+    <div class="box-label">Règle 3 — x² → f'(x) = 2x</div>
     <strong>f(x) = x² &nbsp;→&nbsp; f'(x) = 2x</strong><br><br>
-    C'est une règle qu'on accepte. On peut la retenir ainsi : <em>"l'exposant 2 descend devant, et l'exposant devient 2−1 = 1, donc il disparaît"</em>.<br><br>
-    x² &nbsp;→&nbsp; <strong>2</strong> × x<sup>2−1</sup> = 2 × x<sup>1</sup> = <strong>2x</strong>
+    Mnémotechnique : <em>l'exposant 2 "descend" devant, puis l'exposant restant = 2−1 = 1 → disparaît.</em><br><br>
+    x² &nbsp;→&nbsp; <strong>2</strong> × x<sup>2−1</sup> = 2 × x<sup>1</sup> = <strong>2x</strong><br><br>
+    De même : x³ &nbsp;→&nbsp; <strong>3x²</strong>
   </div>
 
   <div class="box box-blue">
-    <div class="box-label">Règle 4 — la règle de la constante (la plus importante à comprendre)</div>
+    <div class="box-label">Règle 4 — Constante × fonction → k × u'(x)</div>
     <strong>f(x) = k × u(x) &nbsp;→&nbsp; f'(x) = k × u'(x)</strong><br><br>
-    En français : <em>quand on a un nombre qui multiplie une fonction, ce nombre reste là, et on dérive juste la fonction.</em><br><br>
-    Analogie : si une recette de gâteau utilise 3 œufs, et que tu fais la recette × 5, tu utilises 5 × 3 = 15 œufs. Le "×5" s'applique à tout. Ici c'est pareil : la constante "passe devant" le résultat de la dérivée.<br><br>
-    <strong>Exemple concret :</strong> f(x) = −0,7x²<br>
-    On a k = −0,7 et u(x) = x²<br>
-    On sait que la dérivée de x² = 2x (règle 3)<br>
-    Donc : dérivée de −0,7x² = −0,7 × 2x = <strong>−1,4x</strong><br><br>
-    C'est tout. On a juste multiplié : −0,7 × 2 = −1,4, et le x reste.
+    En clair : <em>le nombre devant reste, on dérive juste la fonction.</em><br><br>
+    <strong>Exemple :</strong> f(x) = −0,7x²<br>
+    → k = −0,7 &nbsp;·&nbsp; u(x) = x² &nbsp;·&nbsp; u'(x) = 2x (règle 3)<br>
+    → f'(x) = −0,7 × 2x = <strong>−1,4x</strong>
   </div>
 
-  <h3>Récapitulatif des cas qu'on croise au bac</h3>
-  <div class="box box-purple">
-    <table>
-      <tr><th>Ce qu'on voit</th><th>Ce qu'on fait</th><th>Résultat</th></tr>
-      <tr><td>−86 (nombre seul)</td><td>Constante → disparaît</td><td>0</td></tr>
-      <tr><td>21x</td><td>ax → dérivée = a</td><td>21</td></tr>
-      <tr><td>x²</td><td>x² → 2x</td><td>2x</td></tr>
-      <tr><td>−0,7x²</td><td>−0,7 × (dérivée de x²) = −0,7 × 2x</td><td>−1,4x</td></tr>
-      <tr><td>5x²</td><td>5 × 2x</td><td>10x</td></tr>
-      <tr><td>−3x²</td><td>−3 × 2x</td><td>−6x</td></tr>
-      <tr><td>x³</td><td>x³ → 3x²</td><td>3x²</td></tr>
-      <tr><td>2x³</td><td>2 × 3x²</td><td>6x²</td></tr>
+  <!-- ── GRAPHIQUE 4 : f(x) parabole + f'(x) droite sur même repère ── -->
+  <h3>Visualiser f et f' ensemble — l'exemple du bac</h3>
+  <p>Reprenons la fonction de l'évaluation CNED 4 : <strong>f(x) = −0,7x² + 21x − 86</strong> sur [9 ; 21].</p>
+  <p>Sa dérivée est <strong>f'(x) = −1,4x + 21</strong>. Regardons les deux courbes :</p>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;overflow:hidden;margin:0.75rem 0;">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-3);margin-bottom:12px;">Graphique — f(x) en bleu · f'(x) en orange · zéro de f' en jaune</div>
+    <svg viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+      <defs>
+        <marker id="arr2" markerWidth="7" markerHeight="7" refX="3.5" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L7,3 z" fill="#555566"/>
+        </marker>
+      </defs>
+
+      <!-- Grille -->
+      <line x1="50" y1="210" x2="500" y2="210" stroke="#333340" stroke-width="0.5"/>
+      <line x1="50" y1="170" x2="500" y2="170" stroke="#333340" stroke-width="0.5"/>
+      <line x1="50" y1="130" x2="500" y2="130" stroke="#333340" stroke-width="0.5"/>
+      <line x1="50" y1="90" x2="500" y2="90" stroke="#333340" stroke-width="0.5"/>
+      <line x1="50" y1="50" x2="500" y2="50" stroke="#333340" stroke-width="0.5"/>
+
+      <!-- Axes -->
+      <line x1="50" y1="230" x2="505" y2="230" stroke="#555566" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <line x1="50" y1="240" x2="50" y2="20" stroke="#555566" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+      <!-- Ligne y=0 (axe horizontal de référence pour f') -->
+      <line x1="50" y1="210" x2="500" y2="210" stroke="#555566" stroke-width="1"/>
+
+      <!-- Labels axe x : t de 9 à 21 → px = 50 + (t-9)*(450/12) = 50 + (t-9)*37.5 -->
+      <!-- t=9: px=50, t=10:87.5, t=11:125, t=12:162.5, t=13:200, t=14:237.5, t=15:275, t=16:312.5, t=17:350, t=18:387.5, t=19:425, t=20:462.5, t=21:500 -->
+      <text x="46" y="244" fill="#555566" font-size="10" font-family="DM Mono,monospace">9</text>
+      <text x="83" y="244" fill="#555566" font-size="10" font-family="DM Mono,monospace">10</text>
+      <text x="270" y="244" fill="#555566" font-size="10" font-family="DM Mono,monospace">15</text>
+      <text x="458" y="244" fill="#555566" font-size="10" font-family="DM Mono,monospace">20</text>
+
+      <!-- f(x) = -0.7x²+21x-86 : py = 210 - f(x)*1.65 (échelle) -->
+      <!-- f(9)=27.7→165, f(10)=54→121, f(11)=75.3→86, f(12)=91.6→60, f(13)=102.9→40, f(14)=109.2→29, f(15)=110.5→28 -->
+      <!-- f(16)=106.8→34, f(17)=98.1→48, f(18)=84.4→71, f(19)=65.7→101, f(20)=42→141, f(21)=13.3→188 -->
+      <path d="M50,165 L87.5,121 L125,86 L162.5,60 L200,40 L237.5,29 L275,28 L312.5,34 L350,48 L387.5,71 L425,101 L462.5,141 L500,188"
+        fill="none" stroke="#4f8ef7" stroke-width="2.5" stroke-linejoin="round"/>
+
+      <!-- f'(x) = -1.4x+21 : f'(9)=8.4, f'(10)=7, f'(11)=5.6, f'(12)=4.2, f'(13)=2.8, f'(14)=1.4, f'(15)=0, f'(16)=-1.4, f'(17)=-2.8, f'(18)=-4.2, f'(19)=-5.6, f'(20)=-7, f'(21)=-8.4 -->
+      <!-- py_fprime = 210 - f'(x)*12 (échelle différente pour la lisibilité) -->
+      <!-- py: f'(9)=210-101=109, f'(10)=210-84=126, f'(11)=210-67=143, f'(12)=210-50=160, f'(13)=210-34=176, f'(14)=210-17=193, f'(15)=210, f'(16)=227→croix axe, montrons de 9 à 15 positif puis 15 à 21 négatif -->
+      <!-- Recalibrage: py = 210 - f'(x)*9 -->
+      <!-- f'(9)=8.4→210-75.6=134, f'(10)=7→210-63=147, f'(11)=5.6→210-50.4=160, f'(12)=4.2→210-37.8=172, f'(13)=2.8→210-25.2=185, f'(14)=1.4→210-12.6=197, f'(15)=0→210, f'(16)=-1.4→210+12.6=223, f'(17)=-2.8→210+25.2=235→trop bas -->
+      <!-- Recalibrage: échelle 6 unités par px: py = 210 - f'(x)*6 -->
+      <!-- f'(9)=8.4→160, f'(10)=7→168, f'(11)=5.6→176, f'(12)=4.2→185, f'(13)=2.8→193, f'(14)=1.4→202, f'(15)=0→210, f'(16)=-1.4→218, f'(17)=-2.8→227→limite, ok si on coupe à 21 -->
+      <!-- f'(18)=-4.2→235, f'(19)=-5.6→244→en dehors, borner à 240 -->
+      <path d="M50,160 L87.5,168 L125,176 L162.5,185 L200,193 L237.5,202 L275,210 L312.5,218 L350,227 L387.5,235 L425,240 L462.5,240 L500,240"
+        fill="none" stroke="#f5a623" stroke-width="2" stroke-dasharray="6,3" stroke-linejoin="round"/>
+
+      <!-- Point zéro de f' : x=15, py f'=210 -->
+      <circle cx="275" cy="210" r="6" fill="#f5a623" stroke="#0a0a0b" stroke-width="2"/>
+      <!-- Ligne verticale vers le sommet de f -->
+      <line x1="275" y1="28" x2="275" y2="210" stroke="#f5a623" stroke-width="1" stroke-dasharray="4,3" opacity="0.6"/>
+      <!-- Point max de f -->
+      <circle cx="275" cy="28" r="6" fill="#4f8ef7" stroke="#0a0a0b" stroke-width="2"/>
+
+      <!-- Annotations -->
+      <text x="200" y="22" fill="#4f8ef7" font-size="11" font-family="DM Sans,sans-serif" font-weight="600">f(x) — courbe bleue</text>
+      <text x="60" y="155" fill="#f5a623" font-size="11" font-family="DM Sans,sans-serif" font-weight="600">f'(x) — droite orange</text>
+
+      <!-- Zone f'>0 (monte) -->
+      <rect x="50" y="22" width="225" height="8" rx="3" fill="rgba(52,214,143,0.15)"/>
+      <text x="100" y="20" fill="#34d68f" font-size="10" font-family="DM Sans,sans-serif">f' &gt; 0 → f monte</text>
+      <!-- Zone f'<0 (descend) -->
+      <rect x="275" y="22" width="225" height="8" rx="3" fill="rgba(240,82,82,0.1)"/>
+      <text x="340" y="20" fill="#f05252" font-size="10" font-family="DM Sans,sans-serif">f' &lt; 0 → f descend</text>
+
+      <!-- Annotation x=15 -->
+      <text x="265" y="256" fill="#f5a623" font-size="11" font-family="DM Mono,monospace" font-weight="600">x=15</text>
+      <text x="222" y="16" fill="#4f8ef7" font-size="10" font-family="DM Sans,sans-serif">max ici</text>
+
+      <!-- f'>0 label zone gauche -->
+      <text x="55" y="203" fill="#34d68f" font-size="9.5" font-family="DM Mono,monospace">f'&gt;0</text>
+      <!-- f'<0 label zone droite -->
+      <text x="290" y="220" fill="#f05252" font-size="9.5" font-family="DM Mono,monospace">f'&lt;0</text>
+    </svg>
+    <p style="text-align:center;font-size:12px;color:var(--text-3);margin:6px 0 0;">Quand f' (orange) passe de positive à négative → f (bleu) atteint son maximum en x = 15</p>
+  </div>
+
+  <!-- ── TABLEAU DE VARIATION ── -->
+  <h3>Le tableau de variations — outil obligatoire au bac</h3>
+  <p>Après avoir trouvé que f'(x) = 0 en x = 15, on dresse le tableau de variation :</p>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:0.75rem 0;">
+    <table style="margin:0;border:none;">
+      <tr>
+        <th style="width:80px;">x</th>
+        <th>9</th>
+        <th style="background:var(--bg-3);"></th>
+        <th style="background:rgba(245,166,35,0.15);color:#f5a623;font-weight:700;">15</th>
+        <th style="background:var(--bg-3);"></th>
+        <th>21</th>
+      </tr>
+      <tr>
+        <td style="font-weight:600;color:var(--text);">Signe de f'(x)</td>
+        <td></td>
+        <td style="text-align:center;color:#34d68f;font-size:18px;font-weight:700;background:var(--bg-3);">+</td>
+        <td style="text-align:center;background:rgba(245,166,35,0.1);color:#f5a623;font-weight:700;">0</td>
+        <td style="text-align:center;color:#f05252;font-size:18px;font-weight:700;background:var(--bg-3);">−</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;color:var(--text);">Variation de f</td>
+        <td style="text-align:center;color:var(--text-3);font-size:12px;">f(9) = 27,7</td>
+        <td style="text-align:center;font-size:20px;color:#34d68f;background:var(--bg-3);">↗</td>
+        <td style="text-align:center;font-weight:700;color:#4f8ef7;background:rgba(79,142,247,0.08);">f(15) = 71,5<br><span style="font-size:10px;color:#f5a623;">MAXIMUM</span></td>
+        <td style="text-align:center;font-size:20px;color:#f05252;background:var(--bg-3);">↘</td>
+        <td style="text-align:center;color:var(--text-3);font-size:12px;">f(21) = 13,3</td>
+      </tr>
     </table>
   </div>
 
-  <h3>Exemple complet décomposé — terme par terme</h3>
+  <!-- ── EXEMPLE COMPLET DÉCOMPOSÉ ── -->
+  <h3>Exemple complet — terme par terme (à mémoriser)</h3>
   <p>Dériver f(x) = <strong>−0,7x² + 21x − 86</strong></p>
   <p>Cette fonction a 3 morceaux séparés par + et −. On dérive chaque morceau séparément, puis on recolle.</p>
 
   <div class="box box-amber">
     <div class="box-label">Morceau 1 : −0,7x²</div>
-    On repère : c'est un nombre (−0,7) multiplié par x²<br>
+    Repérer : c'est un nombre (−0,7) multiplié par x²<br>
     Étape A : dériver x² → 2x &nbsp;&nbsp; (règle 3)<br>
     Étape B : multiplier par −0,7 → −0,7 × 2x<br>
     Étape C : calculer −0,7 × 2 = −1,4<br>
@@ -764,17 +1524,15 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="box box-amber">
     <div class="box-label">Morceau 2 : +21x</div>
-    On repère : c'est ax avec a = 21<br>
-    La dérivée de ax, c'est juste a &nbsp;&nbsp; (règle 2)<br>
-    <strong>Résultat : 21</strong><br><br>
-    Pourquoi pas 21x ? Parce que la règle dit que la dérivée de ax = a, pas ax. Le x "disparaît" aussi.
+    Repérer : c'est ax avec a = 21<br>
+    La dérivée de ax = a (règle 2) — le x disparaît<br>
+    <strong>Résultat : 21</strong>
   </div>
 
   <div class="box box-amber">
     <div class="box-label">Morceau 3 : −86</div>
-    C'est un nombre seul, une constante.<br>
-    La dérivée d'une constante = 0 &nbsp;&nbsp; (règle 1)<br>
-    <strong>Résultat : 0 (on ne l'écrit même pas)</strong>
+    C'est un nombre seul → dérivée = 0 (règle 1)<br>
+    <strong>Résultat : 0 (on ne l'écrit pas)</strong>
   </div>
 
   <div class="box box-green">
@@ -784,26 +1542,29 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   </div>
 
   <div class="box box-red">
-    <div class="box-label">⚠️ Les 2 erreurs classiques sur ce calcul</div>
-    <strong>Erreur 1</strong> : écrire −0,7 × 2x = −0,9x (confusion addition/multiplication)<br>
-    Non : −0,7 × 2 = −1,4 &nbsp;&nbsp; (c'est une multiplication, pas une addition)<br><br>
-    <strong>Erreur 2</strong> : écrire la dérivée de 21x = 21x<br>
-    Non : la dérivée de 21x = 21 &nbsp;&nbsp; (le x disparaît, c'est la règle 2)
+    <div class="box-label">⚠️ Les 2 erreurs classiques</div>
+    <strong>Erreur 1</strong> : −0,7 × 2x = −0,9x &nbsp; NON — c'est une multiplication : −0,7 × 2 = <strong>−1,4</strong><br><br>
+    <strong>Erreur 2</strong> : dérivée de 21x = 21x &nbsp; NON — la dérivée de ax = a, le x disparaît → <strong>21</strong>
   </div>
 
+  <!-- ── RÉSOUDRE f'(x) = 0 ── -->
   <h3>Trouver le maximum : résoudre f'(x) = 0</h3>
   <div class="steps">
     <div class="step-item">
       <div class="step-num">1</div>
-      <div>On pose f'(x) = 0 : −1,4x + 21 = 0</div>
+      <div>Poser f'(x) = 0 : &nbsp; <strong>−1,4x + 21 = 0</strong></div>
     </div>
     <div class="step-item">
       <div class="step-num">2</div>
-      <div>On résout (équation du 1er degré !) : x = 21 ÷ 1,4 = <strong>15</strong></div>
+      <div>Résoudre : −1,4x = −21 → x = −21 ÷ −1,4 = <strong>15</strong></div>
     </div>
     <div class="step-item">
       <div class="step-num">3</div>
-      <div>On calcule la valeur max : f(15) = −0,7×225 + 21×15 − 86 = <strong>71,5</strong></div>
+      <div>Calculer la valeur max : f(15) = −0,7×225 + 21×15 − 86 = <strong>71,5</strong></div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div>Dresser le tableau de variation (voir ci-dessus)</div>
     </div>
   </div>
 
@@ -812,22 +1573,52 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
     "La concentration en ozone est maximale à <strong>15h</strong>, avec une concentration de <strong>71,5 µg/m³</strong>."
   </div>
 
+  <!-- ── RÉCAPITULATIF RÈGLES ── -->
+  <h3>Récapitulatif — les cas du bac</h3>
+  <div class="box box-purple">
+    <table style="margin:0;">
+      <tr><th>Ce qu'on voit</th><th>Ce qu'on fait</th><th>Résultat</th></tr>
+      <tr><td>−86 (nombre seul)</td><td>Constante → disparaît</td><td style="color:#34d68f;font-weight:600;">0</td></tr>
+      <tr><td>21x</td><td>ax → dérivée = a</td><td style="color:#34d68f;font-weight:600;">21</td></tr>
+      <tr><td>x²</td><td>exposant descend devant</td><td style="color:#34d68f;font-weight:600;">2x</td></tr>
+      <tr><td>−0,7x²</td><td>−0,7 × 2x</td><td style="color:#34d68f;font-weight:600;">−1,4x</td></tr>
+      <tr><td>5x²</td><td>5 × 2x</td><td style="color:#34d68f;font-weight:600;">10x</td></tr>
+      <tr><td>−3x²</td><td>−3 × 2x</td><td style="color:#34d68f;font-weight:600;">−6x</td></tr>
+      <tr><td>x³</td><td>exposant 3 descend devant</td><td style="color:#34d68f;font-weight:600;">3x²</td></tr>
+      <tr><td>2x³</td><td>2 × 3x²</td><td style="color:#34d68f;font-weight:600;">6x²</td></tr>
+    </table>
+  </div>
+
+  <!-- ── EXERCICE TYPE BAC ── -->
   <div class="exercice">
     <div class="exercice-label">Exercice type bac complet</div>
     <p>Le profit d'un magasin est modélisé par f(x) = −3x² + 60x − 200 où x est le nombre de produits vendus (entre 0 et 20).<br><br>
     1. Calculez f'(x)<br>
     2. Résolvez f'(x) = 0<br>
-    3. Quel est le profit maximum ?</p>
+    3. Dressez le tableau de variations<br>
+    4. Quel est le profit maximum ?</p>
     <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
     <div class="correction">
-      1. f'(x) = −3×2x + 60 = <strong>−6x + 60</strong><br><br>
-      2. −6x + 60 = 0 → −6x = −60 → x = 10<br>
-      Le profit est maximum pour <strong>x = 10 produits vendus</strong><br><br>
-      3. f(10) = −3×100 + 60×10 − 200 = −300 + 600 − 200 = <strong>100 €</strong>
+      <strong>1. f'(x)</strong><br>
+      · Morceau −3x² : −3 × 2x = −6x<br>
+      · Morceau +60x : dérivée = 60<br>
+      · Morceau −200 : constante → 0<br>
+      → <strong>f'(x) = −6x + 60</strong><br><br>
+
+      <strong>2. f'(x) = 0</strong><br>
+      −6x + 60 = 0 → −6x = −60 → x = 10<br>
+      → Profit maximum pour <strong>x = 10 produits</strong><br><br>
+
+      <strong>3. Tableau de variations</strong><br>
+      · Sur [0 ; 10] : f'(x) &gt; 0 → f croît ↗<br>
+      · En x = 10 : f' = 0 → maximum<br>
+      · Sur [10 ; 20] : f'(x) &lt; 0 → f décroît ↘<br><br>
+
+      <strong>4. Profit maximum</strong><br>
+      f(10) = −3×100 + 60×10 − 200 = −300 + 600 − 200 = <strong>100 €</strong>
     </div>
   </div>
 
-  
 </div>
 
 <!-- ===================== SUITES ===================== -->
@@ -1429,9 +2220,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- BLOC 1 : INFOS ET SIC -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">Bloc 1 — Le SIC et la veille commerciale</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -1494,9 +2285,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- BLOC 2 : PROSPECTION -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">Bloc 2 — Segmenter, cibler et fixer des objectifs SMART</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -1563,9 +2354,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- BLOC 2B : TECHNIQUES -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#a78bfa;"></div>
+      <div class="module-dot" style="background:var(--purple);"></div>
       <span class="module-title">Bloc 2B — Techniques de prospection : outbound vs inbound</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -1624,9 +2415,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- BLOC 3 : ARGUMENTATION ET VENTE -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--teal);"></div>
       <span class="module-title">Bloc 3 — Argumenter, traiter les objections, conclure</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -1675,9 +2466,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- BLOC 4 : DOCUMENTS ET SUIVI -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#a78bfa;"></div>
+      <div class="module-dot" style="background:var(--purple);"></div>
       <span class="module-title">Bloc 4 — Documents commerciaux et suivi des résultats</span>
-      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -1729,9 +2520,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- BLOC 5 : GLOSSAIRE PRO -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--green);"></div>
       <span class="module-title">📖 Vocabulaire pro — les termes à maîtriser</span>
-      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -1810,9 +2601,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- SONCAS -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">La méthode SONCAS(E) — identifier les motivations d'achat</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -1847,9 +2638,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- CAB -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">La méthode CAB — argumenter efficacement</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -1884,9 +2675,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- PRIX -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--teal);"></div>
       <span class="module-title">Les prix et les marges — calculs essentiels</span>
-      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -1928,9 +2719,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- VENTE ADDITIONNELLE -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#a78bfa;"></div>
+      <div class="module-dot" style="background:var(--purple);"></div>
       <span class="module-title">La vente additionnelle — vendre plus à chaque client</span>
-      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -1953,9 +2744,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- METHODE SMART GC4B -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--green);"></div>
       <span class="module-title">Objectifs SMART et SWOT — pour l'E2 et l'oral</span>
-      <span class="priority-badge p-low"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,255,255,0.05);color:#6b6b6e;border:1px solid rgba(255,255,255,0.08);">Priorité ★</span>
+      <span class="priority-badge p-low"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--bg);color:var(--text-3);border:0.5px solid var(--border);">Priorité ★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2026,9 +2817,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">Les documents commerciaux — dans l'ordre de la vente</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2062,9 +2853,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">Traiter les réclamations — la méthode en 5 étapes</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2102,9 +2893,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--teal);"></div>
       <span class="module-title">Mesurer la satisfaction client — outils et indicateurs</span>
-      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2182,9 +2973,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">La fidélisation — enjeux et types</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2208,9 +2999,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">Les outils de fidélisation — le panorama complet</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2246,9 +3037,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--teal);"></div>
       <span class="module-title">La promotion des ventes — techniques et réglementation</span>
-      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2277,9 +3068,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#a78bfa;"></div>
+      <div class="module-dot" style="background:var(--purple);"></div>
       <span class="module-title">La GRC — Gestion de la Relation Client (IDIC)</span>
-      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med"  style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2357,7 +3148,7 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- METHODE -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">Méthode — les 4 règles d'or pour bien répondre</span>
       <span class="module-chevron">▶</span>
     </div>
@@ -2384,14 +3175,14 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   </div>
 
   <h3>Les 5 séquences — notions clés à retenir</h3>
-  <p style="color:var(--muted);font-size:13px;margin-bottom:1rem;">Clique sur chaque séquence pour voir les notions essentielles et les mots à connaître.</p>
+  <p style="color:var(--text-3);font-size:13px;margin-bottom:1rem;">Clique sur chaque séquence pour voir les notions essentielles et les mots à connaître.</p>
 
   <!-- SEQ 1 -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">Séquence 1 — Comment mesurer l'activité économique ?</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2457,9 +3248,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- SEQ 2 -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#f5a623;"></div>
+      <div class="module-dot" style="background:var(--amber);"></div>
       <span class="module-title">Séquence 2 — Comment l'État agit-il sur l'économie ?</span>
-      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2504,9 +3295,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- SEQ 3 -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--teal);"></div>
       <span class="module-title">Séquence 3 — Comment le numérique transforme-t-il le travail ?</span>
-      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2553,9 +3344,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- SEQ 4 -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#a78bfa;"></div>
+      <div class="module-dot" style="background:var(--purple);"></div>
       <span class="module-title">Séquence 4 — Quelles sont les relations de travail ?</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2614,9 +3405,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- SEQ 5 -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--green);"></div>
       <span class="module-title">Séquence 5 — Pourquoi se former tout au long de sa vie ?</span>
-      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2672,7 +3463,7 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- GLOSSAIRE -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">📖 Glossaire — les mots compliqués expliqués simplement</span>
       <span class="module-chevron">▶</span>
     </div>
@@ -2745,9 +3536,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- SEQ 1 -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--green);"></div>
       <span class="module-title">Séquence 1 — La sécurité alimentaire</span>
-      <span class="priority-badge p-low" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,255,255,0.05);color:#6b6b6e;border:1px solid rgba(255,255,255,0.08);">Priorité ★</span>
+      <span class="priority-badge p-low" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--bg);color:var(--text-3);border:0.5px solid var(--border);">Priorité ★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2772,9 +3563,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- SEQ 2 -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--green);"></div>
       <span class="module-title">Séquence 2 — Ressources en énergie et développement durable</span>
-      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2802,9 +3593,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- SEQ 3 -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">Séquence 3 — Le suivi de la santé au travail</span>
-      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2834,9 +3625,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- SEQ 4 -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">Séquence 4 — Accidents du travail (AT) et maladies professionnelles (MP)</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2886,9 +3677,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- SEQ 5 -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">Séquence 5 — Les risques psychosociaux (RPS)</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2930,9 +3721,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- SEQ 6 -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">Séquence 6 — Risques liés à l'activité physique (TMS)</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -2976,9 +3767,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- SEQ 7 -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#f5a623;"></div>
+      <div class="module-dot" style="background:var(--amber);"></div>
       <span class="module-title">Séquence 7 — Analyse d'une situation de travail</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3071,7 +3862,7 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#a78bfa;"></div>
+      <div class="module-dot" style="background:var(--purple);"></div>
       <span class="module-title">Méthode pour analyser une image ou une œuvre</span>
       <span class="module-chevron">▶</span>
     </div>
@@ -3114,9 +3905,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">Méthode pour lire un texte en anglais</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3137,9 +3928,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">Méthode pour écrire en anglais — email ou texte court</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3177,9 +3968,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--teal);"></div>
       <span class="module-title">Se présenter et parler de son stage — phrases à maîtriser</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3205,9 +3996,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--teal);"></div>
       <span class="module-title">Connecteurs logiques — donner son opinion</span>
-      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3231,9 +4022,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#a78bfa;"></div>
+      <div class="module-dot" style="background:var(--purple);"></div>
       <span class="module-title">Vocabulaire commerce et vente</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3269,9 +4060,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">Temps — présent simple / prétérit / present perfect</span>
-      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3292,8 +4083,8 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
     </div>
   </div>
 
-  <div class="epreuve-card" style="background:var(--green-bg);border-color:#97c459;margin-top:1.5rem;">
-    <h3 style="color:#6eeac8;">🌐 Aller plus loin — outils gratuits recommandés par le CNED</h3>
+  <div class="epreuve-card" style="background:var(--green-dim);border-color:#97c459;margin-top:1.5rem;">
+    <h3 style="color:#6ee7b0;">🌐 Aller plus loin — outils gratuits recommandés par le CNED</h3>
     <div class="info-box info-teal">
       <div class="info-label">📱 Duolingo — 10-15 min par jour</div>
       <strong>Accès :</strong> duolingo.com ou app "Duolingo" (App Store / Google Play) · Gratuit<br>
@@ -3352,9 +4143,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">Comprendre ce que demandent les questions — les verbes clés</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3387,9 +4178,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">Analyser une image — méthode en 3 étapes</span>
-      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3409,9 +4200,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">Introduire une citation — les règles et formules</span>
-      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3436,9 +4227,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#a78bfa;"></div>
+      <div class="module-dot" style="background:var(--purple);"></div>
       <span class="module-title">Les figures de style — à identifier et à utiliser</span>
-      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3466,9 +4257,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">Structure du développement argumenté — la méthode CNED</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3512,9 +4303,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--teal);"></div>
       <span class="module-title">Les connecteurs logiques — tableau complet</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3536,9 +4327,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#f5a623;"></div>
+      <div class="module-dot" style="background:var(--amber);"></div>
       <span class="module-title">Les modalisateurs — nuancer et donner son opinion</span>
-      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3560,9 +4351,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--green);"></div>
       <span class="module-title">Rédiger une argumentation — le plan d'un paragraphe</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3590,9 +4381,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">Leïla Slimani — "Le parfum des fleurs la nuit" — l'essentiel</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★ — points faciles</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★ — points faciles</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3658,11 +4449,11 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   </div>
 
   <h3>🔤 Anti-fautes — les règles essentielles</h3>
-  <p style="color:var(--muted);font-size:13px;margin-bottom:1rem;">Objectif : éviter les fautes les plus basiques. Pas besoin d'être parfait — juste éviter les erreurs qui sautent aux yeux du correcteur.</p>
+  <p style="color:var(--text-3);font-size:13px;margin-bottom:1rem;">Objectif : éviter les fautes les plus basiques. Pas besoin d'être parfait — juste éviter les erreurs qui sautent aux yeux du correcteur.</p>
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">ER / É / EZ — la faute la plus fréquente au bac</span>
       <span class="module-chevron">▶</span>
     </div>
@@ -3687,7 +4478,7 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">ET/EST · OU/OÙ · ON/ONT · A/À · CE/SE · SON/SONT — les 6 pièges</span>
       <span class="module-chevron">▶</span>
     </div>
@@ -3709,7 +4500,7 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">Conjugaison AVOIR et ÊTRE — tableaux complets + DR MRS VANDERTRAMP</span>
       <span class="module-chevron">▶</span>
     </div>
@@ -3744,7 +4535,7 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#f5a623;"></div>
+      <div class="module-dot" style="background:var(--amber);"></div>
       <span class="module-title">Présent indicatif — terminaisons et verbes irréguliers</span>
       <span class="module-chevron">▶</span>
     </div>
@@ -3770,7 +4561,7 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--green);"></div>
       <span class="module-title">Accords en genre et nombre + mots souvent mal écrits</span>
       <span class="module-chevron">▶</span>
     </div>
@@ -3801,7 +4592,7 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">📖 Glossaire français — les termes à connaître</span>
       <span class="module-chevron">▶</span>
     </div>
@@ -3833,7 +4624,7 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">🔍 Méthode de relecture en 5 min — les 4 passages</span>
       <span class="module-chevron">▶</span>
     </div>
@@ -3889,9 +4680,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">Séq. 1 — Le jeu des puissances dans les relations internationales depuis 1945</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -3955,9 +4746,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">Séq. 2 — Vivre en France en démocratie depuis 1945</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -4021,9 +4812,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">Séq. 3 — L'accès aux ressources : disponibilité, accessibilité, conflits d'usage</span>
-      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -4052,9 +4843,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">Séq. 4 — Les sociétés face aux risques : anticiper, réagir, s'adapter</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -4104,9 +4895,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#a78bfa;"></div>
+      <div class="module-dot" style="background:var(--purple);"></div>
       <span class="module-title">Séq. 5 — S'engager et débattre en démocratie autour des défis de société</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -4172,7 +4963,7 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
   <!-- GLOSSAIRE -->
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--green);"></div>
       <span class="module-title">📖 Glossaire HG-EMC — les 22 termes à connaître</span>
       <span class="module-chevron">▶</span>
     </div>
@@ -4250,9 +5041,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#ff5c5c;"></div>
+      <div class="module-dot" style="background:#993C1D;"></div>
       <span class="module-title">Option 1 — Ce module : méthode + grammaire + vocabulaire</span>
-      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(255,92,92,0.12);color:#ff8f8f;">Priorité ★★★</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -4392,9 +5183,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#4a9eff;"></div>
+      <div class="module-dot" style="background:var(--blue);"></div>
       <span class="module-title">Option 2 — Duolingo : 10 min par jour sur téléphone</span>
-      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -4412,9 +5203,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 
   <div class="module-card">
     <div class="module-header" onclick="toggleMod(this)">
-      <div class="module-dot" style="background:#2dd4a0;"></div>
+      <div class="module-dot" style="background:var(--teal);"></div>
       <span class="module-title">Option 3 — YouTube : travailler l&#39;oreille et la prononciation</span>
-      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:rgba(245,166,35,0.1);color:#f5c060;">Priorité ★★</span>
+      <span class="priority-badge p-med" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--amber-dim);color:#fbbf24;">Priorité ★★</span>
       <span class="module-chevron">▶</span>
     </div>
     <div class="module-body">
@@ -4446,11 +5237,9 @@ p { font-size: 14px; line-height: 1.7; margin-bottom: 0.6rem; color: var(--muted
 </div>
 
 <script>
-
 function showMaths(id, btn) {
   document.querySelectorAll('.maths-sub').forEach(s => s.style.display = 'none');
   document.getElementById(id).style.display = 'block';
-  // Update sub-nav buttons
   if (btn) {
     btn.closest('div').querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
@@ -4465,20 +5254,17 @@ function showPage(id) {
   });
   window.scrollTo(0, 0);
 }
-
 function toggleMod(header) {
   const body = header.nextElementSibling;
   const chev = header.querySelector('.module-chevron');
   body.classList.toggle('open');
   chev.classList.toggle('open');
 }
-
 function toggleCorr(btn) {
   const box = btn.nextElementSibling;
   box.classList.toggle('open');
   btn.textContent = box.classList.contains('open') ? 'Masquer' : 'Voir la correction';
 }
-
 function updateCountdowns() {
   const today = new Date();
   const epreuves = [
@@ -4490,13 +5276,13 @@ function updateCountdowns() {
     { label: 'E3 Oral', date: '2026-06-10' },
   ];
   const container = document.getElementById('countdowns');
+  if (!container) return;
   container.innerHTML = '';
   epreuves.forEach(e => {
     const d = new Date(e.date);
     const diff = Math.ceil((d - today) / 86400000);
     if (diff >= 0) {
-      const urgent = diff <= 5 ? ' urgent-badge' : '';
-      container.innerHTML += `<div class="count-badge${urgent}"><span class="num">${diff}j</span><span class="label">${e.label}</span></div>`;
+      container.innerHTML += `<div class="count-badge"><span class="num">${diff}j</span><span class="label">${e.label}</span></div>`;
     }
   });
 }

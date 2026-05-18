@@ -1021,6 +1021,7 @@ a:hover { text-decoration: underline; }
     <button class="nav-btn" style="font-size:12px;padding:8px 12px;" onclick="showMaths('m-stats',this)">Stats 2 var ★★</button>
     <button class="nav-btn" style="font-size:12px;padding:8px 12px;" onclick="showMaths('m-probas',this)">Probabilités ★</button>
     <button class="nav-btn" style="font-size:12px;padding:8px 12px;" onclick="showMaths('m-calculatrice',this)">Calculatrice</button>
+    <button class="nav-btn" style="font-size:12px;padding:8px 12px;" onclick="showMaths('m-tice',this)">TICE ★★★</button>
     <button class="nav-btn" style="font-size:12px;padding:8px 12px;" onclick="showMaths('m-jourj',this)">Le jour J</button>
   </div>
 
@@ -2129,6 +2130,367 @@ a:hover { text-decoration: underline; }
 
   
 </div>
+
+
+<!-- ===================== TICE — Guide outils numériques ===================== -->
+  <div id="m-tice" class="maths-sub" style="display:none">
+  <h2>Guide TICE — Outils numériques à l'épreuve</h2>
+  <p class="page-intro">3 outils possibles à l'épreuve. La question TICE est obligatoire dans la partie « Réaliser » d'un exercice noté sur 10 points. Source : arrêté Éducation nationale du 8 février 2010.</p>
+
+  <div class="box box-red">
+    <div class="box-label">⚠️ La règle d'or TICE</div>
+    L'examinateur passe te voir au moment où tu fais la manip numérique. <strong>Parle à voix haute</strong> ce que tu fais — ça rapporte des points en compétence <em>Communiquer</em>. Une phrase de restitution est préparée pour chaque outil (voir ci-dessous).
+  </div>
+
+  <h3>Les 3 situations possibles</h3>
+  <div class="box box-blue">
+    <table>
+      <tr><th>Outil</th><th>Démarche typique</th><th>Séquence CNED</th></tr>
+      <tr><td><strong>Tableur</strong> (Excel / LibreOffice)</td><td>Ajustement d'un nuage de points</td><td>Séq. 4 — Stats 2 variables</td></tr>
+      <tr><td><strong>GeoGebra</strong></td><td>Signe d'une dérivée, tableau de variations</td><td>Séq. 1 — Polynômes degré 3</td></tr>
+      <tr><td><strong>Numworks</strong></td><td>Résoudre équation / suites / régression</td><td>Séq. 1, 2 et 4</td></tr>
+    </table>
+  </div>
+
+  <div class="box box-amber">
+    <div class="box-label">🎯 Stratégie note</div>
+    Sur les 3 outils, <strong>la Numworks est ton joker</strong> : tu l'as déjà, elle est simple, et elle couvre la plupart des cas. Le tableur et GeoGebra sont à connaître au cas où le sujet les impose explicitement (« à l'aide du tableur » / « à l'aide de GeoGebra »).
+  </div>
+
+  <!-- ============== SITUATION 1 — TABLEUR ============== -->
+  <h3 style="margin-top:32px;border-top:2px solid var(--accent);padding-top:20px;">Situation 1 — Le Tableur (Excel / LibreOffice Calc)</h3>
+  <p><em>Cas typique : ajustement d'un nuage de points</em></p>
+
+  <div class="box box-blue">
+    <div class="box-label">📘 Rappel notions clés</div>
+    Un <strong>nuage de points</strong> représente une série statistique à 2 variables (xᵢ ; yᵢ). Quand les points suivent une tendance, on cherche une <strong>courbe de tendance</strong> (= ajustement) qui colle au mieux aux points. Pour mesurer la qualité, on utilise le <strong>coefficient de détermination R²</strong> : plus R² est proche de 1, meilleur est l'ajustement.<br><br>
+    <strong>Les 5 modèles courants :</strong><br>
+    • Linéaire : y = ax + b<br>
+    • Polynomial : degré 2 ou 3<br>
+    • Exponentiel : y = a · e^(bx)<br>
+    • Logarithmique : y = a · ln(x) + b<br>
+    • Puissance : y = a · x^b
+  </div>
+
+  <h4 style="margin-top:20px;">Procédure pas à pas</h4>
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div>Saisir les données dans 2 lignes (ou 2 colonnes) : xᵢ et yᵢ.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div>Sélectionner tout le tableau.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div>Menu <strong>Insertion</strong> → choisir « Nuage de points » (Excel) ou « Diagramme XY » (LibreOffice).</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div>Clic droit sur un point → « Ajouter une courbe de tendance » (Excel) / « Insérer courbe de régression » (LibreOffice).</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">5</div>
+      <div>Dans le panneau : cocher <strong>« Afficher l'équation sur le graphique »</strong> ET <strong>« Afficher le coefficient de détermination R² »</strong>.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">6</div>
+      <div>Tester plusieurs types (linéaire, exponentiel, polynomial, log, puissance) et noter chaque R².</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">7</div>
+      <div><strong>Choisir le modèle dont R² est le plus proche de 1.</strong></div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">8</div>
+      <div>Recopier l'équation sur la copie et l'utiliser pour calculer la valeur demandée.</div>
+    </div>
+  </div>
+
+  <div class="box box-red">
+    <div class="box-label">⚠️ Pièges à éviter</div>
+    • Ne confonds pas <strong>R</strong> (coefficient de corrélation) et <strong>R²</strong> (coefficient de détermination). On veut R².<br>
+    • N'oublie pas de justifier le choix de l'ajustement : « R² = 0,99 le plus proche de 1 ».<br>
+    • <strong>Interpoler</strong> = estimer une valeur DANS la plage des données. <strong>Extrapoler</strong> = estimer HORS de la plage (plus risqué).
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exemple MCV — Ventes d'une boutique de prêt-à-porter</div>
+    <p>Une boutique a relevé son chiffre d'affaires hebdomadaire (en k€) après le lancement d'une campagne de fidélisation :</p>
+    <table>
+      <tr><th>Semaine xᵢ</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
+      <tr><th>CA yᵢ (k€)</th><td>12</td><td>15</td><td>20</td><td>27</td><td>37</td><td>50</td><td>68</td></tr>
+    </table>
+    <p><strong>Question :</strong> À l'aide du tableur, déterminer le modèle d'ajustement le plus adapté et estimer le CA de la semaine 9.</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      Linéaire : R² ≈ 0,89<br>
+      Exponentiel : R² ≈ 0,9998 → <strong>y ≈ 8,8 × e^(0,30x)</strong><br><br>
+      Pour x = 9 : y ≈ 8,8 × e^(2,7) ≈ <strong>131 k€</strong>
+    </div>
+  </div>
+
+  <div class="box box-purple">
+    <div class="box-label">🎙️ Phrase à dire à l'examinateur</div>
+    <em>« J'ai saisi les données dans le tableur, puis créé un nuage de points. J'ai testé plusieurs courbes de tendance. L'ajustement linéaire donne R² ≈ 0,89, l'ajustement exponentiel donne R² ≈ 0,9998. Je choisis l'ajustement exponentiel car son R² est le plus proche de 1. L'équation est y ≈ 8,8 × e^(0,30x). J'utilise cette équation pour estimer la valeur demandée. »</em>
+  </div>
+
+  <!-- ============== SITUATION 2 — GEOGEBRA ============== -->
+  <h3 style="margin-top:32px;border-top:2px solid var(--accent);padding-top:20px;">Situation 2 — GeoGebra</h3>
+  <p><em>Cas typique : signe de la dérivée et tableau de variations</em></p>
+
+  <div class="box box-blue">
+    <div class="box-label">📘 Rappel notions clés</div>
+    Pour étudier les variations d'une fonction f, on étudie le <strong>signe de sa dérivée f'</strong>.<br>
+    • Quand f'(x) > 0, f est <strong>croissante</strong> ↗<br>
+    • Quand f'(x) < 0, f est <strong>décroissante</strong> ↘<br>
+    • Les valeurs de x où f'(x) = 0 sont les <strong>extrémums</strong> (max ou min)<br><br>
+    GeoGebra permet de tracer f', de lire ses zéros à l'écran et donc de remplir le tableau de signes.
+  </div>
+
+  <div class="box box-amber">
+    <div class="box-label">🧮 Rappel formules de dérivation (à connaître par cœur)</div>
+    <table>
+      <tr><th>Fonction f(x)</th><th>Dérivée f'(x)</th></tr>
+      <tr><td>k (constante)</td><td>0</td></tr>
+      <tr><td>x</td><td>1</td></tr>
+      <tr><td>x²</td><td>2x</td></tr>
+      <tr><td>x³</td><td>3x²</td></tr>
+      <tr><td>k · xⁿ</td><td>k · n · x^(n−1)</td></tr>
+      <tr><td>f(x) + g(x)</td><td>f'(x) + g'(x)</td></tr>
+    </table>
+  </div>
+
+  <h4 style="margin-top:20px;">Procédure pas à pas (GeoGebra Classique)</h4>
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div>Ouvrir <strong>GeoGebra Classique 5 ou 6</strong> (l'icône avec un point bleu et une courbe).</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div>Dans la barre de saisie en bas, taper la fonction f. Ex : <code>f(x) = 2x^3 - 9x^2 + 12x - 1</code> puis <strong>Entrée</strong>.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div>Saisir la dérivée. Soit la calculer à la main, soit utiliser GeoGebra : taper <code>f'(x)</code> dans la barre de saisie.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div>GeoGebra trace automatiquement la courbe de f'. Ajuster le zoom pour voir l'axe des x.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">5</div>
+      <div>Pour trouver où f'(x) = 0 : outil <strong>« Intersection »</strong> (icône avec 2 droites qui se croisent) → cliquer sur la courbe de f' puis sur l'axe des x.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">6</div>
+      <div>GeoGebra affiche les points d'intersection avec leurs coordonnées. Noter les valeurs de x trouvées.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">7</div>
+      <div>Lire le <strong>signe de f'</strong> entre ces valeurs (au-dessus de l'axe = positif, en-dessous = négatif).</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">8</div>
+      <div>Reporter dans le tableau de signes, puis en déduire le <strong>tableau de variations</strong> de f.</div>
+    </div>
+  </div>
+
+  <div class="box box-red">
+    <div class="box-label">⚠️ Pièges à éviter</div>
+    • <strong>Multiplication implicite</strong> : GeoGebra accepte « 2x » mais préfère « 2*x ». En cas de doute, mets l'étoile.<br>
+    • <strong>Puissances</strong> : on tape ^ (touche AltGr + 9). Ex : x^3 pour x³.<br>
+    • Ne pas oublier de <strong>recopier sur la copie</strong> les valeurs lues à l'écran (sinon l'examinateur ne peut pas évaluer).
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exemple MCV — Bénéfice mensuel d'un rayon</div>
+    <p>Le bénéfice (en centaines d'€) d'un rayon en fonction du nombre x (en dizaines) d'articles vendus par jour est modélisé sur [0 ; 7] par :</p>
+    <p style="text-align:center;font-size:1.1em;"><strong>f(x) = −x³ + 9x² − 15x + 10</strong></p>
+    <p><strong>Question :</strong> À l'aide de GeoGebra, déterminer le nombre d'articles à vendre pour maximiser le bénéfice.</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      f'(x) = −3x² + 18x − 15<br>
+      Zéros lus sur GeoGebra : <strong>x = 1 et x = 5</strong><br>
+      Signe de f' : négatif sur [0;1], positif sur [1;5], négatif sur [5;7]<br>
+      Donc f admet un <strong>maximum en x = 5</strong>.<br><br>
+      Le rayon doit vendre <strong>50 articles par jour</strong> pour maximiser le bénéfice.<br>
+      f(5) = 35 → soit <strong>3 500 €</strong>
+    </div>
+  </div>
+
+  <div class="box box-purple">
+    <div class="box-label">🎙️ Phrase à dire à l'examinateur</div>
+    <em>« J'ai saisi la fonction f dans GeoGebra. J'ai ensuite saisi f'(x) pour obtenir la dérivée. Avec l'outil Intersection entre f' et l'axe des abscisses, je trouve que f' s'annule en x = 1 et x = 5. Je lis sur le graphique que f' est négative sur [0 ; 1], positive sur [1 ; 5], puis négative sur [5 ; 7]. Donc f est croissante puis décroissante, et admet un maximum en x = 5. »</em>
+  </div>
+
+  <!-- ============== SITUATION 3 — NUMWORKS ============== -->
+  <h3 style="margin-top:32px;border-top:2px solid var(--accent);padding-top:20px;">Situation 3 — Calculatrice Numworks</h3>
+  <p><em>3 usages clés : équation, suite, régression</em></p>
+
+  <div class="box box-blue">
+    <div class="box-label">📘 Rappel notions clés</div>
+    La Numworks a plusieurs applications utiles :<br>
+    • <strong>Équations</strong> : résout équations du 1er, 2nd et 3e degré (donne aussi le discriminant ∆)<br>
+    • <strong>Fonctions</strong> : trace une courbe, fait un tableau de valeurs, lit des images et antécédents<br>
+    • <strong>Suites</strong> : calcule les termes d'une suite arithmétique ou géométrique<br>
+    • <strong>Régressions</strong> : nuage de points + ajustement (équivalent du tableur)
+  </div>
+
+  <h4 style="margin-top:20px;">3A — Résoudre une équation (ex : f'(x) = 0)</h4>
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div>Allumer la Numworks → écran d'accueil.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div>Aller sur l'application <strong>« Équations »</strong>.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div>Appuyer sur <strong>ok</strong> pour ajouter une équation. Choisir « Vide ».</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div>Taper l'équation. Le « = » se fait avec <strong>shift + π</strong>. Le « x » avec la touche <strong>x,n,t</strong>.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">5</div>
+      <div>Ex : pour f'(x) = 0 avec f'(x) = −3x² + 18x − 15, taper : <code>-3x^2 + 18x - 15 = 0</code></div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">6</div>
+      <div>Sélectionner <strong>« Résoudre l'équation »</strong> en bas → ok. Les solutions sont données automatiquement.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">7</div>
+      <div>Noter les solutions sur la copie.</div>
+    </div>
+  </div>
+
+  <h4 style="margin-top:20px;">3B — Calculer les termes d'une suite</h4>
+  <div class="box box-amber">
+    <strong>Rappel :</strong> Suite arithmétique uₙ = u₁ + (n − 1) × r. Suite géométrique uₙ = u₁ × q^(n − 1).
+  </div>
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div>Application <strong>« Suites »</strong>.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div>Ajouter une suite → choisir le mode d'expression (explicite uₙ = ... ou récurrent uₙ₊₁ = ...).</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div>Saisir la formule. Ex pour suite géométrique de raison 1,05 et premier terme 1000 : <code>u(n) = 1000 × 1,05^(n-1)</code></div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div>Définir le premier rang (souvent n = 1) dans les paramètres.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">5</div>
+      <div>Aller dans l'onglet <strong>Tableau</strong> pour lire les valeurs des termes.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">6</div>
+      <div>Pour la <strong>somme</strong> des n premiers termes : application « Calculs » → taper <code>sum(1000×1.05^(k-1), k, 1, n)</code></div>
+    </div>
+  </div>
+
+  <h4 style="margin-top:20px;">3C — Ajustement d'un nuage de points (alternative au tableur)</h4>
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div>Application <strong>« Régressions »</strong> — pas « Statistiques » qui est pour les 1 variable.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div>Onglet <strong>Données</strong> : entrer les xᵢ dans X1, les yᵢ dans Y1.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div>Onglet <strong>Graphique</strong> : le nuage apparaît avec régression linéaire par défaut.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div>Touche <strong>ok</strong> → choisir un modèle (linéaire, exponentiel, polynomial, log, puissance...).</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">5</div>
+      <div>Aller sur <strong>« Plus d'informations »</strong> pour lire l'<strong>équation</strong> et le <strong>r²</strong>.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">6</div>
+      <div>Tester plusieurs modèles, garder celui dont r² est le plus proche de 1.</div>
+    </div>
+  </div>
+
+  <div class="exercice">
+    <div class="exercice-label">Exemple MCV — Programme de fidélité (régression)</div>
+    <p>Le magasin lance un programme de fidélité. Nombre de membres inscrits chaque mois (en centaines) :</p>
+    <table>
+      <tr><th>Mois xᵢ</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+      <tr><th>Membres yᵢ</th><td>1,2</td><td>2,4</td><td>4,5</td><td>8,9</td><td>18,1</td><td>35,8</td></tr>
+    </table>
+    <p><strong>Question :</strong> À l'aide de la calculatrice, déterminer l'ajustement le plus adapté et estimer le nombre de membres au mois 8.</p>
+    <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
+    <div class="correction">
+      Linéaire : r² ≈ 0,80 — Exponentiel : <strong>r² ≈ 0,9999</strong><br>
+      Équation : <strong>y ≈ 0,60 × e^(0,69x)</strong><br><br>
+      Pour x = 8 : y ≈ 0,60 × e^(5,52) ≈ <strong>150 centaines = 15 000 membres environ</strong><br>
+      <em>(extrapolation, à interpréter avec prudence)</em>
+    </div>
+  </div>
+
+  <div class="box box-purple">
+    <div class="box-label">🎙️ Phrase à dire à l'examinateur</div>
+    <em>« Je suis dans l'application Régressions de la Numworks. J'ai saisi les données dans les colonnes X1 et Y1. Je passe à l'onglet Graphique. Je teste l'ajustement linéaire : r² ≈ 0,80. Je teste l'ajustement exponentiel : r² ≈ 0,9999. Je choisis l'exponentiel car r² est le plus proche de 1. L'équation est y ≈ 0,60 × e^(0,69x). J'utilise cette équation pour estimer la valeur demandée. »</em>
+  </div>
+
+  <!-- ============== CHECKLIST JOUR J TICE ============== -->
+  <h3 style="margin-top:32px;border-top:2px solid var(--accent);padding-top:20px;">Checklist jour J — spécial TICE</h3>
+
+  <div class="box box-green">
+    <div class="box-label">✅ Avant l'épreuve (matin)</div>
+    ☐ Numworks chargée + pile de secours dans la trousse<br>
+    ☐ Calculatrice en <strong>mode examen</strong> si exigé (vérifier la convocation)<br>
+    ☐ <strong>5 min de chauffe Numworks</strong> : saisir X = 1,2,3 / Y = 2,4,6 dans Régressions → vérifier que linéaire donne y = 2x et r² = 1<br>
+    ☐ Stylo, crayon, gomme, règle, calculatrice + pile, convocation, pièce d'identité<br>
+    ☐ Petit-déjeuner avec <strong>sucres lents</strong> (pain, céréales) — glycémie stable = 1h de concentration<br>
+    ☐ 4 cycles de respiration carrée (4s inspire / 4s pause / 4s expire / 4s pause) avant d'entrer en salle
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">⏱️ Pendant l'épreuve (1 heure)</div>
+    ☐ <strong>5 premières minutes</strong> : lire TOUT le sujet, repérer la question TICE<br>
+    ☐ Faire en premier les questions « S'approprier » (faciles, sûres)<br>
+    ☐ Pour la question TICE : suivre la recette à la lettre, noter sur la copie l'équation et le R² obtenus<br>
+    ☐ <strong>Parler à voix haute</strong> à l'examinateur quand il passe (script appris)<br>
+    ☐ Garder <strong>10 min en fin d'épreuve</strong> pour relire et noter les résultats partiels<br>
+    ☐ Si bloqué sur une question : passer, revenir après. Une feuille blanche = 0.
+  </div>
+
+  <div class="box box-red">
+    <div class="box-label">🏆 Règle d'or — pour l'ensemble de l'épreuve</div>
+    <strong>Tout écrire, même les tentatives partielles.</strong> La grille d'évaluation note la <em>démarche</em>, pas seulement le résultat.<br><br>
+    • Une équation posée mais non résolue = <strong>des points</strong><br>
+    • Une formule recopiée de l'annexe = <strong>des points</strong><br>
+    • Un commentaire à l'examinateur = <strong>des points</strong><br>
+    • Une copie blanche = <strong>0</strong>
+  </div>
+
+  <div class="box box-amber">
+    <div class="box-label">🧠 Mantra Fabio</div>
+    <em style="font-size:1.05em;"><strong>Je ne réfléchis pas, j'exécute la recette. La Numworks est mon joker. Je parle à voix haute. Je laisse 10 min pour relire. Allez Fabio.</strong></em>
+  </div>
+
+</div>
+
 
 <!-- ===================== JOUR J ===================== -->
 

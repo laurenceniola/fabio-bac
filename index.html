@@ -754,7 +754,7 @@ a:hover { text-decoration: underline; }
 
 <nav class="nav">
   <button class="nav-btn active" onclick="showPage('planning')">Planning</button>
-  <button class="nav-btn" onclick="showPage('maths')">Maths ★</button>
+  <button class="nav-btn" onclick="showPage('maths')">Maths ✓</button>
   <button class="nav-btn" onclick="showPage('e2')">E2 Pro ★★★</button>
   <button class="nav-btn" onclick="showPage('francais')">Vente-conseil E31 ★★★</button>
   <button class="nav-btn" onclick="showPage('histgeo')">Suivi ventes E32 ★★</button>
@@ -772,225 +772,160 @@ a:hover { text-decoration: underline; }
 <div id="planning" class="page active">
   <div class="planning-header">
     <h2>Planning stratégique</h2>
-    <p>Du 4 mai au 10 juin 2026 · Priorités calculées par coefficient × difficulté × délai</p>
+    <p>Sprint final · 20 mai → 2 juin 2026 · Priorités calculées par coefficient × difficulté × délai</p>
   </div>
 
   <div class="strategy-box">
-    <h3>Règle des 3 priorités</h3>
-    <p><strong>1. Le dossier E3 avant le 22 mai</strong> — coefficient 9, diplôme en jeu si absent.<br>
-    <strong>2. L'épreuve E2 pro</strong> — coefficient 4, matière connue, meilleur retour sur investissement.<br>
-    <strong>3. Français + Histoire-Géo</strong> — coefficient 2,5 chacun, les plus hauts coefficients des épreuves générales.</p>
+    <h3>Règle des 3 priorités — écrits restants</h3>
+    <p><strong>1. E2 Pro (2 juin)</strong> — coefficient 4, le plus lourd des écrits. Difficulté ressentie n°1 → on l'infuse un peu chaque jour plutôt qu'en bloc.<br>
+    <strong>2. Français + Histoire-Géo (28 mai)</strong> — coefficient ~2,5 chacun, denses, et ce sont les premières → on les construit en premier.<br>
+    <strong>3. Arts · Éco-Droit · PSE</strong> — coefficient 1 chacun. Objectif assumé : 8–10 avec le minimum d'effort. Méthode + un exercice type, pas de zèle.</p>
   </div>
 
-  <div class="week-label">Cette semaine · 4–10 mai</div>
-
-  <div class="epreuve-row">
-    <div class="epreuve-date">Urgent</div>
-    <div class="epreuve-bar alert-row">
-      <span class="epreuve-name">Dossier E3 — supports professionnels</span>
-      <span class="epreuve-meta">À déposer avant le 22 mai</span>
-      <span class="coef-badge coef-9">Coef 9</span>
-    </div>
+  <div class="info-box info-amber">
+    <div class="info-label">Pourquoi ce planning est volontairement déséquilibré</div>
+    6 épreuves, ~6 jours utiles : la tentation serait d'y consacrer une journée chacune. Ce serait une erreur de calcul. Une épreuve à coef 4 ne mérite pas le même temps qu'une épreuve à coef 1. L'énergie de Fabio est une ressource limitée autant que le temps — on la concentre là où elle rapporte.
   </div>
 
+  <div class="week-label">Déjà passé</div>
+
   <div class="epreuve-row">
-    <div class="epreuve-date">5 mai</div>
+    <div class="epreuve-date">19–20 mai</div>
     <div class="epreuve-bar done">
       <div class="check-circle done-check">✓</div>
-      <span class="epreuve-name">EPS — Tennis de table + Demi-fond</span>
-      <span class="epreuve-meta">Passé</span>
-      <span class="coef-badge coef-done">Coef 1</span>
-    </div>
-  </div>
-
-  <div class="epreuve-row">
-    <div class="epreuve-date">4–18 mai</div>
-    <div class="epreuve-bar high">
-      <span class="epreuve-name">Révisions Maths</span>
-      <span class="epreuve-meta">~8h réparties · séq 6 et 2 en priorité</span>
-      <span class="coef-badge coef-1">Coef 1</span>
-    </div>
-  </div>
-
-  <div class="week-label">Semaine 2 · 11–17 mai</div>
-
-  <div class="epreuve-row">
-    <div class="epreuve-date">11–17 mai</div>
-    <div class="epreuve-bar high">
-      <span class="epreuve-name">Révisions Anglais écrit</span>
-      <span class="epreuve-meta">Niveau correct · méthode compréhension de texte · 2h suffisent</span>
-      <span class="coef-badge coef-2">Coef 2</span>
-    </div>
-  </div>
-
-  <div class="epreuve-row">
-    <div class="epreuve-date">11–17 mai</div>
-    <div class="epreuve-bar high">
-      <span class="epreuve-name">Révisions Espagnol écrit</span>
-      <span class="epreuve-meta">Vocabulaire commerce · méthode · ~3h</span>
-      <span class="coef-badge coef-2">Coef 2</span>
-    </div>
-  </div>
-
-  <div class="week-label">Épreuves · 19–21 mai</div>
-
-  <div class="epreuve-row">
-    <div class="epreuve-date">19 mai</div>
-    <div class="epreuve-bar medium">
-      <span class="epreuve-name">Mathématiques E1-B</span>
-      <span class="epreuve-meta">14h00 · 1h · LP Louis Guilloux, Rennes</span>
-      <span class="coef-badge coef-1">Coef 1</span>
-    </div>
-  </div>
-
-  <div class="epreuve-row">
-    <div class="epreuve-date">20 mai</div>
-    <div class="epreuve-bar low">
-      <span class="epreuve-name">Anglais écrit E4-AA</span>
-      <span class="epreuve-meta">14h00 · 1h · LP Coetlogon, Rennes</span>
-      <span class="coef-badge coef-2">Coef 2</span>
+      <span class="epreuve-name">Maths (19) + Anglais écrit (20)</span>
+      <span class="epreuve-meta">Passées · place aux épreuves suivantes</span>
+      <span class="coef-badge coef-done">✓</span>
     </div>
   </div>
 
   <div class="epreuve-row">
     <div class="epreuve-date">21 mai</div>
-    <div class="epreuve-bar low">
+    <div class="epreuve-bar done">
+      <div class="check-circle done-check">✓</div>
       <span class="epreuve-name">Espagnol écrit E4-BA</span>
-      <span class="epreuve-meta">14h00 · 1h · LP Coetlogon, Rennes</span>
-      <span class="coef-badge coef-2">Coef 2</span>
+      <span class="epreuve-meta">Passée</span>
+      <span class="coef-badge coef-done">✓</span>
     </div>
   </div>
 
-  <div class="week-label">Semaine 3 · 22–27 mai — révisions intensives</div>
+  <div class="week-label">Phase 1 · 22–27 mai — construction</div>
 
   <div class="epreuve-row">
-    <div class="epreuve-date">22–27 mai</div>
+    <div class="epreuve-date">Jeu 22</div>
     <div class="epreuve-bar urgent">
-      <span class="epreuve-name">Révisions Français</span>
-      <span class="epreuve-meta">Méthode résumé + écriture · ~5h · Priorité haute</span>
-      <span class="coef-badge coef-25">Coef 2,5</span>
+      <span class="epreuve-name">E2 Pro — découverte + Français méthode (lecture)</span>
+      <span class="epreuve-meta">~3,5h · Bloc frais : format E2 + lecture d'un sujet annale · Bloc 2 : méthode partie 1 Français</span>
+      <span class="coef-badge coef-4">E2 ★</span>
     </div>
   </div>
 
   <div class="epreuve-row">
-    <div class="epreuve-date">22–27 mai</div>
+    <div class="epreuve-date">Ven 23</div>
     <div class="epreuve-bar urgent">
-      <span class="epreuve-name">Révisions Histoire-Géo EMC</span>
-      <span class="epreuve-meta">Notions clés + méthode · ~4h</span>
-      <span class="coef-badge coef-25">Coef 2,5</span>
+      <span class="epreuve-name">Français méthode (écriture) + E2 GC4B prospection</span>
+      <span class="epreuve-meta">~3,5h · Bloc frais : méthode partie 2 + 1 entraînement · Bloc 2 : notions clés prospection</span>
+      <span class="coef-badge coef-25">Fr · E2</span>
     </div>
   </div>
 
   <div class="epreuve-row">
-    <div class="epreuve-date">22–27 mai</div>
+    <div class="epreuve-date">Sam 24</div>
     <div class="epreuve-bar high">
-      <span class="epreuve-name">Révisions Éco-Droit</span>
-      <span class="epreuve-meta">Notions clés · ~3h</span>
-      <span class="coef-badge coef-1">Coef 1</span>
-    </div>
-  </div>
-
-  <div class="week-label">Épreuves · 28–29 mai</div>
-
-  <div class="epreuve-row">
-    <div class="epreuve-date">28 mai</div>
-    <div class="epreuve-bar medium">
-      <span class="epreuve-name">Français E5-A</span>
-      <span class="epreuve-meta">08h30 · 3h · LP Coetlogon, Rennes</span>
-      <span class="coef-badge coef-25">Coef 2,5</span>
+      <span class="epreuve-name">Histoire-Géo (5 synthèses) + E2 GC4B valorisation</span>
+      <span class="epreuve-meta">~3,5h · Bloc frais : parcourir les 5 séquences HG · Bloc 2 : valorisation de l'offre</span>
+      <span class="coef-badge coef-25">HG · E2</span>
     </div>
   </div>
 
   <div class="epreuve-row">
-    <div class="epreuve-date">28 mai</div>
-    <div class="epreuve-bar medium">
-      <span class="epreuve-name">Histoire-Géographie EMC E5-B</span>
-      <span class="epreuve-meta">14h00 · 2h30 · LP Coetlogon, Rennes</span>
-      <span class="coef-badge coef-25">Coef 2,5</span>
+    <div class="epreuve-date">Dim 25</div>
+    <div class="epreuve-bar high">
+      <span class="epreuve-name">Histoire-Géo méthode + Éco-Droit survol</span>
+      <span class="epreuve-meta">~3,5h · Bloc frais : méthode épreuve HG + entraînement · Bloc 2 : méthode + survol séq. 3-4-5</span>
+      <span class="coef-badge coef-25">HG · ED</span>
     </div>
   </div>
 
   <div class="epreuve-row">
-    <div class="epreuve-date">29 mai</div>
-    <div class="epreuve-bar low">
-      <span class="epreuve-name">Arts appliqués E6</span>
-      <span class="epreuve-meta">09h30 · 2h · Matériel à apporter (crayons, feutres)</span>
-      <span class="coef-badge coef-1">Coef 1</span>
-    </div>
-  </div>
-
-  <div class="epreuve-row">
-    <div class="epreuve-date">29 mai</div>
-    <div class="epreuve-bar medium">
-      <span class="epreuve-name">Économie-Droit E1-A</span>
-      <span class="epreuve-meta">14h00 · 2h · LP Coetlogon, Rennes</span>
-      <span class="coef-badge coef-1">Coef 1</span>
-    </div>
-  </div>
-
-  <div class="week-label">Semaine 4 · 30 mai–1er juin — sprint final E2</div>
-
-  <div class="epreuve-row">
-    <div class="epreuve-date">30 mai–1 juin</div>
+    <div class="epreuve-date">Lun 26</div>
     <div class="epreuve-bar urgent">
-      <span class="epreuve-name">Révisions E2 Pro — Prospection &amp; valorisation</span>
-      <span class="epreuve-meta">Étude de cas · méthode + notions · ~6h · Priorité absolue</span>
-      <span class="coef-badge coef-4">Coef 4</span>
+      <span class="epreuve-name">E2 Pro — sujet d'annale complet + PSE survol</span>
+      <span class="epreuve-meta">~3,5h · Bloc frais : un sujet E2 en conditions · Bloc 2 : survol des 7 modules PSE</span>
+      <span class="coef-badge coef-4">E2 ★</span>
     </div>
   </div>
 
   <div class="epreuve-row">
-    <div class="epreuve-date">1er juin</div>
+    <div class="epreuve-date">Mar 27</div>
+    <div class="epreuve-bar high">
+      <span class="epreuve-name">Français — derniers points faibles + Arts appliqués méthode</span>
+      <span class="epreuve-meta">~3,5h · Bloc frais : relecture Français · Bloc 2 : fiche méthode Arts + 1 sujet type · Coucher tôt</span>
+      <span class="coef-badge coef-25">Fr · Arts</span>
+    </div>
+  </div>
+
+  <div class="week-label">Phase 2 · 28 mai–2 juin — la rafale</div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">Jeu 28</div>
+    <div class="epreuve-bar medium">
+      <span class="epreuve-name">Français E5-A &nbsp;·&nbsp; Histoire-Géo EMC E5-B</span>
+      <span class="epreuve-meta">08h30 · 3h &nbsp;|&nbsp; 14h00 · 2h30 · LP Coetlogon · Entre les deux : 30 min revoir méthode HG</span>
+      <span class="coef-badge coef-25">Coef 2,5 ×2</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">Ven 29</div>
+    <div class="epreuve-bar medium">
+      <span class="epreuve-name">Arts appliqués E6 &nbsp;·&nbsp; Économie-Droit E1-A</span>
+      <span class="epreuve-meta">09h30 · 2h &nbsp;|&nbsp; 14h00 · 2h · LP Coetlogon · Veille : fiche méthode Arts + survol éco-droit</span>
+      <span class="coef-badge coef-1">Coef 1 ×2</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">Sam–Dim<br>30–31</div>
+    <div class="epreuve-bar urgent">
+      <span class="epreuve-name">Récupération + bachotage E2 Pro</span>
+      <span class="epreuve-meta">Le week-end tombe pile entre les deux vagues — dernier vrai temps pour la matière la plus lourde · 2 sujets d'annale</span>
+      <span class="coef-badge coef-4">E2 ★</span>
+    </div>
+  </div>
+
+  <div class="epreuve-row">
+    <div class="epreuve-date">Lun 1er</div>
     <div class="epreuve-bar medium">
       <span class="epreuve-name">PSE E3-D</span>
-      <span class="epreuve-meta">08h30 · 2h · LP Coetlogon, Rennes</span>
+      <span class="epreuve-meta">08h30 · 2h · LP Coetlogon · Veille : survol modules 6-7 + méthode</span>
       <span class="coef-badge coef-1">Coef 1</span>
     </div>
   </div>
 
-  <div class="week-label">Épreuve principale · 2 juin</div>
-
   <div class="epreuve-row">
-    <div class="epreuve-date">2 juin</div>
+    <div class="epreuve-date">Mar 2</div>
     <div class="epreuve-bar urgent">
-      <span class="epreuve-name">E2 Prospection clientèle &amp; valorisation</span>
-      <span class="epreuve-meta">14h00 · 3h · LP Coetlogon, Rennes</span>
+      <span class="epreuve-name">E2 — Prospection clientèle &amp; valorisation de l'offre</span>
+      <span class="epreuve-meta">14h00 · 3h · LP Coetlogon · Matinée : dernière relecture des fiches GC4B</span>
       <span class="coef-badge coef-4">Coef 4</span>
     </div>
   </div>
 
-  <div class="week-label">Épreuves orales · 8–10 juin</div>
+  <div class="week-label">Après les écrits — oraux (préparés à part)</div>
 
   <div class="epreuve-row">
-    <div class="epreuve-date">8 juin</div>
+    <div class="epreuve-date">8–10 juin</div>
     <div class="epreuve-bar low">
-      <span class="epreuve-name">Anglais oral E4-AB</span>
-      <span class="epreuve-meta">13h30 · 10 min · LP Ste Thérèse, La Guerche-de-Bretagne</span>
-      <span class="coef-badge coef-2">Coef 2</span>
-    </div>
-  </div>
-
-  <div class="epreuve-row">
-    <div class="epreuve-date">9 juin</div>
-    <div class="epreuve-bar low">
-      <span class="epreuve-name">Espagnol oral E4-BB</span>
-      <span class="epreuve-meta">13h30 · 10 min · Lodima Ouest, Bruz</span>
-      <span class="coef-badge coef-2">Coef 2</span>
-    </div>
-  </div>
-
-  <div class="epreuve-row">
-    <div class="epreuve-date">10 juin</div>
-    <div class="epreuve-bar alert-row">
-      <span class="epreuve-name">E3 — Vente-conseil + Suivi ventes + Fidélisation</span>
-      <span class="epreuve-meta">07h45 · Lodima Ouest, Bruz · Dossier obligatoire</span>
-      <span class="coef-badge coef-9">Coef 9</span>
+      <span class="epreuve-name">Oraux : Anglais · Espagnol · E3 pro (E31/E32/E33)</span>
+      <span class="epreuve-meta">Préparation dans un espace dédié — non couverts par ce planning d'écrits</span>
+      <span class="coef-badge coef-2">Oraux</span>
     </div>
   </div>
 
   <div style="background:var(--green-dim);border:0.5px solid #97c459;border-radius:10px;padding:1rem 1.25rem;margin-top:1.5rem;">
-    <p style="font-size:13px;color:#6ee7b0;font-weight:500;margin-bottom:4px;">Calcul stratégique</p>
-    <p style="font-size:13px;color:#6ee7b0;">Total coefficients : 26. Pour obtenir 10/20 de moyenne, il faut obtenir 260 points. L'E3 (coef 9) et l'E2 (coef 4) représentent à eux seuls 50% du total. Fabio peut compenser des notes faibles en épreuves générales (coef 1 chacune) si E2 et E3 sont solides.</p>
+    <p style="font-size:13px;color:#6ee7b0;font-weight:500;margin-bottom:4px;">Calcul stratégique — écrits restants</p>
+    <p style="font-size:13px;color:#6ee7b0;">L'E2 (coef 4) pèse autant que les quatre épreuves à coef 1 réunies. C'est aussi la dernière du calendrier : on a le temps de l'infuser sans précipitation. Objectif réaliste : viser 12+ sur l'E2 et les matières pro, sécuriser 8–10 sur les coef 1. Une note faible sur une épreuve à coef 1 coûte peu — une note faible sur l'E2 coûte cher. Le planning suit cette logique.</p>
   </div>
 </div>
 
@@ -1002,7 +937,7 @@ a:hover { text-decoration: underline; }
       <span class="chip chip-blue">19 mai 2026 · 14h00</span>
       <span class="chip chip-blue">1h · LP Louis Guilloux Rennes</span>
       <span class="chip chip-amber">Coefficient 1</span>
-      <span class="chip chip-green">Formules fournies en annexe</span>
+      <span class="chip chip-green">Épreuve passée ✓</span>
     </div>
   </div>
 
@@ -1888,11 +1823,11 @@ a:hover { text-decoration: underline; }
   <div class="exercice">
     <div class="exercice-label">Exercice 2 — trouver n (durée nécessaire)</div>
     <p>Une entreprise place 10 000 € à 4% par an. Elle veut atteindre 15 000 €. Dans combien d'années ?<br>
-    <em>La formule pour trouver n est donnée en annexe le jour J — ici on explique chaque étape.</em></p>
+    <em>Cette formule peut figurer en annexe le jour J, ou non — ici on explique chaque étape pour la comprendre, pas seulement la recopier.</em></p>
     <button class="btn-correction" onclick="toggleCorr(this)">Voir la correction</button>
     <div class="correction">
       On cherche n tel que : 10 000 × (1,04)ⁿ = 15 000<br><br>
-      La formule de l'annexe : <strong>n = log(Cn ÷ C0) ÷ log(1 + t)</strong><br><br>
+      La formule : <strong>n = log(Cn ÷ C0) ÷ log(1 + t)</strong><br><br>
       Étape 1 — calculer Cn ÷ C0 : 15 000 ÷ 10 000 = 1,5<br>
       Étape 2 — calculer log(1,5) sur la calculatrice :<br>
       &nbsp;&nbsp;<span class="key">log</span><span class="key">(</span><span class="key">1</span><span class="key">.</span><span class="key">5</span><span class="key">)</span><span class="key">=</span> → <strong>0,1761</strong><br>
@@ -2479,7 +2414,7 @@ a:hover { text-decoration: underline; }
     <div class="box-label">🏆 Règle d'or — pour l'ensemble de l'épreuve</div>
     <strong>Tout écrire, même les tentatives partielles.</strong> La grille d'évaluation note la <em>démarche</em>, pas seulement le résultat.<br><br>
     • Une équation posée mais non résolue = <strong>des points</strong><br>
-    • Une formule recopiée de l'annexe = <strong>des points</strong><br>
+    • Une formule correctement posée = <strong>des points</strong><br>
     • Un commentaire à l'examinateur = <strong>des points</strong><br>
     • Une copie blanche = <strong>0</strong>
   </div>
@@ -2495,15 +2430,12 @@ a:hover { text-decoration: underline; }
 <!-- ===================== JOUR J ===================== -->
 
   <div id="m-jourj" class="maths-sub" style="display:none">
-  <h2>Le jour de l'épreuve — 18 mai</h2>
-  <p class="page-intro">1 heure. 2 parties indépendantes. 20 points. Les formules sont en annexe.</p>
+  <h2>L'épreuve de maths — bilan</h2>
+  <p class="page-intro">1 heure. 2 parties indépendantes. 20 points. Épreuve passée le 19 mai 2026.</p>
 
-  <div class="box box-green">
-    <div class="box-label">✅ Ce que tu peux faire avant même de lire le sujet</div>
-    1. Ouvrir le sujet et lire les <strong>annexes en premier</strong> — elles te disent quelles formules sont utilisées donc quelles séquences sont au programme<br>
-    2. Lire les 2 parties et commencer par celle que tu reconnais le mieux<br>
-    3. Identifier les questions de type "S'approprier" (lire, comprendre) — ce sont souvent les plus faciles
-  </div>
+  <div class="box box-amber">
+    <div class="box-label">⚠️ Mise au point importante — le formulaire</div>
+    Contrairement à ce qui était indiqué ici avant l'épreuve : <strong>le formulaire de formules n'est PAS garanti en annexe</strong>. La fiche méthode du CNED le dit clairement — des annexes « <em>peuvent</em> » être fournies, ce n'est pas systématique. Le programme part du principe que le candidat sait <strong>identifier et mobiliser</strong> la bonne formule selon la situation. Si Fabio est tombé sur un sujet sans formulaire, c'est conforme au cadre officiel : ce n'est pas une irrégularité.
 
   <h3>Les 5 compétences évaluées</h3>
   <table>
@@ -2525,7 +2457,7 @@ a:hover { text-decoration: underline; }
 
   <div class="box box-amber">
     <div class="box-label">⏱️ Gestion du temps (1h)</div>
-    · 5 min : lire les annexes + vue d'ensemble du sujet<br>
+    · 5 min : vue d'ensemble du sujet + repérer les annexes s'il y en a<br>
     · 25 min : partie 1<br>
     · 25 min : partie 2<br>
     · 5 min : relecture et vérification
@@ -2541,7 +2473,7 @@ a:hover { text-decoration: underline; }
 
   <div class="box box-green" style="margin-top:1.5rem">
     <div class="box-label">💪 Dernier mot</div>
-    Les formules sont données. Tu n'as rien à mémoriser par cœur. Ce qui compte, c'est de comprendre la situation décrite dans l'énoncé et de choisir la bonne formule. Avec ce qu'on a travaillé ensemble, tu as toutes les cartes en main.
+    L'épreuve de maths est derrière toi. Qu'il y ait eu un formulaire ou non, ce qui compte maintenant c'est de tourner la page sereinement et de mettre ton énergie sur les épreuves qui restent. Les maths ne sont pas la priorité stratégique — et le travail qu'on a fait ensemble pour comprendre les bases reste acquis. Place aux matières qui pèsent le plus dans la balance.
   </div>
 
   
@@ -2749,13 +2681,17 @@ a:hover { text-decoration: underline; }
         <tr><td><strong>Retargeting</strong></td><td>Re-cibler un prospect qui a visité le site sans acheter</td><td>Rappel au bon moment, taux de conversion amélioré</td></tr>
       </table>
 
-      <h4>La méthode CROC — pour le phoning</h4>
+      <h4>La méthode CROC — structurer un appel téléphonique</h4>
       <div class="info-box info-blue">
         Script structuré pour un appel sortant :<br><br>
         <strong>C — Contact</strong> : Bonjour, prénom + nom + fonction + entreprise. Valider l'interlocuteur : "Je parle bien à M./Mme… ?"<br>
         <strong>R — Raison</strong> : Rappeler l'historique ou l'objet de l'appel pour créer un climat de confiance<br>
         <strong>O — Objectif</strong> : Exposer clairement ce qu'on cherche (prendre un RDV, transmettre une info, prendre une commande)<br>
         <strong>C — Congé</strong> : Reformuler, rassurer, remercier, prendre congé personnalisé ("Au revoir M./Mme X")
+      </div>
+      <div class="info-box info-amber">
+        <div class="info-label">⚠️ Ne pas confondre CROC et CRAC</div>
+        <strong>CROC</strong> = la trame d'un <strong>appel téléphonique</strong> (ici). <strong>CRAC</strong> = la méthode pour <strong>traiter une objection</strong> pendant l'argumentation — voir le bloc 3 ci-dessous. Deux outils, deux moments différents de la relation commerciale.
       </div>
 
       <div class="exercice">
@@ -2802,6 +2738,27 @@ a:hover { text-decoration: underline; }
         Exemple : "Notre logiciel [C] traite 10 000 données par jour [A] ce qui vous fait économiser 2h de travail par semaine [P] comme en témoignent nos 50 clients PME actuels."
       </div>
 
+      <h4>La méthode SONCASE — identifier les motivations d'achat</h4>
+      <div class="info-box info-amber">
+        <div class="info-label">Pourquoi le client achète</div>
+        Chaque client a un ou plusieurs <strong>mobiles d'achat</strong>. SONCASE est l'outil pour les repérer et adapter son argumentation. Un même argument peut répondre à plusieurs mobiles.
+      </div>
+      <table>
+        <tr><th>Lettre</th><th>Mobile</th><th>Ce que cherche le client</th></tr>
+        <tr><td><strong>S</strong></td><td>Sécurité</td><td>Être rassuré, tester, vérifier, éviter les risques (garanties, normes, SAV)</td></tr>
+        <tr><td><strong>O</strong></td><td>Orgueil</td><td>Se démarquer, du prestige, être valorisé par son achat</td></tr>
+        <tr><td><strong>N</strong></td><td>Nouveauté</td><td>De l'avant-gardisme, un produit tout juste sorti, être le premier</td></tr>
+        <tr><td><strong>C</strong></td><td>Confort</td><td>Le bien-être, la simplicité d'utilisation, la praticité</td></tr>
+        <tr><td><strong>A</strong></td><td>Argent</td><td>Un bon rapport qualité-prix, une promotion, une bonne affaire</td></tr>
+        <tr><td><strong>S</strong></td><td>Sympathie</td><td>Un faible pour une marque, une couleur, un lien d'affection avec le produit</td></tr>
+        <tr><td><strong>E</strong></td><td>Écologie</td><td>Un produit écologique, naturel, qui répond à des valeurs morales</td></tr>
+      </table>
+      <div class="info-box info-blue">
+        <strong>L'argumentaire CAP/SONCASE — l'outil complet</strong><br>
+        Les deux méthodes se combinent dans un tableau : pour chaque argument (Caractéristique-Avantage-Preuve), on indique le mobile SONCASE auquel il répond. C'est ça, un argumentaire commercial complet.<br><br>
+        <em>Exemple (montre connectée) : "Livrée avec 2 bracelets interchangeables [C] — vous changez selon votre tenue ou pour le sport [A] — tenez, je vous montre [P]" → répond aux mobiles CONFORT + SYMPATHIE.</em>
+      </div>
+
       <h4>Les types d'objections et comment y répondre</h4>
       <table>
         <tr><th>Type d'objection</th><th>Exemple</th><th>Comment répondre</th></tr>
@@ -2811,6 +2768,30 @@ a:hover { text-decoration: underline; }
         <tr><td>Fidélité concurrent</td><td>"J'ai déjà un fournisseur"</td><td>Valoriser les points différenciants sans dénigrer le concurrent</td></tr>
       </table>
 
+      <h4>La méthode CRAC — traiter une objection étape par étape</h4>
+      <div class="info-box info-amber">
+        <div class="info-label">La méthode clé du traitement des objections</div>
+        Quand un client objecte, on ne répond pas dans le vif. On suit 4 étapes : <strong>C</strong>reuser → <strong>R</strong>eformuler → <strong>A</strong>rgumenter → <strong>C</strong>ontrôler. L'objection est une marque d'intérêt, pas un conflit : un client qui objecte est un client qui s'intéresse.
+      </div>
+      <table>
+        <tr><th>Étape</th><th>Ce qu'on fait</th><th>Exemple — objection "Votre produit est trop cher"</th></tr>
+        <tr><td><strong>C — Creuser</strong></td><td>Faire préciser l'objection par une question</td><td>"Quand vous dites que c'est cher, c'est par rapport à quel prix ou quel produit ?"</td></tr>
+        <tr><td><strong>R — Reformuler</strong></td><td>Vérifier qu'on a bien compris, faire valider par le client</td><td>"Si j'ai bien compris, vous pensez que le concurrent vend le même produit deux fois moins cher. C'est bien cela ?"</td></tr>
+        <tr><td><strong>A — Argumenter</strong></td><td>Répondre, en s'appuyant sur la technique du "oui, mais…"</td><td>"C'est le même type de produit, mais le nôtre n'offre pas les mêmes garanties : qualité contrôlée dès l'usine, matériaux supérieurs."</td></tr>
+        <tr><td><strong>C — Contrôler</strong></td><td>Vérifier que l'objection est levée avant de continuer</td><td>"Est-ce que cela répond à votre question sur le prix ?"</td></tr>
+      </table>
+      <div class="info-box info-blue">
+        <strong>Variante CNED — la méthode AIR</strong> (pour mémoriser l'attitude de base face à une objection) :<br>
+        <strong>A — Accepter</strong> : laisser le client exprimer l'objection sans l'interrompre, en souligner l'intérêt<br>
+        <strong>I — Interroger</strong> : poser des questions pour comprendre ce qui se cache derrière<br>
+        <strong>R — Répondre</strong> : répondre à l'objection avec la bonne technique<br><br>
+        <em>Astuce de vocabulaire : ne jamais dire le mot "objection" au client. Préférer "cette question", "ce point", "cette remarque".</em>
+      </div>
+      <div class="info-box info-teal">
+        <div class="info-label">Cas particulier — l'objection "prix"</div>
+        L'objection sur le prix se traite <strong>toujours en dernier</strong>. Techniques possibles : <strong>diviser</strong> le prix par la durée d'utilisation ("moins de 2 € par jour, le prix d'un café"), <strong>multiplier</strong> les avantages par leur durée, <strong>additionner</strong> tous les avantages pour justifier le prix, ou montrer ce que le client <strong>perd</strong> s'il n'achète pas maintenant.
+      </div>
+
       <div class="exercice">
         <div class="exercice-label">Question type E2</div>
         <p>Un prospect vous dit : "Votre offre m'intéresse mais c'est plus cher que votre concurrent." Comment répondez-vous ?</p>
@@ -2819,6 +2800,76 @@ a:hover { text-decoration: underline; }
           Je reconnais d'abord l'objection sans la nier (écoute active) : "Je comprends que le prix soit un critère important pour vous."<br><br>
           Ensuite je valorise la différence : "Notre offre est effectivement positionnée différemment. Avez-vous bien pris en compte [avantage spécifique : service après-vente inclus / formation offerte / garantie plus longue] ? Sur la durée, nos clients constatent que le coût total est comparable voire inférieur."<br><br>
           Je conclus avec une preuve : "Je peux vous mettre en contact avec un client dans votre secteur qui a fait la comparaison."
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOC 3B : VALORISER L'OFFRE -->
+  <div class="module-card">
+    <div class="module-header" onclick="toggleMod(this)">
+      <div class="module-dot" style="background:var(--green);"></div>
+      <span class="module-title">Bloc 3B — Valoriser l'offre commerciale</span>
+      <span class="priority-badge p-high" style="font-size:11px;padding:2px 8px;border-radius:12px;background:var(--red-dim);color:#f87171;">Priorité ★★★</span>
+      <span class="module-chevron">▶</span>
+    </div>
+    <div class="module-body">
+      <div style="margin-top:0.75rem;">
+      <div class="info-box info-amber">
+        <div class="info-label">Pourquoi ce bloc est incontournable</div>
+        L'option de Fabio s'appelle « Prospection clientèle <strong>ET valorisation de l'offre commerciale</strong> ». La prospection amène le prospect ; la valorisation met l'offre en valeur pour le transformer en client. Un sujet d'E2 peut porter entièrement sur cette seconde moitié — il faut la maîtriser autant que la prospection.
+      </div>
+
+      <h4>1. Les événements et manifestations commerciales</h4>
+      <div class="info-box info-blue">
+        Un événement commercial sert à promouvoir l'entreprise, améliorer son image et développer son chiffre d'affaires. Quatre grands types :
+      </div>
+      <table>
+        <tr><th>Type</th><th>En quoi ça consiste</th><th>Contexte</th></tr>
+        <tr><td><strong>Salon professionnel</strong></td><td>Manifestation thématique qui réunit exposants et visiteurs professionnels d'un secteur. Stands + conférences.</td><td><strong>B to B</strong> (entre professionnels)</td></tr>
+        <tr><td><strong>Foire</strong></td><td>Manifestation ponctuelle festive (musique, démonstrations, camelots). Visiteurs séduits par la concentration d'offres.</td><td><strong>B to C</strong> (grand public)</td></tr>
+        <tr><td><strong>Soirée de lancement / vente privée</strong></td><td>Événement réservé aux clients fidèles ou prospects triés, pour un lancement produit ou une vente en avant-première.</td><td>B to C ciblé</td></tr>
+        <tr><td><strong>Journée portes ouvertes</strong></td><td>L'entreprise accueille des visiteurs pour montrer ses installations, son personnel, ses produits et services.</td><td>B to B ou B to C</td></tr>
+      </table>
+      <div class="info-box info-teal">
+        <strong>Le réflexe B2B / B2C</strong> : salon = professionnels = B to B ; foire = grand public = B to C. C'est une distinction que les sujets d'E2 aiment vérifier.
+      </div>
+
+      <h4>2. L'animation commerciale</h4>
+      <div class="info-box info-blue">
+        Animer, c'est guider, informer et séduire le prospect en permanence. <strong>Objectifs d'une animation</strong> : créer du trafic, séduire de nouveaux clients, dynamiser l'image du point de vente, renforcer la notoriété, augmenter le CA.<br><br>
+        <strong>Techniques d'animation</strong> : goodies (objet publicitaire utile, visible, fonctionnel), chatbot (animation digitale qui répond aux questions), jeu-concours (attire du monde et récupère les coordonnées des prospects).
+      </div>
+      <div class="info-box info-blue">
+        <strong>L'ILV — Information sur le Lieu de Vente</strong><br>
+        Supports installés sur le lieu de vente pour orienter le prospect, présenter les produits et l'aider à choisir. Règles : information objective, formulation claire (pas de jargon), mise en avant des bénéfices client. L'ILV répond surtout au mobile <strong>sécurité</strong> : informer le client, c'est le rassurer.
+      </div>
+
+      <h4>3. Valoriser l'offre grâce au digital</h4>
+      <table>
+        <tr><th>Support</th><th>Caractéristique</th></tr>
+        <tr><td><strong>Site marchand</strong></td><td>Permet l'achat en ligne (transaction). C'est la vitrine de l'entreprise.</td></tr>
+        <tr><td><strong>Site vitrine</strong></td><td>Présente l'entreprise et ses produits, mais <strong>sans transaction</strong>.</td></tr>
+        <tr><td><strong>Réseaux sociaux</strong></td><td>Instagram, LinkedIn, Facebook, Snapchat… On choisit le support selon la cible (notamment l'âge).</td></tr>
+      </table>
+      <div class="info-box info-blue">
+        <strong>La structure d'un site marchand</strong> : page d'accueil claire et séduisante · catalogue · fiches produits détaillées · panier modifiable · espace client · assistance permanente (chatbot, FAQ) · rubrique contact · CGV.
+      </div>
+      <div class="info-box info-teal">
+        <strong>Deux notions clés à connaître :</strong><br>
+        · <strong>Storytelling</strong> : raconter une histoire en plusieurs publications pour relier les internautes à la marque.<br>
+        · <strong>Tunnel de conversion</strong> : le parcours du visiteur jusqu'à l'achat. L'objectif est de réduire au maximum l'abandon de panier avant la validation de la commande.
+      </div>
+
+      <div class="exercice">
+        <div class="exercice-label">Question type E2 — valorisation</div>
+        <p>Une entreprise de produits artisanaux veut faire connaître une nouvelle gamme auprès du grand public. Elle hésite entre participer à un salon professionnel ou à une foire. Que lui conseillez-vous ? Justifiez.</p>
+        <button class="btn-corr" onclick="toggleCorr(this)">Voir la correction</button>
+        <div class="correction">
+          Je conseille la <strong>foire</strong>.<br><br>
+          La cible visée est le <strong>grand public</strong> (B to C). Or le salon professionnel est réservé aux visiteurs professionnels (B to B) : l'entreprise n'y rencontrerait pas ses clients finaux. La foire, elle, s'adresse aux particuliers, dans une ambiance festive propice à la découverte et à l'achat d'impulsion.<br><br>
+          On peut compléter le dispositif : une animation sur le stand (dégustation, démonstration), un jeu-concours pour récupérer les coordonnées des visiteurs, et un relais sur les réseaux sociaux avant et après l'événement.
         </div>
       </div>
       </div>
@@ -2894,6 +2945,8 @@ a:hover { text-decoration: underline; }
         <tr><td><strong>B to B</strong> (Business to Business)</td><td>Vente entre professionnels (entreprise → entreprise). Ex: fournisseur → magasin</td></tr>
         <tr><td><strong>B to C</strong> (Business to Consumer)</td><td>Vente d'une entreprise à un particulier. Ex: magasin → client</td></tr>
         <tr><td><strong>CAP</strong></td><td>Méthode d'argumentation : Caractéristique → Avantage → Preuve</td></tr>
+        <tr><td><strong>CRAC</strong></td><td>Méthode de traitement des objections : Creuser → Reformuler → Argumenter → Contrôler</td></tr>
+        <tr><td><strong>CROC</strong></td><td>Trame d'un appel téléphonique : Contact → Raison → Objectif → Congé</td></tr>
         <tr><td><strong>CGV</strong></td><td>Conditions Générales de Vente — le cadre juridique de la vente</td></tr>
         <tr><td><strong>Ciblage</strong></td><td>Choisir les segments de marché sur lesquels on va concentrer ses efforts</td></tr>
         <tr><td><strong>Concurrent direct</strong></td><td>Entreprise qui vend le même produit au même client</td></tr>
@@ -2902,8 +2955,10 @@ a:hover { text-decoration: underline; }
         <tr><td><strong>Datamining</strong></td><td>Analyse de grandes quantités de données pour trouver des tendances et comportements clients</td></tr>
         <tr><td><strong>E-mailing</strong></td><td>Envoi d'emails commerciaux en masse, ciblés et personnalisés</td></tr>
         <tr><td><strong>E-réputation</strong></td><td>Image d'une entreprise sur internet (avis, réseaux sociaux, forums)</td></tr>
+        <tr><td><strong>Foire</strong></td><td>Manifestation commerciale ponctuelle et festive destinée au grand public (B to C)</td></tr>
         <tr><td><strong>Force de vente</strong></td><td>L'ensemble des commerciaux d'une entreprise</td></tr>
         <tr><td><strong>GRC</strong></td><td>Gestion de la Relation Client (= CRM en français)</td></tr>
+        <tr><td><strong>ILV</strong></td><td>Information sur le Lieu de Vente — supports qui orientent et informent le client en magasin</td></tr>
         <tr><td><strong>Lead</strong></td><td>Contact potentiel qui n'a pas encore été qualifié (= suspect)</td></tr>
         <tr><td><strong>Mercatique directe</strong></td><td>Communication personnalisée vers des clients/prospects pour déclencher un achat rapide</td></tr>
         <tr><td><strong>Omnicanal</strong></td><td>Tous les canaux de vente et de contact sont utilisés simultanément et de façon cohérente</td></tr>
@@ -2912,11 +2967,15 @@ a:hover { text-decoration: underline; }
         <tr><td><strong>Portefeuille clients</strong></td><td>L'ensemble des clients et prospects dont un commercial a la charge</td></tr>
         <tr><td><strong>Prospect</strong></td><td>Personne/entreprise identifiée comme client potentiel, non encore client</td></tr>
         <tr><td><strong>Publipostage</strong></td><td>Envoi de courriers commerciaux par voie postale à une liste ciblée</td></tr>
+        <tr><td><strong>Salon professionnel</strong></td><td>Manifestation thématique réunissant exposants et visiteurs professionnels d'un secteur (B to B)</td></tr>
         <tr><td><strong>Scoring</strong></td><td>Attribution d'une note à un client/prospect selon son potentiel commercial</td></tr>
         <tr><td><strong>Segmentation</strong></td><td>Division du marché en groupes homogènes selon des critères définis</td></tr>
+        <tr><td><strong>SONCASE</strong></td><td>Les 7 mobiles d'achat : Sécurité, Orgueil, Nouveauté, Confort, Argent, Sympathie, Écologie</td></tr>
         <tr><td><strong>SIC</strong></td><td>Système d'Information Commercial — base de données clients/prospects de l'entreprise</td></tr>
         <tr><td><strong>Taux de transformation</strong></td><td>% de contacts qui deviennent des clients (ventes ÷ contacts × 100)</td></tr>
         <tr><td><strong>Vente au rebond</strong></td><td>Profiter d'un contact client (réclamation, suivi) pour proposer une vente complémentaire</td></tr>
+        <tr><td><strong>Storytelling</strong></td><td>Raconter une histoire en plusieurs publications pour créer un lien avec la marque</td></tr>
+        <tr><td><strong>Tunnel de conversion</strong></td><td>Le parcours du visiteur jusqu'à l'achat ; on cherche à réduire l'abandon de panier</td></tr>
         <tr><td><strong>Veille commerciale</strong></td><td>Surveillance continue du marché, des concurrents et des clients pour anticiper les changements</td></tr>
       </table>
       </div>
@@ -5634,8 +5693,12 @@ function updateCountdowns() {
     { label: 'Anglais', date: '2026-05-20' },
     { label: 'Espagnol', date: '2026-05-21' },
     { label: 'Français', date: '2026-05-28' },
+    { label: 'Histoire-Géo', date: '2026-05-28' },
+    { label: 'Arts appliqués', date: '2026-05-29' },
+    { label: 'Éco-Droit', date: '2026-05-29' },
+    { label: 'PSE', date: '2026-06-01' },
     { label: 'E2 Pro', date: '2026-06-02' },
-    { label: 'E3 Oral', date: '2026-06-10' },
+    { label: 'Oraux E3', date: '2026-06-10' },
   ];
   const container = document.getElementById('countdowns');
   if (!container) return;
